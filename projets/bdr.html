@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href=".././logo2.png">
-    <title> Analyse de Données, Reporting et Datavisualisation - Théo PETIT</title>
+    <title> Conception et implémentation d'une BDR - Théo PETIT</title>
     <style>
         * {
             margin: 0;
@@ -617,15 +617,15 @@
 
     <!-- Hero du projet -->
     <section class="project-hero">
-        <h1>Analyse de Données, Reporting et Datavisualisation (ADRD)</h1>
-        <p class="project-subtitle">Analyse statistique de données réelles et visualisation interactive</p>
+        <h1>Conception et implémentation d'une Base De Données Relationnelle</h1>
+        <p class="project-subtitle">Gestion de base de données MySQL et interface utilisateur Python/Tkinter</p>
 
         <!-- Technologies utilisées -->
         <div class="project-technologies">
+            <span class="tech-badge">MySQL</span>
             <span class="tech-badge">Python</span>
-            <span class="tech-badge">PowerBI</span>
-            <span class="tech-badge">Visualisation</span>
-            <span class="tech-badge">Statistiques</span>
+            <span class="tech-badge">PHP</span>
+            <span class="tech-badge">Tkinter</span>
         </div>
     </section>
 
@@ -634,68 +634,52 @@
         <!-- Difficulté et temps -->
         <div class="difficulty-section">
             <h3>DIFFICULTÉ :</h3>
-            <div class="stars">★★★★☆</div>
+            <div class="stars">★★★☆☆</div>
         </div>
         <div class="time-info">
-            ⏱️ Temps estimé : 50h
+            ⏱️ Temps estimé : 20h
         </div>
 
         <!-- Description du projet -->
         <div class="content-section">
             <h2>Description du Projet</h2>
             <p>
-                Ce projet s'est déroulé sur une semaine entière en équipe, durant laquelle nous avons collaboré au mieux
-                afin de
-                fournir le livrable à <strong>Calixys</strong>. Dans le cadre du projet réalisé en partenariat avec le
-                <strong>laboratoire MAVIE</strong>, nous avons
-                répondu à une demande de l'entreprise Calixys visant à développer un livrable complet : "Une
-                datavisualisation sur les
-                risques du quotidien" via un fichier Excel regroupant <strong>619 répondants</strong> à un questionnaire
-                préalablement établi et mené
-                par l'entreprise.
+                Nous disposions de nombreuses heures disposées sur notre emploi du temps au fil des semaines. Ce projet
+                s'est effectué en binôme.
             </p>
             <p>
-                Nous avons utilisé la méthode <strong>SCRUM</strong> pour mener à bien ce projet dans les délais
-                impartis et garantir une
-                organisation continue. Comme expliqué dans <a href="ADRD/Rapport individuel Théo PETIT.pdf"
-                    style="color: #5A8FBD; text-decoration: none;">mon rapport individuel</a>, cette méthode nous a
-                permis d'avancer
-                efficacement tout en assurant la cohérence globale du projet.
+                J'ai travaillé avec <strong>Toni ROBERT</strong>. De mon côté, je me suis concentré sur la conception et
+                l'implémentation de la base de données via <strong>MySQL</strong>, en utilisant <strong>PHP</strong> et
+                <strong>Python</strong> pour gérer les interactions et automatiser certaines tâches. Mon binôme s'est
+                occupé de toute la création et de la gestion de la base de données ainsi que de la réalisation d'un MLD
+                (modèle relationnel) afin d'en sortir les différentes requêtes SQL.
             </p>
             <p>
-                De mon côté, je me suis principalement concentré sur la <strong>réalisation des visuels et
-                    graphiques</strong>, ainsi que sur la
-                <strong>valorisation des données</strong> dans Excel, tout en contribuant activement à la rédaction du
-                diagnostic final. Un de mes
-                collaborateurs a assuré le suivi du projet et la validation des résultats pour garantir la qualité du
-                rendu final. Grâce à
-                cette collaboration et à une répartition naturelle des tâches, nous avons pu conjuguer nos efforts pour
-                aboutir à un
-                livrable structuré et professionnel.
+                Les données étaient stockées au sein de divers fichiers CSV que nous devions transformer et importer
+                dans le fichier Python pour ensuite les implanter dans la base. Nous avons par la suite réalisé une
+                interface Python via <strong>Tkinter</strong> (voir photo).
             </p>
             <p>
-                Ce projet m'a permis d'affiner mes compétences en datavisualisation, en organisation d'équipe et en
-                restitution
-                synthétique des données. Je suis fier d'avoir participé à cette expérience collective enrichissante et
-                d'avoir pu mettre
-                mes compétences au service d'un projet concret et utile.
+                Cet affichage permet la connexion à un "profil" à l'aide d'un identifiant et d'un mot de passe. Il
+                existe divers utilisateurs détenant différents droits selon le statut (exemple : 'Admin' détient tous
+                les droits sur la base). La bonne répartition des tâches nous a permis d'avancer efficacement et de
+                finaliser le projet dans les délais.
             </p>
 
             <!-- Image exemple -->
-            <img src="ADRD/1page.png" alt="Aperçu du projet" class="project-image"
-                onerror="this.src='https://via.placeholder.com/800x500/5A8FBD/FFFFFF?text=Analyse+de+Données'">
+            <img src="bdr/bdr2.png" alt="Interface Tkinter" class="project-image"
+                onerror="this.src='https://via.placeholder.com/800x500/5A8FBD/FFFFFF?text=Interface+BDR'">
         </div>
 
         <!-- Compétences développées -->
         <div class="content-section">
             <h2>Compétences Développées</h2>
             <ul>
-                <li>Analyse statistique de données complexes</li>
-                <li>Création de visualisations claires et impactantes</li>
-                <li>Travail en équipe avec méthodologie SCRUM</li>
-                <li>Valorisation et nettoyage de données Excel</li>
-                <li>Rédaction de rapports professionnels</li>
-                <li>Communication des résultats aux parties prenantes</li>
+                <li>Conception et modélisation de bases de données (MLD, MCD)</li>
+                <li>Implémentation SQL et gestion de données MySQL</li>
+                <li>Développement d'interfaces graphiques avec Python (Tkinter)</li>
+                <li>Traitement et import de données CSV</li>
+                <li>Travail collaboratif et gestion des droits utilisateurs</li>
             </ul>
         </div>
 
@@ -704,23 +688,22 @@
             <h2>Résultats et Apprentissages</h2>
             <h3>Résultats obtenus</h3>
             <p>
-                Livrable complet comprenant des visualisations interactives, un diagnostic approfondi des risques du
-                quotidien
-                basé sur l'analyse de 619 réponses, et des recommandations stratégiques pour l'entreprise Calixys.
+                Une base de données fonctionnelle peuplée à partir de fichiers CSV, couplée à une interface utilisateur
+                sécurisée permettant la gestion des données selon les rôles (Admin, Utilisateur).
             </p>
 
             <h3>Ce que j'ai appris</h3>
             <p>
-                L'importance de la communication en équipe, la maîtrise des outils de datavisualisation
-                et comment transformer des données brutes en insights actionnables pour une entreprise.
+                L'importance d'une bonne modélisation en amont, la gestion des connexions entre différents langages
+                (Python/SQL), et la création d'interfaces utilisateurs intuitives.
             </p>
         </div>
 
         <!-- Boutons d'action -->
         <div class="action-buttons">
-            <a href="ADRD/Rapport individuel Théo PETIT.pdf" class="btn btn-primary">Voir Mon Rapport Individuel</a>
-            <a href="ADRD/Rapport collectif.pdf" class="btn btn-primary">Voir Le Rapport Collectif</a>
-            <a href="ADRD/SAE.pbix" class="btn btn-primary">Voir Le Tableau De Bord</a>
+            <a href="https://youtu.be/8O6gbRkXAoI" target="_blank" class="btn btn-primary">Voir la vidéo de
+                démonstration</a>
+            <a href="bdr/Q7 - selmarin_TKinter.py" download class="btn btn-primary">Télécharger le code Python</a>
             <a href="../index.html#projets" class="btn btn-secondary">← Retour aux projets</a>
         </div>
 

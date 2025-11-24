@@ -1,3 +1,21 @@
+<?php
+// Compteur de visiteurs simple
+$fichier_compteur = 'compteur.txt';
+
+// Vérifier si le fichier existe, sinon le créer avec 0
+if (!file_exists($fichier_compteur)) {
+    file_put_contents($fichier_compteur, '0');
+}
+
+// Lire le nombre actuel
+$visiteurs = (int) file_get_contents($fichier_compteur);
+
+// Incrémenter
+$visiteurs++;
+
+// Sauvegarder le nouveau nombre
+file_put_contents($fichier_compteur, $visiteurs);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -9,6 +27,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <style>
         * {
             margin: 0;
@@ -2917,95 +2936,7 @@
     <!-- Hero avec carousel -->
     <section class="hero" id="#top">
         <!-- Hero Card Carousel -->
-        <div class="hero-card-carousel" id="heroCarousel">
-            <!-- Slide 1: Journal -->
-            <div class="hero-card-slide active" id="slide-journal">
-                <div class="journal-layout">
-                    <!-- Fixed Static Image -->
-                    <img src="courrier.jpg" alt="Courrier de l'Ouest" class="journal-cover"
-                        style="background: white; padding: 2px; object-fit: cover;"
-                        onerror="this.src='https://placehold.co/80x100?text=Journal'">
-                    <div class="journal-info">
-                        <h3 class="card-title">Courrier de l'Ouest</h3>
-                        <p class="card-content" style="margin: 0.5rem 0;">L'actualité locale et régionale en direct.</p>
-                        <div class="reading-time">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                            <span>15 min de lecture</span>
-                        </div>
-                        <a href="https://www.courrierdelouest.fr/" target="_blank"
-                            style="display: inline-block; margin-top: 0.5rem; color: white; font-size: 0.85rem; text-decoration: underline;">Lire
-                            le journal ↗</a>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Slide 2: Crypto -->
-            <div class="hero-card-slide" id="slide-crypto">
-                <div class="card-header">
-                    <span style="font-size: 1.5rem;">🪙</span>
-                    <h3 class="card-title">Marché Crypto</h3>
-                </div>
-                <div class="card-content">
-                    <div class="crypto-row" id="btc-row">Chargement...</div>
-                    <div class="crypto-row" id="eth-row">Chargement...</div>
-                </div>
-            </div>
-
-            <!-- Slide 3: Weather -->
-            <div class="hero-card-slide" id="slide-weather">
-                <div class="weather-main">
-                    <div id="weather-icon-container">
-                        <!-- Icon injected by JS -->
-                    </div>
-                    <div class="weather-details">
-                        <div class="weather-temp" id="weather-temp">--°</div>
-                        <div style="font-size: 1.1rem; font-weight: 500;">Niort</div>
-                        <div style="font-size: 0.9rem; opacity: 0.8;" id="current-date">--</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 4: AI News -->
-            <div class="hero-card-slide" id="slide-ai">
-                <div class="card-header">
-                    <!-- Modern AI Icon (Brain/Network) -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round" stroke-linejoin="round" style="color: #5A8FBD;">
-                        <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
-                        <path d="M12 8v-2"></path>
-                        <path d="M12 16v2"></path>
-                        <path d="M16 12h2"></path>
-                        <path d="M6 12h2"></path>
-                        <path d="M20 17.5a2.5 2.5 0 0 0-3.5-2"></path>
-                        <path d="M7.5 15.5a2.5 2.5 0 0 0-3.5 2"></path>
-                        <path d="M20 6.5a2.5 2.5 0 0 1-3.5 2"></path>
-                        <path d="M7.5 8.5a2.5 2.5 0 0 1-3.5-2"></path>
-                    </svg>
-                    <h3 class="card-title">IA & Data Science</h3>
-                </div>
-                <div class="card-content"
-                    style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-                    <div id="ai-news-content" style="font-size: 0.95rem; line-height: 1.4;">
-                        Chargement des actus IA...
-                    </div>
-                    <div style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.7;">
-                        Source: Daily AI Recap
-                    </div>
-                </div>
-            </div>
-
-            <!-- Navigation Dots -->
-            <div class="hero-card-nav" id="heroCarouselNav">
-                <div class="hero-dot active" onclick="goToHeroSlide(0)"></div>
-                <div class="hero-dot" onclick="goToHeroSlide(1)"></div>
-                <div class="hero-dot" onclick="goToHeroSlide(2)"></div>
-                <div class="hero-dot" onclick="goToHeroSlide(3)"></div>
-            </div>
-        </div>
         </div>
 
         <!-- Carousel d'images -->
@@ -3106,7 +3037,7 @@
                     </div>
                 </a>
 
-                <a href="indicatdeurs.html" class="project-card" data-note="9" data-project-name="Indicateurs"
+                <a href="projets/indicateurs.html" class="project-card" data-note="9" data-project-name="Indicateurs"
                     data-year="1">
                     <img src="projets/Indicateurs/indicateurs.png" alt="Projet 2" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+2'">
@@ -3123,7 +3054,8 @@
                     </div>
                 </a>
 
-                <a href="dataviz.html" class="project-card" data-note="12" data-project-name="DataViz" data-year="1">
+                <a href="projets/dataviz.html" class="project-card" data-note="12" data-project-name="DataViz"
+                    data-year="1">
                     <img src="projets/dataviz/dataviz.png" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3138,7 +3070,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="estimation.html" class="project-card" data-note="13" data-project-name="Estimation"
+                <a href="projets/estimation.html" class="project-card" data-note="13" data-project-name="Estimation"
                     data-year="1">
                     <img src="projets/estimation/estimation.png" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
@@ -3156,7 +3088,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="regrression.html" class="project-card" data-note="16" data-project-name="Régression"
+                <a href="projets/regression.html" class="project-card" data-note="16" data-project-name="Régression"
                     data-year="1">
                     <img src="projets/regression/regression.png" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
@@ -3173,7 +3105,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="bdr.html" class="project-card" data-note="13.5" data-project-name="BDR" data-year="1">
+                <a href="projets/bdr.html" class="project-card" data-note="13.5" data-project-name="BDR" data-year="1">
                     <img src="projets/bdr/bdr2.png" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3189,7 +3121,8 @@
                         </div>
                     </div>
                 </a>
-                <a href="enquete.html" class="project-card" data-note="14.5" data-project-name="Enquête" data-year="1">
+                <a href="projets/enquete.html" class="project-card" data-note="14.5" data-project-name="Enquête"
+                    data-year="1">
                     <img src="projets/enquete/enquete.jpeg" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3205,7 +3138,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="vba.html" class="project-card" data-note="17" data-project-name="VBA" data-year="1">
+                <a href="projets/vba.html" class="project-card" data-note="17" data-project-name="VBA" data-year="1">
                     <img src="projets/vba/vba2.jpeg" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3226,7 +3159,8 @@
         <!-- Projets 2ème année -->
         <div id="projets-2eme" class="projects-content">
             <div class="projects-grid">
-                <a href="php.html" class="project-card" data-note="18" data-project-name="Site PHP" data-year="2">
+                <a href="projets/php.html" class="project-card" data-note="18" data-project-name="Site PHP"
+                    data-year="2">
                     <img src="projets/PHP/php.png" alt="Projet Dashboard" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Dashboard+Power+BI'">
                     <div class="project-content">
@@ -3691,6 +3625,9 @@
         </div>
 
         <div class="statistics-grid">
+
+
+
             <!-- Stat 1 - Visiteurs -->
             <div class="stat-card">
                 <div class="stat-icon">
@@ -3701,7 +3638,7 @@
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
                 </div>
-                <div class="stat-number counter" id="visitorCount">0</div>
+                <div class="stat-number counter"><?php echo number_format($visiteurs, 0, ',', ' '); ?></div>
                 <div class="stat-label">Visiteurs</div>
                 <div class="stat-description">Nombre de visites sur ce portfolio</div>
             </div>
@@ -3748,33 +3685,37 @@
         </div>
 
         <!-- Graphiques de progression -->
+        <div class="statistics-header">
+            <h2 class="section-title">En graphiques</h2>
+            <p class="section-subtitle">Quelques représentations de mes compétences</p>
+        </div>
         <div class="charts-container">
-            <h3 class="charts-main-title">Visualisation de mon parcours</h3>
 
-            <!-- Graphique 1 : Nombre de projets par année -->
+
+            <!-- Graphique 1 : Répartition des Projets (Doughnut) -->
             <div class="chart-card">
-                <h4 class="chart-title">Nombre de projets par année</h4>
-                <p class="chart-subtitle">Évolution de la charge de travail</p>
+                <h4 class="chart-title">Répartition des Projets</h4>
+                <p class="chart-subtitle">Domaines d'intervention</p>
                 <div class="chart-wrapper">
-                    <canvas id="projectsPerYearChart"></canvas>
+                    <canvas id="projectDistributionChart"></canvas>
                 </div>
             </div>
 
-            <!-- Graphique 2 : Technologies utilisées -->
+            <!-- Graphique 2 : Maîtrise des Outils (Horizontal Bar) -->
             <div class="chart-card">
-                <h4 class="chart-title">Technologies maîtrisées</h4>
-                <p class="chart-subtitle">Répartition des compétences techniques</p>
+                <h4 class="chart-title">Maîtrise des Outils</h4>
+                <p class="chart-subtitle">Niveau technique</p>
                 <div class="chart-wrapper">
-                    <canvas id="technologiesChart"></canvas>
+                    <canvas id="toolsChart"></canvas>
                 </div>
             </div>
 
-            <!-- Graphique 3 : Progression des compétences -->
+            <!-- Graphique 3 : Profil de Compétences (Radar) -->
             <div class="chart-card">
-                <h4 class="chart-title">Progression des compétences</h4>
-                <p class="chart-subtitle">Évolution au fil des années</p>
+                <h4 class="chart-title">Profil de Compétences</h4>
+                <p class="chart-subtitle">Vue d'ensemble</p>
                 <div class="chart-wrapper">
-                    <canvas id="skillsProgressChart"></canvas>
+                    <canvas id="skillsRadarChart"></canvas>
                 </div>
             </div>
         </div>
@@ -3837,33 +3778,7 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section id="newsletter" class="section"
-        style="background: white; color: #111; padding: 3rem 1.5rem 3rem 1.5rem; position: relative; overflow: hidden; min-height: auto !important;">
 
-        <div class="container"
-            style="position: relative; z-index: 2; text-align: center; max-width: 700px; margin: 0 auto;">
-            <h2 class="section-title" style="color: #111; margin-bottom: 1rem; text-align: center;">Veille IA
-                Quotidienne</h2>
-            <p style="font-size: 1.1rem; color: #4B5563; margin-bottom: 2.5rem; line-height: 1.6;">
-                Rejoignez notre communauté et recevez chaque matin un résumé concis des dernières innovations en
-                Intelligence Artificielle et Data Science.
-            </p>
-
-            <form onsubmit="event.preventDefault(); subscribeNewsletter();"
-                style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                <input type="email" id="newsletter-email" placeholder="votre@email.com" required
-                    style="flex: 1; min-width: 280px; padding: 1rem 1.5rem; border-radius: 50px; border: 1px solid #E5E7EB; outline: none; font-family: 'Inter', sans-serif; font-size: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); color: #111; background: #F9FAFB;">
-                <button type="button" onclick="subscribeNewsletter()"
-                    style="padding: 1rem 2rem; background: #5A8FBD; color: white; border: none; border-radius: 100px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                    S'inscrire
-                </button>
-            </form>
-
-            <div id="newsletter-message"
-                style="margin-top: 1.5rem; height: 20px; font-size: 0.95rem; font-weight: 500; padding-bottom: 3rem;">
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer class="footer" style="margin-top: 0; padding-top: 2rem;">
@@ -4045,232 +3960,181 @@
 
         // Création des graphiques de progression
         function createChartsVisualizations() {
-            // Récupérer tous les projets
-            const projectCards = document.querySelectorAll('.project-card[data-year]');
+            // Configuration globale des couleurs (Thème Bleu)
+            const colors = {
+                primary: '#5A8FBD',    // Bleu principal
+                dark: '#2C3E50',       // Bleu nuit
+                light: '#A3C4DC',      // Bleu clair
+                accent: '#4A6FA5',     // Bleu accent
+                bg: 'rgba(90, 143, 189, 0.2)', // Fond transparent
+                white: '#ffffff'
+            };
 
-            // Filtrer les projets commentés
-            const validProjects = Array.from(projectCards).filter(card => {
-                let parent = card.parentElement;
-                while (parent) {
-                    if (parent.nodeType === Node.COMMENT_NODE) return false;
-                    parent = parent.parentElement;
-                }
-                return true;
-            });
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.color = '#4B5563';
 
-            // Compter projets par année
-            const year1Count = validProjects.filter(p => p.dataset.year === '1').length;
-            const year2Count = validProjects.filter(p => p.dataset.year === '2').length;
-            const year3Count = validProjects.filter(p => p.dataset.year === '3').length;
-
-            // ========== GRAPHIQUE 1: Nombre de projets par année (Barres) ==========
-            const ctx1 = document.getElementById('projectsPerYearChart');
+            // ========== GRAPHIQUE 1: Répartition des Projets (Doughnut) ==========
+            const ctx1 = document.getElementById('projectDistributionChart');
             if (ctx1) {
                 new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: ['1ère année', '2ème année', '3ème année'],
-                        datasets: [{
-                            label: 'Nombre de projets',
-                            data: [year1Count, year2Count, year3Count],
-                            backgroundColor: [
-                                'rgba(255, 193, 7, 0.7)',
-                                'rgba(59, 130, 246, 0.7)',
-                                'rgba(16, 185, 129, 0.7)'
-                            ],
-                            borderColor: [
-                                '#F59E0B',
-                                '#3B82F6',
-                                '#10B981'
-                            ],
-                            borderWidth: 2,
-                            borderRadius: 8
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        animation: {
-                            duration: 1500,
-                            easing: 'easeInOutQuart',
-                            delay: (context) => context.dataIndex * 200
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            tooltip: {
-                                backgroundColor: 'rgba(44, 62, 80, 0.95)',
-                                titleColor: '#fff',
-                                bodyColor: '#fff',
-                                borderColor: '#5A8FBD',
-                                borderWidth: 2,
-                                padding: 12,
-                                callbacks: {
-                                    label: function (context) {
-                                        return context.parsed.y + ' projet' + (context.parsed.y > 1 ? 's' : '');
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            // ========== GRAPHIQUE 2: Technologies maîtrisées (Doughnut) ==========
-            const ctx2 = document.getElementById('technologiesChart');
-            if (ctx2) {
-                new Chart(ctx2, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Python', 'SQL', 'Power BI', 'R', 'JavaScript', 'Java', 'Autres'],
+                        labels: ['Data Analysis', 'Business Intelligence', 'Développement Web', 'Data Science'],
                         datasets: [{
-                            data: [25, 20, 18, 12, 10, 8, 7],
+                            data: [35, 25, 20, 20], // Estimations basées sur le profil
                             backgroundColor: [
-                                '#3B82F6',
-                                '#10B981',
-                                '#F59E0B',
-                                '#EF4444',
-                                '#8B5CF6',
-                                '#EC4899',
-                                '#6B7280'
+                                '#2C3E50', // Dark
+                                '#5A8FBD', // Primary
+                                '#7FAACF', // Lighter Primary
+                                '#A3C4DC'  // Lightest
                             ],
-                            borderColor: '#fff',
-                            borderWidth: 3
+                            borderColor: '#ffffff',
+                            borderWidth: 2,
+                            hoverOffset: 4
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        animation: {
-                            animateRotate: true,
-                            animateScale: true,
-                            duration: 2000
-                        },
                         plugins: {
                             legend: {
-                                position: 'right',
+                                position: 'bottom',
                                 labels: {
-                                    padding: 15,
-                                    font: {
-                                        size: 12,
-                                        family: "'Inter', sans-serif"
-                                    },
-                                    color: '#2C3E50'
+                                    usePointStyle: true,
+                                    padding: 20,
+                                    font: { size: 12 }
                                 }
                             },
                             tooltip: {
-                                backgroundColor: 'rgba(44, 62, 80, 0.95)',
-                                titleColor: '#fff',
-                                bodyColor: '#fff',
-                                borderColor: '#5A8FBD',
-                                borderWidth: 2,
+                                backgroundColor: colors.dark,
                                 padding: 12,
                                 callbacks: {
                                     label: function (context) {
-                                        return context.label + ': ' + context.parsed + '%';
+                                        return ` ${context.label}: ${context.parsed}%`;
                                     }
                                 }
+                            },
+                            datalabels: {
+                                color: '#fff',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                },
+                                formatter: (value) => value + '%'
+                            }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            }
+
+            // ========== GRAPHIQUE 2: Maîtrise des Outils (Horizontal Bar) ==========
+            const ctx2 = document.getElementById('toolsChart');
+            if (ctx2) {
+                new Chart(ctx2, {
+                    type: 'bar',
+                    indexAxis: 'y', // Barres horizontales
+                    data: {
+                        labels: ['Python', 'SQL', 'Power BI', 'Excel / VBA', 'R', 'Git / GitHub'],
+                        datasets: [{
+                            label: 'Niveau de maîtrise (%)',
+                            data: [90, 85, 85, 80, 70, 75],
+                            backgroundColor: colors.primary,
+                            borderRadius: 4,
+                            barPercentage: 0.6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: { display: false }
+                            },
+                            y: {
+                                grid: { display: false }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: colors.dark,
+                                callbacks: {
+                                    label: function (context) {
+                                        return ` Maîtrise: ${context.parsed.x}%`;
+                                    }
+                                }
+                            },
+                            datalabels: {
+                                color: '#fff',
+                                font: {
+                                    weight: 'bold',
+                                    size: 12
+                                },
+                                anchor: 'end',
+                                align: 'end',
+                                formatter: (value) => value + '%'
                             }
                         }
                     }
                 });
             }
 
-            // ========== GRAPHIQUE 3: Progression des compétences (Line) ==========
-            const ctx3 = document.getElementById('skillsProgressChart');
+            // ========== GRAPHIQUE 3: Profil de Compétences (Radar) ==========
+            const ctx3 = document.getElementById('skillsRadarChart');
             if (ctx3) {
                 new Chart(ctx3, {
-                    type: 'line',
+                    type: 'radar',
                     data: {
-                        labels: ['1ère année', '2ème année', '3ème année'],
-                        datasets: [
-                            {
-                                label: 'Analyse de données',
-                                data: [40, 70, 90],
-                                borderColor: '#3B82F6',
-                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                                tension: 0.4,
-                                fill: true,
-                                borderWidth: 3
-                            },
-                            {
-                                label: 'Développement',
-                                data: [30, 65, 85],
-                                borderColor: '#10B981',
-                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                                tension: 0.4,
-                                fill: true,
-                                borderWidth: 3
-                            },
-                            {
-                                label: 'Visualisation',
-                                data: [50, 75, 95],
-                                borderColor: '#F59E0B',
-                                backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                                tension: 0.4,
-                                fill: true,
-                                borderWidth: 3
-                            }
-                        ]
+                        labels: ['Analyse de Données', 'Visualisation', 'Programmation', 'Gestion de Projet', 'Communication', 'Statistiques'],
+                        datasets: [{
+                            label: 'Mon Profil',
+                            data: [90, 85, 80, 75, 85, 80],
+                            fill: true,
+                            backgroundColor: 'rgba(90, 143, 189, 0.2)', // colors.bg
+                            borderColor: '#5A8FBD', // colors.primary
+                            pointBackgroundColor: '#5A8FBD',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#5A8FBD'
+                        }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        animation: {
-                            duration: 2000,
-                            easing: 'easeInOutQuart'
-                        },
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    padding: 15,
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                pointLabels: {
                                     font: {
                                         size: 12,
                                         family: "'Inter', sans-serif"
                                     },
-                                    color: '#2C3E50'
+                                    color: '#4B5563'
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 100,
+                                ticks: {
+                                    display: false, // Cache les chiffres de l'échelle
+                                    stepSize: 20
                                 }
-                            },
-                            tooltip: {
-                                backgroundColor: 'rgba(44, 62, 80, 0.95)',
-                                titleColor: '#fff',
-                                bodyColor: '#fff',
-                                borderColor: '#5A8FBD',
-                                borderWidth: 2,
-                                padding: 12
                             }
                         },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                max: 100,
-                                ticks: {
-                                    callback: function (value) {
-                                        return value + '%';
-                                    },
-                                    font: {
-                                        size: 12,
-                                        family: "'Inter', sans-serif"
-                                    },
-                                    color: '#6B7280'
-                                },
-                                grid: {
-                                    color: 'rgba(0, 0, 0, 0.05)'
-                                }
-                            },
-                            x: {
-                                ticks: {
-                                    font: {
-                                        size: 12,
-                                        weight: 'bold',
-                                        family: "'Inter', sans-serif"
-                                    },
-                                    color: '#2C3E50'
-                                },
-                                grid: {
-                                    display: false
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: colors.dark,
+                                callbacks: {
+                                    label: function (context) {
+                                        return ` ${context.label}: ${context.parsed.r}/100`;
+                                    }
                                 }
                             }
                         }
@@ -4278,6 +4142,7 @@
                 });
             }
         }
+
 
         // Observer pour animer les graphiques au scroll
         const chartsObserver = new IntersectionObserver((entries) => {
@@ -4641,10 +4506,10 @@
 
         // Auto-rotation du carousel toutes les 8 secondes - SUPPRIMÉ car géré par startAboutCarousel
         /*
-        setInterval(() => {
-            nextSlideAbout();
-        }, 8000);
-        */
+       setInterval(() => {
+           nextSlideAbout();
+       }, 8000);
+       */
 
         // Textes pour chaque image
         const texts = [
@@ -4659,7 +4524,7 @@
 
             {
                 title: "Une formation appliquée",
-                description: "Axée sur les données, mêlant informatique, statistiques et mathématiques"
+                description: "Axée sur les données, mêlant informatique, s        tatistiques et mathématiques"
             },
             {
                 title: "Une formation appliquée",
@@ -4838,32 +4703,7 @@
             sectionObserver.observe(statisticsSection);
         }
 
-        // Charger le compteur de visiteurs
-        fetch('/api/visitor-count')
-            .then(response => response.text())
-            .then(count => {
-                const visitorCountElement = document.getElementById('visitorCount');
-                const targetCount = parseInt(count) || 0;
 
-                // Animation du compteur
-                let currentCount = 0;
-                const duration = 2000; // 2 secondes
-                const increment = targetCount / (duration / 16); // 60 FPS
-
-                const counter = setInterval(() => {
-                    currentCount += increment;
-                    if (currentCount >= targetCount) {
-                        visitorCountElement.textContent = targetCount.toLocaleString('fr-FR');
-                        clearInterval(counter);
-                    } else {
-                        visitorCountElement.textContent = Math.floor(currentCount).toLocaleString('fr-FR');
-                    }
-                }, 16);
-            })
-            .catch(error => {
-                console.error('Erreur lors du chargement du compteur:', error);
-                document.getElementById('visitorCount').textContent = '---';
-            });
 
         // Animer les barres de compétences au scroll
         const skillBars = document.querySelectorAll('.skill-bar');
@@ -4930,357 +4770,10 @@
             }
         });
 
-        // Hero Card Carousel Logic
-        let heroCarouselInterval;
-        let heroCarouselTimeout;
-        let currentHeroSlide = 0;
-        const HERO_AUTO_DELAY = 7000;
-        const HERO_PAUSE_DELAY = 8000;
-        const totalHeroSlides = 4; // Updated to 4
 
-        function initHeroCarousel() {
-            startHeroCarousel();
-
-            // Pause on interaction
-            const container = document.getElementById('heroCarousel');
-            if (container) {
-                container.addEventListener('mouseenter', pauseHeroCarousel);
-                container.addEventListener('click', pauseHeroCarousel);
-                container.addEventListener('touchstart', pauseHeroCarousel);
-            }
-        }
-
-        function startHeroCarousel() {
-            stopHeroCarousel();
-            heroCarouselInterval = setInterval(() => {
-                nextHeroSlide();
-            }, HERO_AUTO_DELAY);
-        }
-
-        function stopHeroCarousel() {
-            clearInterval(heroCarouselInterval);
-            clearTimeout(heroCarouselTimeout);
-        }
-
-        function pauseHeroCarousel() {
-            stopHeroCarousel();
-            heroCarouselTimeout = setTimeout(() => {
-                startHeroCarousel();
-            }, HERO_PAUSE_DELAY);
-        }
-
-        function nextHeroSlide() {
-            goToHeroSlide((currentHeroSlide + 1) % totalHeroSlides);
-        }
-
-        function goToHeroSlide(index) {
-            currentHeroSlide = index;
-
-            // Update Slides
-            document.querySelectorAll('.hero-card-slide').forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-
-            // Update Dots
-            document.querySelectorAll('.hero-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-        }
-
-        // API Fetching for Hero Carousel
-        async function fetchHeroData() {
-            try {
-                // 1. Crypto (CoinGecko)
-                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=eur&include_24hr_change=true');
-                const cryptoData = await cryptoRes.json();
-
-                const btcPrice = cryptoData.bitcoin.eur.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
-                const btcChange = cryptoData.bitcoin.eur_24h_change.toFixed(2);
-                const ethPrice = cryptoData.ethereum.eur.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
-                const ethChange = cryptoData.ethereum.eur_24h_change.toFixed(2);
-
-                document.getElementById('btc-row').innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-weight: 700;">Bitcoin</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <div>${btcPrice}</div>
-                        <div style="font-size: 0.85rem; color: ${btcChange >= 0 ? '#4CAF50' : '#EF4444'};">
-                            ${btcChange >= 0 ? '↗' : '↘'} ${Math.abs(btcChange)}%
-                        </div>
-                    </div>
-                `;
-
-                document.getElementById('eth-row').innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-weight: 700;">Ethereum</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <div>${ethPrice}</div>
-                        <div style="font-size: 0.85rem; color: ${ethChange >= 0 ? '#4CAF50' : '#EF4444'};">
-                            ${ethChange >= 0 ? '↗' : '↘'} ${Math.abs(ethChange)}%
-                        </div>
-                    </div>
-                `;
-
-                // 2. Weather (OpenMeteo)
-                const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=46.3231&longitude=-0.4588&current=temperature_2m,weather_code');
-                const weatherData = await weatherRes.json();
-
-                const temp = Math.round(weatherData.current.temperature_2m);
-                const code = weatherData.current.weather_code;
-
-                document.getElementById('weather-temp').textContent = `${temp}°`;
-
-                // Date
-                const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
-                document.getElementById('current-date').textContent = new Date().toLocaleDateString('fr-FR', dateOptions);
-
-                // Custom SVG Icon based on code
-                let svgIcon = '';
-                if (code <= 3) { // Clear/Cloudy
-                    svgIcon = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
-                } else if (code <= 60) { // Rain/Drizzle
-                    svgIcon = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 3.2 14.2"></path><path d="M16 10.5C16 6.4 12.9 3 9 3c-3.3 0-6 2.4-6.8 5.8"></path><line x1="8" y1="21" x2="8" y2="21"></line><line x1="12" y1="21" x2="12" y2="21"></line><line x1="16" y1="21" x2="16" y2="21"></line></svg>`;
-                } else { // Storm/Snow/Other
-                    svgIcon = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"></path><polyline points="13 11 9 17 15 17 11 23"></polyline></svg>`;
-                }
-                document.getElementById('weather-icon-container').innerHTML = svgIcon;
-
-                // 3. AI News (Mock Data)
-                const aiNews = [
-                    "GPT-5 : Les rumeurs s'intensifient sur une sortie fin 2025.",
-                    "Google DeepMind dévoile une nouvelle architecture pour la robotique.",
-                    "L'UE vote une nouvelle régulation sur les modèles d'IA générative.",
-                    "NVIDIA annonce une puce Blackwell encore plus puissante pour l'IA.",
-                    "Une IA découvre 2 millions de nouveaux matériaux potentiels."
-                ];
-                // Pick a random news item
-                const randomNews = aiNews[Math.floor(Math.random() * aiNews.length)];
-                document.getElementById('ai-news-content').innerHTML = `<strong>À la une :</strong><br>${randomNews}`;
-
-            } catch (e) {
-                console.error("Hero Data Error", e);
-                // Fallback Mock Data if API fails (Rate limit or Network error)
-                document.getElementById('btc-row').innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-weight: 700;">Bitcoin</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <div>92 450 €</div>
-                        <div style="font-size: 0.85rem; color: #4CAF50;">↗ 2.4%</div>
-                    </div>`;
-                document.getElementById('eth-row').innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-weight: 700;">Ethereum</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <div>3 120 €</div>
-                        <div style="font-size: 0.85rem; color: #EF4444;">↘ 0.8%</div>
-                    </div>`;
-                document.getElementById('weather-temp').textContent = "18°";
-                document.getElementById('current-date').textContent = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-                document.getElementById('weather-icon-container').innerHTML = `
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #FDB813;">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>`;
-            }
-        }
-
-        // Newsletter Logic (Real API)
-        async function subscribeNewsletter() {
-            const emailInput = document.getElementById('newsletter-email');
-            const email = emailInput.value;
-            const msgDiv = document.getElementById('newsletter-message');
-            const btn = document.querySelector('#newsletter button');
-
-            if (email) {
-                btn.textContent = 'Inscription...';
-                btn.disabled = true;
-
-                try {
-                    // Determine API URL (Localhost for dev, relative for prod if same domain)
-                    // Since user is running backend locally on port 3000:
-                    const apiUrl = 'http://localhost:3000/subscribe';
-
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ email: email })
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        btn.textContent = 'Inscrit !';
-                        btn.style.background = '#4CAF50';
-                        msgDiv.textContent = `Merci ! Vous recevrez la veille IA quotidienne à ${email}.`;
-                        msgDiv.style.color = '#4CAF50';
-                        emailInput.value = '';
-                    } else {
-                        throw new Error(data.error || 'Erreur inconnue');
-                    }
-                } catch (error) {
-                    console.error('Newsletter Error:', error);
-                    btn.textContent = "Erreur";
-                    btn.style.background = '#EF4444';
-                    msgDiv.textContent = `Erreur: ${error.message}`;
-                    msgDiv.style.color = '#EF4444';
-                }
-
-                setTimeout(() => {
-                    btn.textContent = "S'inscrire";
-                    btn.disabled = false;
-                    btn.style.background = '#5A8FBD';
-                    if (!msgDiv.textContent.includes('Merci')) {
-                        msgDiv.textContent = '';
-                    }
-                }, 5000);
-            }
-        }
-
-        // --- Daily Ticker Logic (Hero Carousel) ---
-        const heroCarouselData = [
-            { id: 'slide-journal', duration: 7000 },
-            { id: 'slide-crypto', duration: 7000 },
-            { id: 'slide-weather', duration: 7000 },
-            { id: 'slide-ai', duration: 7000 }
-        ];
-        let currentHeroSlideIndex = 0;
-        let heroInterval;
-        let heroTimeout;
-
-        function initHeroCarousel() {
-            const dotsContainer = document.getElementById('heroCarouselNav');
-            dotsContainer.innerHTML = '';
-
-            heroCarouselData.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('hero-dot');
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => goToHeroSlide(index));
-                dotsContainer.appendChild(dot);
-            });
-
-            startHeroCarousel();
-        }
-
-        function goToHeroSlide(index) {
-            const slides = document.querySelectorAll('.hero-card-slide');
-            const dots = document.querySelectorAll('.hero-dot');
-
-            slides.forEach(s => s.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
-
-            currentHeroSlideIndex = index;
-            slides[currentHeroSlideIndex].classList.add('active');
-            dots[currentHeroSlideIndex].classList.add('active');
-
-            // Reset Timer
-            clearInterval(heroInterval);
-            clearTimeout(heroTimeout);
-
-            // Pause for 8s on interaction, then resume
-            heroTimeout = setTimeout(startHeroCarousel, 8000);
-        }
-
-        function startHeroCarousel() {
-            clearInterval(heroInterval);
-            heroInterval = setInterval(() => {
-                const nextIndex = (currentHeroSlideIndex + 1) % heroCarouselData.length;
-                goToHeroSlide(nextIndex);
-            }, 7000); // Auto-rotate every 7s
-        }
-
-        async function fetchHeroData() {
-            try {
-                // 1. Crypto (CoinGecko)
-                const cryptoRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=eur&include_24hr_change=true');
-                const cryptoData = await cryptoRes.json();
-
-                const btcPrice = Math.round(cryptoData.bitcoin.eur);
-                const btcChange = cryptoData.bitcoin.eur_24h_change.toFixed(1);
-                const ethPrice = Math.round(cryptoData.ethereum.eur);
-                const ethChange = cryptoData.ethereum.eur_24h_change.toFixed(1);
-
-                document.getElementById('btc-row').innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-weight: 700;">Bitcoin</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <div>${btcPrice} €</div>
-                        <div style="font-size: 0.85rem; color: ${btcChange >= 0 ? '#4CAF50' : '#EF4444'};">
-                            ${btcChange >= 0 ? '↗' : '↘'} ${Math.abs(btcChange)}%
-                        </div>
-                    </div>
-                `;
-                document.getElementById('eth-row').innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-weight: 700;">Ethereum</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <div>${ethPrice} €</div>
-                        <div style="font-size: 0.85rem; color: ${ethChange >= 0 ? '#4CAF50' : '#EF4444'};">
-                            ${ethChange >= 0 ? '↗' : '↘'} ${Math.abs(ethChange)}%
-                        </div>
-                    </div>
-                `;
-
-                // 2. Weather (OpenMeteo)
-                const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=46.3231&longitude=-0.4588&current=temperature_2m,weather_code');
-                const weatherData = await weatherRes.json();
-
-                const temp = Math.round(weatherData.current.temperature_2m);
-                const code = weatherData.current.weather_code;
-
-                document.getElementById('weather-temp').textContent = `${temp}°`;
-
-                // Date
-                const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
-                document.getElementById('current-date').textContent = new Date().toLocaleDateString('fr-FR', dateOptions);
-
-                // Custom SVG Icon based on code
-                let svgIcon = '';
-                if (code <= 3) { // Clear/Cloudy
-                    svgIcon = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
-                } else if (code <= 60) { // Rain/Drizzle
-                    svgIcon = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A4.5 4.5 0 0 0 3.2 14.2"></path><path d="M16 10.5C16 6.4 12.9 3 9 3c-3.3 0-6 2.4-6.8 5.8"></path><line x1="8" y1="21" x2="8" y2="21"></line><line x1="12" y1="21" x2="12" y2="21"></line><line x1="16" y1="21" x2="16" y2="21"></line></svg>`;
-                } else { // Storm/Snow/Other
-                    svgIcon = `<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"></path><polyline points="13 11 9 17 15 17 11 23"></polyline></svg>`;
-                }
-                document.getElementById('weather-icon-container').innerHTML = svgIcon;
-
-                // 3. AI News (Mock Data)
-                const aiNews = [
-                    "GPT-5 : Les rumeurs s'intensifient sur une sortie fin 2025.",
-                    "Google DeepMind dévoile une nouvelle architecture pour la robotique.",
-                    "L'UE vote une nouvelle régulation sur les modèles d'IA générative.",
-                    "NVIDIA annonce une puce Blackwell encore plus puissante pour l'IA.",
-                    "Une IA découvre 2 millions de nouveaux matériaux potentiels."
-                ];
-                // Pick a random news item
-                const randomNews = aiNews[Math.floor(Math.random() * aiNews.length)];
-                document.getElementById('ai-news-content').innerHTML = `<strong>À la une :</strong><br>${randomNews}`;
-
-            } catch (e) {
-                console.error("Hero Data Error", e);
-            }
-        }
 
         // Init
-        fetchHeroData();
-        initHeroCarousel();
-        setInterval(fetchHeroData, 300000); // Refresh data every 5 mins
+
 
         // Drag & Drop Logic
 
