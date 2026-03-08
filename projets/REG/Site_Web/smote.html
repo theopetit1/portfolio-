@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>SMOTE - Détail</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+    :root {
+        --primary: #059669;    /* Emerald 600 */
+        --primary-dark: #065f46; /* Emerald 800 */
+        --primary-light: #d1fae5; /* Emerald 100 */
+
+        --text-main: #111827;    /* Gray 900 */
+        --text-muted: #6b7280;   /* Gray 500 */
+
+        --bg-body: #f9fafb;      /* Gray 50 */
+        --bg-card: #ffffff;
+
+        --accent: #10b981;       /* Emerald 500 */
+        --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-body); color: var(--text-main); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+
+    a { text-decoration: none; color: inherit; transition: color 0.2s; }
+
+    /* NAVBAR PRO */
+    .navbar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1.2rem 4rem;
+        display: flex; justify-content: space-between; align-items: center;
+        border-bottom: 1px solid var(--border);
+        position: sticky; top: 0; z-index: 100;
+        box-shadow: 0 4px 20px -10px rgba(0,0,0,0.05);
+    }
+    .nav-brand { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.5px; color: var(--primary-dark); text-transform: uppercase; }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); padding: 8px 0; border-bottom: 2px solid transparent; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    /* HERO */
+    .hero {
+        background: white;
+        padding: 5rem 2rem 6rem;
+        text-align: center;
+        background: radial-gradient(circle at 50% 0%, var(--primary-light) 0%, transparent 60%);
+    }
+    .hero-pre { color: var(--primary); font-weight: 700; letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
+    .hero h1 { font-size: 3.5rem; color: var(--text-main); margin: 0 auto 1.5rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; max-width: 900px; }
+
+    /* SECTION COMMON */
+    .container { max-width: 1400px; margin: 0 auto; padding: 4rem 2rem; }
+    .section-header { text-align: left; margin-bottom: 3rem; border-left: 5px solid var(--primary); padding-left: 20px; }
+    .section-title { font-size: 2rem; font-weight: 700; color: var(--text-main); margin: 0; letter-spacing: -0.5px; }
+    .section-desc { font-size: 1.1rem; color: var(--text-muted); margin-top: 10px; max-width: 700px; }
+
+    /* TEAM (PORTRAIT RECTANGLES) */
+    .team-section { background: white; padding: 5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .team-card {
+        position: relative;
+        aspect-ratio: 9/16;
+        background: #eee;
+        border-radius: 4px; overflow: hidden;
+        box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+        transition: transform 0.3s;
+    }
+    .team-card:hover { transform: translateY(-10px); }
+    .team-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(110%); transition: filter 0.3s; }
+    .team-card:hover .team-img { filter: grayscale(0%); }
+    .team-overlay {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        padding: 3rem 1.5rem 1.5rem;
+        color: white; text-align: left;
+    }
+    .team-name { font-size: 1.5rem; font-weight: 700; margin: 0; }
+    .team-role { font-size: 0.9rem; font-weight: 500; opacity: 0.9; color: var(--primary); text-transform: uppercase; margin-top: 5px; }
+
+    /* BENCHMARK CARDS (4 IN A ROW) */
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* Force 4 columns */
+        gap: 20px;
+    }
+    .card-bench {
+        background: white; border-radius: 8px; padding: 2rem 1.5rem;
+        border: 1px solid var(--border); text-align: center;
+        transition: all 0.3s; position: relative;
+        display: flex; flex-direction: column; justify-content: space-between;
+        height: 100%;
+    }
+    .card-bench:hover { box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1); border-color: var(--primary); transform: translateY(-5px); }
+    .card-bench.recommanded { border: 2px solid var(--primary); background: #f0fdf4; }
+
+    .badge-rec { background: var(--primary); color: white; font-size: 0.7rem; font-weight: 700; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
+
+    .model-name { font-size: 1.4rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; }
+    .stats-main { font-size: 2.5rem; font-weight: 800; color: var(--primary-dark); margin: 0.5rem 0; letter-spacing: -1px; }
+    .stats-sub { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; }
+
+    .btn-analyze {
+        margin-top: 1.5rem; display: block; width: 100%; padding: 12px;
+        background: transparent; border: 1px solid var(--primary); color: var(--primary);
+        font-weight: 600; border-radius: 4px; transition: all 0.2s;
+    }
+    .btn-analyze:hover { background: var(--primary); color: white; }
+
+    /* CONCLUSION & TEXT */
+    .text-content { font-size: 1.1rem; color: #4b5563; line-height: 1.8; margin-bottom: 2rem; text-align: justify; column-count: 2; column-gap: 4rem; }
+    .conclusion-box { background: white; padding: 3rem; border-top: 4px solid var(--primary); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); border-radius: 8px; }
+    .conc-title { font-size: 1.5rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+
+    /* TABLE EXPORT */
+    .export-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .export-table th { background: #f9fafb; text-align: left; padding: 12px; color: #6b7280; font-weight: 600; border-bottom: 2px solid #e5e7eb; }
+    .export-table td { padding: 12px; border-bottom: 1px solid #e5e7eb; color: #374151; }
+    .export-table tr:hover { background: #f0fdf4; }
+    .btn-download { display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 6px; font-weight: 700; margin-top: 2rem; transition: background 0.2s; }
+    .btn-download:hover { background: var(--primary-dark); }
+</style>
+
+<style>
+    /* 2x2 GRID LAYOUT */
+    .detail-grid { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 40px; 
+        margin-bottom: 3rem; 
+    }
+    
+    .criteria-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; height: 100%; }
+    .criteria-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid #f1f5f9; font-size:0.9rem; }
+    .feat-score { background: #eff6ff; color: #3b82f6; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }
+    
+    .matrix-box-container { background:white; border:1px solid #e2e8f0; border-radius:12px; padding:2rem; text-align:center; height:100%; display:flex; flex-direction:column; justify-content:center; }
+    .matrix-grid { display: grid; grid-template-columns: 40px 1fr 1fr; gap: 15px; align-items: center; max-width: 350px; margin: 0 auto; }
+    .m-box { padding: 2.5rem 0; border-radius: 8px; display:flex; flex-direction:column; justify-content:center; height:140px; }
+    .m-dark { background: #0f172a; color: white; }
+    .m-light { background: #dbeafe; color: #1e293b; }
+    .m-val { font-size: 1.8rem; font-weight: 700; display:block; margin-bottom:5px; }
+    .m-lbl { font-size: 0.7rem; opacity:0.8; text-transform:uppercase; letter-spacing:1px; }
+    
+    .bottom-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; }
+    .roc-img { width: 100%; height: auto; border-radius: 6px; border:1px solid #f1f5f9; max-height: 400px; object-fit: contain; }
+    
+    .code-mini { font-family: 'Consolas', monospace; font-size: 0.75rem; background: #1f2937; color: #e5e7eb; padding: 1rem; border-radius: 6px; overflow-x: auto; max-height: 400px; }
+    
+    h3 { margin-top:0; color:var(--text-main); font-size:1.1rem; margin-bottom:1rem; }
+</style>
+</head><body>
+    
+<nav class="navbar">
+    <div class="nav-brand">Marketing Scoring</div>
+    <div class="nav-links">
+        <a href="acceuil.html">SYNTHÈSE</a>
+        <a href="standard.html">STANDARD</a>
+        <a href="over.html">OVERSAMPLING</a>
+        <a href="under.html">UNDERSAMPLING</a>
+        <a href="smote.html" class="active">SMOTE (IA)</a>
+    </div>
+</nav>
+
+    
+    <div class="container">
+        <header style="margin: 0 0 3rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e5e7eb; padding-bottom:1.5rem;">
+            <div>
+                 <a href="acceuil.html" style="font-weight:600; font-size:0.85rem; color:var(--text-muted);">← RETOUR SYNTHÈSE</a>
+                <h1 style="font-size:2.5rem; margin:10px 0 0; line-height:1; color:var(--text-main);">SMOTE</h1>
+            </div>
+            <div style="text-align:right;">
+                 <div style="font-size:2.5rem; font-weight:800; color:var(--primary);">0.7934</div>
+                 <div style="font-weight:700; color:var(--text-muted); font-size:0.75rem; letter-spacing:1px; text-transform:uppercase;">Score AUC</div>
+            </div>
+        </header>
+
+        <!-- ROW 1: CRITERIA (Left) | MATRIX (Right) -->
+        <div class="detail-grid">
+            <!-- LEFT: CRITERES -->
+            <div>
+                <h3>Critères de Ciblage (Top 5)</h3>
+                <div class="criteria-card">
+                    <div class="criteria-item"><span>IPC_bin_(93.9, 94.7]</span><span class="feat-score">+1.42</span></div>
+                    <div class="criteria-item"><span>indic_confiance_low</span><span class="feat-score">+1.06</span></div>
+                    <div class="criteria-item"><span>ancienne_campagne_oui</span><span class="feat-score">+0.87</span></div>
+                    <div class="criteria-item"><span>croissance_emploi_neg</span><span class="feat-score">+0.42</span></div>
+                    <div class="criteria-item"><span>geo_urbain</span><span class="feat-score">+0.41</span></div>
+                    
+                    <div style="padding:1.5rem; font-size:0.85rem; color:#6b7280; background:#f9fafb; border-top:1px solid #f1f5f9;">
+                        <strong>Interprétation :</strong> Les indices macro-économiques et l'historique relationnel dominent la décision du modèle.
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: MATRIX -->
+            <div>
+                <h3>Matrice de Confusion</h3>
+                <div class="matrix-box-container">
+                    <div class="matrix-grid">
+                        <div style="writing-mode:vertical-rl; transform:rotate(180deg); text-align:center; font-size:0.7rem; font-weight:700; color:#94a3b8;">RÉEL</div>
+                        <div class="m-box m-dark">
+                            <span class="m-val">7050</span><span class="m-lbl">Vrais Nég.</span>
+                        </div>
+                        <div class="m-box m-light">
+                            <span class="m-val">1950</span><span class="m-lbl">Faux Pos.</span>
+                        </div>
+                        <div></div>
+                        <div class="m-box m-light">
+                            <span class="m-val">320</span><span class="m-lbl">Faux Nég.</span>
+                        </div>
+                        <div class="m-box m-light" style="background:#bae6fd">
+                            <span class="m-val">680</span><span class="m-lbl">Vrais Pos.</span>
+                        </div>
+                    </div>
+                    <div style="text-align:center; margin-top:10px; font-size:0.7rem; font-weight:700; color:#94a3b8;">PRÉDIT (0 / 1)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: ROC (Left Small) | CODE (Right Small) -->
+        <div class="detail-grid" style="grid-template-columns: 40% 60%;">
+            <!-- LEFT: ROC -->
+            <div>
+                <h3>Performance (ROC)</h3>
+                <div class="bottom-card" style="text-align:center;">
+                    <img src="../roc_analyse.png" class="roc-img">
+                </div>
+            </div>
+            
+            <!-- RIGHT: CODE -->
+            <div>
+                <h3>Code Source Python</h3>
+                <div class="code-mini">
+                    <pre style="margin:0;"># Code non trouvé</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+<footer style="background: white; border-top: 1px solid #e5e7eb; padding: 3rem 0; margin-top: 5rem; text-align: center; color: #6b7280; font-size: 0.9rem;">
+    <div class="container" style="padding: 0;">
+        <div style="font-weight: 700; color: #111827; margin-bottom: 10px;">MARKETING SCORING PROJECT</div>
+        <div>Théo P. &bull; Alexan.R &bull; Jérémy.P &bull; IUT Poitiers</div>
+        <div style="margin-top: 20px; font-size: 0.8rem;">&copy; 2026 - Analyse Prédictive & Data Science</div>
+    </div>
+</footer>
+
+</body></html>

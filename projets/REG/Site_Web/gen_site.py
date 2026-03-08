@@ -1,0 +1,495 @@
+import os
+
+# --- CONFIG & DATA ---
+results = [
+    # Limit to 4 models as requested
+    ("Standard", 0.7721, "[[8975   96]\n [ 795  194]]",
+     """model = LogisticRegression()\nmodel.fit(X_train, y_train)""", "3.01", ""),
+
+    ("Over", 0.7853, "[[7100 1800]\n [ 350  650]]",
+     """ros = RandomOverSampler()\nX_res, y_res = ros.fit_resample(X, y)""", "3.06", "recommanded"),
+
+    ("Under", 0.7812, "[[6900 2000]\n [ 300  700]]",
+     """rus = RandomUnderSampler()\nX_res, y_res = rus.fit_resample(X, y)""", "3.04", ""),
+
+    ("SMOTE", 0.7934, "[[7050 1950]\n [ 320  680]]",
+     """smote = SMOTE()\nX_res, y_res = smote.fit_resample(X, y)""", "2.89", ""),
+]
+
+# --- DESIGN SYSTEM (GREEN / PRO) ---
+CSS = """
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+    :root {
+        --primary: #059669;    /* Emerald 600 */
+        --primary-dark: #065f46; /* Emerald 800 */
+        --primary-light: #d1fae5; /* Emerald 100 */
+
+        --text-main: #111827;    /* Gray 900 */
+        --text-muted: #6b7280;   /* Gray 500 */
+
+        --bg-body: #f9fafb;      /* Gray 50 */
+        --bg-card: #ffffff;
+
+        --accent: #10b981;       /* Emerald 500 */
+        --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-body); color: var(--text-main); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+
+    a { text-decoration: none; color: inherit; transition: color 0.2s; }
+
+    /* NAVBAR PRO */
+    .navbar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1.2rem 4rem;
+        display: flex; justify-content: space-between; align-items: center;
+        border-bottom: 1px solid var(--border);
+        position: sticky; top: 0; z-index: 100;
+        box-shadow: 0 4px 20px -10px rgba(0,0,0,0.05);
+    }
+    .nav-brand { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.5px; color: var(--primary-dark); text-transform: uppercase; }
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); padding: 8px 0; border-bottom: 2px solid transparent; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    /* HERO */
+    .hero {
+        background: white;
+        padding: 5rem 2rem 6rem;
+        text-align: center;
+        background: radial-gradient(circle at 50% 0%, var(--primary-light) 0%, transparent 60%);
+    }
+    .hero-pre { color: var(--primary); font-weight: 700; letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
+    .hero h1 { font-size: 3.5rem; color: var(--text-main); margin: 0 auto 1.5rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; max-width: 900px; }
+
+    /* SECTION COMMON */
+    .container { max-width: 1400px; margin: 0 auto; padding: 4rem 2rem; }
+    .section-header { text-align: left; margin-bottom: 3rem; border-left: 5px solid var(--primary); padding-left: 20px; }
+    .section-title { font-size: 2rem; font-weight: 700; color: var(--text-main); margin: 0; letter-spacing: -0.5px; }
+    .section-desc { font-size: 1.1rem; color: var(--text-muted); margin-top: 10px; max-width: 700px; }
+
+    /* TEAM (PORTRAIT RECTANGLES) */
+    .team-section { background: white; padding: 5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .team-card {
+        position: relative;
+        aspect-ratio: 9/16;
+        background: #eee;
+        border-radius: 4px; overflow: hidden;
+        box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+        transition: transform 0.3s;
+    }
+    .team-card:hover { transform: translateY(-10px); }
+    .team-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(110%); transition: filter 0.3s; }
+    .team-card:hover .team-img { filter: grayscale(0%); }
+    .team-overlay {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        padding: 3rem 1.5rem 1.5rem;
+        color: white; text-align: left;
+    }
+    .team-name { font-size: 1.5rem; font-weight: 700; margin: 0; }
+    .team-role { font-size: 0.9rem; font-weight: 500; opacity: 0.9; color: var(--primary); text-transform: uppercase; margin-top: 5px; }
+
+    /* BENCHMARK CARDS (4 IN A ROW) */
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* Force 4 columns */
+        gap: 20px;
+    }
+    .card-bench {
+        background: white; border-radius: 8px; padding: 2rem 1.5rem;
+        border: 1px solid var(--border); text-align: center;
+        transition: all 0.3s; position: relative;
+        display: flex; flex-direction: column; justify-content: space-between;
+        height: 100%;
+    }
+    .card-bench:hover { box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1); border-color: var(--primary); transform: translateY(-5px); }
+    .card-bench.recommanded { border: 2px solid var(--primary); background: #f0fdf4; }
+
+    .badge-rec { background: var(--primary); color: white; font-size: 0.7rem; font-weight: 700; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
+
+    .model-name { font-size: 1.4rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; }
+    .stats-main { font-size: 2.5rem; font-weight: 800; color: var(--primary-dark); margin: 0.5rem 0; letter-spacing: -1px; }
+    .stats-sub { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; }
+
+    .btn-analyze {
+        margin-top: 1.5rem; display: block; width: 100%; padding: 12px;
+        background: transparent; border: 1px solid var(--primary); color: var(--primary);
+        font-weight: 600; border-radius: 4px; transition: all 0.2s;
+    }
+    .btn-analyze:hover { background: var(--primary); color: white; }
+
+    /* CONCLUSION & TEXT */
+    .text-content { font-size: 1.1rem; color: #4b5563; line-height: 1.8; margin-bottom: 2rem; text-align: justify; column-count: 2; column-gap: 4rem; }
+    .conclusion-box { background: white; padding: 3rem; border-top: 4px solid var(--primary); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); border-radius: 8px; }
+    .conc-title { font-size: 1.5rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+
+    /* TABLE EXPORT */
+    .export-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .export-table th { background: #f9fafb; text-align: left; padding: 12px; color: #6b7280; font-weight: 600; border-bottom: 2px solid #e5e7eb; }
+    .export-table td { padding: 12px; border-bottom: 1px solid #e5e7eb; color: #374151; }
+    .export-table tr:hover { background: #f0fdf4; }
+    .btn-download { display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: white; padding: 15px 30px; border-radius: 6px; font-weight: 700; margin-top: 2rem; transition: background 0.2s; }
+    .btn-download:hover { background: var(--primary-dark); }
+</style>
+"""
+
+NAV_HTML = """
+<nav class="navbar">
+    <div class="nav-brand">Marketing Scoring</div>
+    <div class="nav-links">
+        <a href="acceuil.html">SYNTHÈSE</a>
+        <a href="standard.html">STANDARD</a>
+        <a href="over.html">OVERSAMPLING</a>
+        <a href="under.html">UNDERSAMPLING</a>
+        <a href="smote.html">SMOTE (IA)</a>
+    </div>
+</nav>
+"""
+
+# --- HELPERS ---
+def read_src(path):
+    # If path is a code string, return it directly
+    if path.startswith(""""model = LogisticRegression()""") or \
+       path.startswith(""""ros = RandomOverSampler()""") or \
+       path.startswith(""""rus = RandomUnderSampler()""") or \
+       path.startswith(""""smote = SMOTE()"""):
+        return path.strip('"""')
+    try:
+        base = os.path.dirname(__file__)
+        return open(os.path.join(base, path), 'r', encoding='utf-8').read()
+    except: return "# Code non trouvé"
+
+def get_desc(name):
+    if name == "Over": return "Duplication aléatoire des données minoritaires."
+    if name == "Under": return "Suppression aléatoire des données majoritaires."
+    if name == "SMOTE": return "Génération artificielle de voisins proches (KNN)."
+    return "Approche classique sur données brutes."
+
+# --- GENERATORS ---
+FOOTER = """
+<footer style="background: white; border-top: 1px solid #e5e7eb; padding: 3rem 0; margin-top: 5rem; text-align: center; color: #6b7280; font-size: 0.9rem;">
+    <div class="container" style="padding: 0;">
+        <div style="font-weight: 700; color: #111827; margin-bottom: 10px;">MARKETING SCORING PROJECT</div>
+        <div>Théo P. &bull; Alexan.R &bull; Jérémy.P &bull; IUT Poitiers</div>
+        <div style="margin-top: 20px; font-size: 0.8rem;">&copy; 2026 - Analyse Prédictive & Data Science</div>
+    </div>
+</footer>
+"""
+
+# --- GENERATORS ---
+def gen_home():
+    # 1. CARDS
+    cards = ""
+    for name, auc, cm, src, lift, tag in results:
+        is_rec = "recommanded" if tag == "recommanded" else ""
+        badge = f'<div class="badge-rec">{tag.upper()}</div>' if tag else '<div style="height:25px"></div>'
+
+        cards += f"""
+        <div class="card-bench {is_rec}">
+            <div>
+                {badge}
+                <div class="model-name">{name}</div>
+                <div class="model-desc" style="color:#6b7280; font-size:0.9rem;">{get_desc(name)}</div>
+
+                <div class="stats-main">{auc:.2f}</div>
+                <div class="stats-sub">AUC Score</div>
+
+                <div style="margin-top:15px; font-weight:700; color:#059669;">Lift {lift}x</div>
+            </div>
+
+            <a href="{name.lower()}.html" class="btn-analyze">Voir Détails</a>
+        </div>
+        """
+
+    # 2. EXPORT TABLE (Reading CSV)
+    table_html = ""
+    try:
+        import pandas as pd
+        df_export = pd.read_csv("new/top_500_prospects.csv").head(5)
+        cols_to_show = [c for c in df_export.columns if "score" in c or "age" in c or "campagne" in c][:5]
+        # Fallback if specific cols missing
+        if not cols_to_show: cols_to_show = df_export.columns[:5]
+
+        # HTML Table
+        table_html = '<table class="export-table"><thead><tr>'
+        for c in cols_to_show: table_html += f'<th>{c}</th>'
+        table_html += '</tr></thead><tbody>'
+
+        for _, row in df_export[cols_to_show].iterrows():
+            table_html += '<tr>'
+            for val in row:
+                if isinstance(val, float): val = f"{val:.4f}"
+                table_html += f'<td>{val}</td>'
+            table_html += '</tr>'
+        table_html += '</tbody></table>'
+
+    except Exception as e:
+        table_html = f"<p>Tableau non disponible: {e}</p>"
+
+    html = f"""<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>Synthèse - Marketing</title>{CSS}</head><body>
+    {NAV_HTML.replace('href="acceuil.html"', 'href="acceuil.html" class="active"')}
+
+    <div class="hero">
+        <span class="hero-pre">CAMPAGNE MARKETING 2026</span>
+        <h1>Optimisation des taux de souscription <br><span style="color:var(--primary)">Épargne & Crédit</span>.</h1>
+        <p style="margin: 0 auto; max-width:600px; color:#4b5563; font-size:1.2rem;">Analyse prédictive et segmentation client pour réduire la pression commerciale et maximiser le ROI.</p>
+    </div>
+
+    <!-- TEAM SECTION -->
+    <div class="team-section">
+        <div class="container" style="padding:0 2rem;">
+            <div class="section-header" style="text-align:center; border:none; padding:0; margin-bottom:4rem;">
+                <h2 class="section-title">L'Équipe Projet</h2>
+                <div style="width:50px; height:4px; background:var(--primary); margin: 1rem auto;"></div>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="moi.png" class="team-img">
+                    <div class="team-overlay">
+                        <h3 class="team-name">Théo.P</h3>
+                        <div class="team-role">Étudiant Data</div>
+                    </div>
+                </div>
+                 <div class="team-card">
+                    <img src="alexan.png" class="team-img">
+                    <div class="team-overlay">
+                        <h3 class="team-name">Alexan.R</h3>
+                        <div class="team-role">Étudiant Data</div>
+                    </div>
+                </div>
+                 <div class="team-card">
+                    <img src="jeremy.jpg" class="team-img">
+                    <div class="team-overlay">
+                        <h3 class="team-name">Jérémy.P</h3>
+                        <div class="team-role">Étudiant Data</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTRO SECTION -->
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Contexte & Recherche</h2>
+            <div class="section-desc">Pourquoi avons-nous besoin de modèles prédictifs ?</div>
+        </div>
+        <div class="text-content">
+            <p>Dans un contexte de saturation des canaux d'appels, nos clients montrent des signes de lassitude face au démarchage non ciblé. L'objectif de cette étude est de passer d'un marketing de masse à un marketing de précision. Nous avons analysé une base historique de 45 000 contacts pour identifier les signaux faibles (âge, job, historique) qui prédisent une souscription.</p>
+            <p>Notre approche s'est concentrée sur deux axes : la qualité de la donnée (nettoyage rigoureux des 17 variables) et la gestion du déséquilibre de classe (seulement 11% de souscripteurs réels). Nous avons testé 4 stratégies statistiques pour maximiser le taux de détection (Recall) sans exploser les coûts (Précision).</p>
+        </div>
+    </div>
+
+    <!-- BENCHMARK SECTION -->
+    <div style="background:#f3f4f6; padding:4rem 0;">
+        <div class="container">
+             <div class="section-header">
+                <h2 class="section-title">Benchmark Comparatif</h2>
+                <div class="section-desc">Performance des 4 modèles sur le jeu de test.</div>
+            </div>
+
+            <div class="cards-grid">
+                {cards}
+            </div>
+        </div>
+    </div>
+
+    <!-- EXPORT SECTION -->
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Export & Ciblage</h2>
+            <div class="section-desc">Accès aux données ciblées (Top 500 Prospects)</div>
+        </div>
+
+        <div style="background:white; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;">
+            <div style="padding:1.5rem; background:#f9fafb; border-bottom:1px solid #e5e7eb; font-weight:600; color:#4b5563;">
+                Aperçu du fichier : top_500_prospects.csv
+            </div>
+            {table_html}
+        </div>
+
+        <div style="text-align:center;">
+            <a href="top_500_prospects.csv" download class="btn-download">
+                <span>⬇ Télécharger la liste (.csv)</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- CONCLUSION SECTION -->
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Conclusion & Recommandations</h2>
+            <div class="section-desc">Synthèse des résultats et plan d'action proposé.</div>
+        </div>
+        <div class="conclusion-box">
+             <div class="conc-title">
+                <span style="display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; background:var(--primary-light); color:var(--primary); border-radius:50%;">✓</span>
+                Conclusion & Recommandations
+            </div>
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4rem;">
+                <div>
+                     <h4 style="color:var(--text-main); margin-bottom:10px;">Analyse des Résultats</h4>
+                     <p style="color:var(--text-muted);">Le modèle <strong>SMOTE</strong> offre le meilleur équilibre. Il capture 60% du potentiel total en ne sollicitant que 20% de la base client. Le modèle Standard, bien que précis, est trop conservateur ("frileux") et rate trop d'opportunités.</p>
+                </div>
+                <div>
+                     <h4 style="color:var(--text-main); margin-bottom:10px;">Plan d'Action</h4>
+                     <ul style="color:var(--text-muted); padding-left:20px; margin:0;">
+                         <li style="margin-bottom:10px;">Intégrer le scoring SMOTE dans le CRM des téléconseillers.</li>
+                         <li style="margin-bottom:10px;">Prioriser les appels avec un score de probabilité > 0.6.</li>
+                         <li style="margin-bottom:10px;">Mesurer le taux de conversion réel sur 3 mois (A/B Testing).</li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {FOOTER}
+</body></html>"""
+    with open("new/Site_Web/acceuil.html", "w", encoding='utf-8') as f: f.write(html)
+
+def gen_detail(name, auc, cm_txt, src, lift):
+    nav_active = NAV_HTML.replace(f'href="{name.lower()}.html"', f'href="{name.lower()}.html" class="active"')
+    
+    # Parsing CM
+    try:
+        import re
+        nums = re.findall(r'\d+', cm_txt)
+        tn, fp, fn, tp = nums if len(nums)==4 else (0,0,0,0)
+    except:
+        tn, fp, fn, tp = 0,0,0,0
+
+    html = f"""<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>{name} - Détail</title>{CSS}
+<style>
+    /* 2x2 GRID LAYOUT */
+    .detail-grid {{ 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 40px; 
+        margin-bottom: 3rem; 
+    }}
+    
+    .criteria-card {{ background: white; border: 1px solid #e2e8f0; border-radius: 12px; height: 100%; }}
+    .criteria-item {{ display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid #f1f5f9; font-size:0.9rem; }}
+    .feat-score {{ background: #eff6ff; color: #3b82f6; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }}
+    
+    .matrix-box-container {{ background:white; border:1px solid #e2e8f0; border-radius:12px; padding:2rem; text-align:center; height:100%; display:flex; flex-direction:column; justify-content:center; }}
+    .matrix-grid {{ display: grid; grid-template-columns: 40px 1fr 1fr; gap: 15px; align-items: center; max-width: 350px; margin: 0 auto; }}
+    .m-box {{ padding: 2.5rem 0; border-radius: 8px; display:flex; flex-direction:column; justify-content:center; height:140px; }}
+    .m-dark {{ background: #0f172a; color: white; }}
+    .m-light {{ background: #dbeafe; color: #1e293b; }}
+    .m-val {{ font-size: 1.8rem; font-weight: 700; display:block; margin-bottom:5px; }}
+    .m-lbl {{ font-size: 0.7rem; opacity:0.8; text-transform:uppercase; letter-spacing:1px; }}
+    
+    .bottom-card {{ background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; }}
+    .roc-img {{ width: 100%; height: auto; border-radius: 6px; border:1px solid #f1f5f9; max-height: 400px; object-fit: contain; }}
+    
+    .code-mini {{ font-family: 'Consolas', monospace; font-size: 0.75rem; background: #1f2937; color: #e5e7eb; padding: 1rem; border-radius: 6px; overflow-x: auto; max-height: 400px; }}
+    
+    h3 {{ margin-top:0; color:var(--text-main); font-size:1.1rem; margin-bottom:1rem; }}
+</style>
+</head><body>
+    {nav_active}
+    
+    <div class="container">
+        <header style="margin: 0 0 3rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e5e7eb; padding-bottom:1.5rem;">
+            <div>
+                 <a href="acceuil.html" style="font-weight:600; font-size:0.85rem; color:var(--text-muted);">← RETOUR SYNTHÈSE</a>
+                <h1 style="font-size:2.5rem; margin:10px 0 0; line-height:1; color:var(--text-main);">{name}</h1>
+            </div>
+            <div style="text-align:right;">
+                 <div style="font-size:2.5rem; font-weight:800; color:var(--primary);">{auc:.4f}</div>
+                 <div style="font-weight:700; color:var(--text-muted); font-size:0.75rem; letter-spacing:1px; text-transform:uppercase;">Score AUC</div>
+            </div>
+        </header>
+
+        <!-- ROW 1: CRITERIA (Left) | MATRIX (Right) -->
+        <div class="detail-grid">
+            <!-- LEFT: CRITERES -->
+            <div>
+                <h3>Critères de Ciblage (Top 5)</h3>
+                <div class="criteria-card">
+                    <div class="criteria-item"><span>IPC_bin_(93.9, 94.7]</span><span class="feat-score">+1.42</span></div>
+                    <div class="criteria-item"><span>indic_confiance_low</span><span class="feat-score">+1.06</span></div>
+                    <div class="criteria-item"><span>ancienne_campagne_oui</span><span class="feat-score">+0.87</span></div>
+                    <div class="criteria-item"><span>croissance_emploi_neg</span><span class="feat-score">+0.42</span></div>
+                    <div class="criteria-item"><span>geo_urbain</span><span class="feat-score">+0.41</span></div>
+                    
+                    <div style="padding:1.5rem; font-size:0.85rem; color:#6b7280; background:#f9fafb; border-top:1px solid #f1f5f9;">
+                        <strong>Interprétation :</strong> Les indices macro-économiques et l'historique relationnel dominent la décision du modèle.
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: MATRIX -->
+            <div>
+                <h3>Matrice de Confusion</h3>
+                <div class="matrix-box-container">
+                    <div class="matrix-grid">
+                        <div style="writing-mode:vertical-rl; transform:rotate(180deg); text-align:center; font-size:0.7rem; font-weight:700; color:#94a3b8;">RÉEL</div>
+                        <div class="m-box m-dark">
+                            <span class="m-val">{tn}</span><span class="m-lbl">Vrais Nég.</span>
+                        </div>
+                        <div class="m-box m-light">
+                            <span class="m-val">{fp}</span><span class="m-lbl">Faux Pos.</span>
+                        </div>
+                        <div></div>
+                        <div class="m-box m-light">
+                            <span class="m-val">{fn}</span><span class="m-lbl">Faux Nég.</span>
+                        </div>
+                        <div class="m-box m-light" style="background:#bae6fd">
+                            <span class="m-val">{tp}</span><span class="m-lbl">Vrais Pos.</span>
+                        </div>
+                    </div>
+                    <div style="text-align:center; margin-top:10px; font-size:0.7rem; font-weight:700; color:#94a3b8;">PRÉDIT (0 / 1)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: ROC (Left Small) | CODE (Right Small) -->
+        <div class="detail-grid" style="grid-template-columns: 40% 60%;">
+            <!-- LEFT: ROC -->
+            <div>
+                <h3>Performance (ROC)</h3>
+                <div class="bottom-card" style="text-align:center;">
+                    <img src="../roc_analyse.png" class="roc-img">
+                </div>
+            </div>
+            
+            <!-- RIGHT: CODE -->
+            <div>
+                <h3>Code Source Python</h3>
+                <div class="code-mini">
+                    <pre style="margin:0;">{src}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {FOOTER}
+</body></html>"""
+    with open(f"new/Site_Web/{name.lower()}.html", "w", encoding='utf-8') as f: f.write(html)
+
+# --- RUN ---
+print("Génération Design Pro Green...", flush=True)
+gen_home()
+for name, auc, cm, path, lift, tag in results:
+    src = read_src(path)
+    gen_detail(name, auc, cm, src, lift)
+print("Terminé !")

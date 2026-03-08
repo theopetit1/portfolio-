@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href=".././logo2.png">
+    <title> Modélisation de score : Régression Logistique - Théo PETIT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow-x: hidden;
+            background: #F9FAFB;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar simplifiée */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: white;
+            border-bottom: 1px solid #E5E7EB;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Logo */
+        .logo {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.7;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        /* Navigation centrale */
+        .nav-center {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            position: relative;
+            text-decoration: none;
+            color: #111;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #5A8FBD;
+        }
+
+        /* Menu déroulant Projets */
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding-top: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .dropdown-content>div {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            padding: 2rem;
+            min-width: 280px;
+        }
+
+        .nav-dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .dropdown-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #111;
+            padding-bottom: 0.5rem;
+        }
+
+        .dropdown-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .dropdown-link {
+            text-decoration: none;
+            color: #4B5563;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.6rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .dropdown-link:hover {
+            background: #F3F4F6;
+            color: #111;
+            padding-left: 1.2rem;
+        }
+
+        /* Barre de recherche */
+        .search-container {
+            position: relative;
+            max-width: 180px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: none;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            background: #F5F5F5;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .search-box:hover,
+        .search-box:focus {
+            background: #E5E5E5;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: #111;
+            pointer-events: none;
+        }
+
+        /* Suggestions de recherche */
+        .search-suggestions {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            min-width: 250px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1001;
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid #F3F4F6;
+            font-size: 0.9rem;
+            color: #4B5563;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background: #F9FAFB;
+            color: #111;
+        }
+
+        .suggestion-item strong {
+            color: #2563EB;
+            font-weight: 700;
+            background: #DBEAFE;
+            padding: 0.1rem 0.25rem;
+            border-radius: 3px;
+        }
+
+        /* Hero du projet */
+        .project-hero {
+            margin-top: 60px;
+            padding: 4rem 3rem;
+            background: linear-gradient(135deg, #2C3E50 0%, #5A8FBD 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .project-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .project-hero .project-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        /* Technologies badges */
+        .project-technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .tech-badge {
+            padding: 0.8rem 1.8rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* Contenu principal */
+        .project-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2C3E50;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #5A8FBD;
+            padding-left: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2C3E50;
+            margin: 2rem 0 1rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4B5563;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content-section ul li {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #4B5563;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .content-section ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #5A8FBD;
+            font-weight: 700;
+        }
+
+        /* Images du projet */
+        .project-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            display: block;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Difficulté */
+        .difficulty-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #E8F2F9 0%, #D6E7F5 100%);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .difficulty-section h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: #2C3E50;
+        }
+
+        .stars {
+            color: #5A8FBD;
+            font-size: 1.5rem;
+        }
+
+        /* Temps estimé */
+        .time-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: #F3F4F6;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #2C3E50;
+            margin-bottom: 2rem;
+        }
+
+        /* Boutons d'action */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #5A8FBD;
+            border: 2px solid #5A8FBD;
+        }
+
+        .btn-secondary:hover {
+            background: #5A8FBD;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 4rem 3rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .footer-address {
+            color: #b0b0b0;
+            line-height: 1.8;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-contact-item {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-contact-label {
+            color: #888;
+            min-width: 80px;
+        }
+
+        .footer-contact a {
+            color: #5A8FBD;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-contact a:hover {
+            color: #B8D4EC;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-link {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #5A8FBD;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 1.5rem;
+            }
+
+            .nav-center {
+                display: none;
+            }
+
+            .project-hero {
+                padding: 3rem 1.5rem;
+            }
+
+            .project-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .content-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <!-- Logo -->
+        <div class="logo" onclick="window.location.href='../index.html'">
+            <img src="../logo2.png" alt="Logo"
+                onerror="this.style.background='linear-gradient(135deg, #B8B8B8, #8A8A8A)'; this.alt='TP';">
+        </div>
+
+        <!-- Navigation centrale -->
+        <div class="nav-center">
+            <a href=".././index.html" class="nav-link">Accueil</a>
+
+            <!-- Dropdown Projets -->
+            <div class="nav-dropdown">
+                <span class="nav-link">Projets 1ère année</span>
+                <div class="dropdown-content">
+                    <div>
+                        <h3 class="dropdown-title">Mes Projets</h3>
+                        <div class="dropdown-links">
+                            <a href="ADRD.html" class="dropdown-link">Projet A.D.R.D</a>
+                            <a href="vba.html" class="dropdown-link">Application Excel/VBA</a>
+                            <a href="enquete.html" class="dropdown-link"> Enquête sur les étudiants</a>
+                            <a href="bdr.html" class="dropdown-link">Conception d'une BDR</a>
+                            <a href="regression.html" class="dropdown-link"> Régréssion linéaire</a>
+                            <a href="dataviz.html" class="dropdown-link"> Concours DataViz</a>
+                            <a href="bdr.html" class="dropdown-link">Conception d'une BDR</a>
+                            <a href="indicateurs.html" class="dropdown-link"> Indicateurs de performances</a>
+                            <a href="estimation.html" class="dropdown-link"> Estimation par échantillonage</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barre de recherche -->
+        <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" class="search-box" placeholder="Rechercher" id="searchInput">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+    </nav>
+
+    <!-- Hero du projet -->
+    <section class="project-hero">
+        <h1>Optimisation de Campagne Marketing : Modèle de Scoring</h1>
+        <p class="project-subtitle">Création d'un modèle de régression logistique pour cibler les prospects d'une
+            assurance</p>
+
+        <!-- Technologies utilisées -->
+        <div class="project-technologies">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">Scikit-Learn</span>
+            <span class="tech-badge">Pandas</span>
+            <span class="tech-badge">Matplotlib / Seaborn</span>
+            <span class="tech-badge">Machine Learning</span>
+        </div>
+    </section>
+
+    <!-- Contenu principal -->
+    <div class="project-content">
+        <!-- Difficulté et temps -->
+        <div class="difficulty-section">
+            <h3>DIFFICULTÉ :</h3>
+            <div class="stars">★★★★☆</div>
+        </div>
+        <div class="time-info">
+            ⏱️ Temps estimé : 25h
+        </div>
+
+        <!-- Description du projet -->
+        <div class="content-section">
+            <h2>Description du Projet</h2>
+            <p>
+                Ce projet a été réalisé en tant que Data Scientists au sein d'une assurance (branche crédit et épargne).
+                L'entreprise mène régulièrement des campagnes d'appels téléphoniques pour proposer la souscription à un
+                produit d'épargne.
+            </p>
+            <p>
+                Cependant, nos équipes commerciales ont une capacité d'appel limitée en raison d'un coût humain élevé,
+                d'un temps d'appel important et du risque de saturation des clients. Notre objectif global pour ce
+                projet était de mettre en place un modèle de scoring permettant de :
+            </p>
+            <ul>
+                <li>Prédire la probabilité de souscription d'un client.</li>
+                <li>Prioriser les clients à contacter.</li>
+                <li>Augmenter le taux de transformation de la campagne.</li>
+                <li>Réduire les appels inutiles.</li>
+            </ul>
+            <p>
+                Sur la base d'un historique de campagnes passées, et d'indicateurs socio-démographiques, bancaires et
+                macro-économiques, notre mission consistait à analyser les données, construire un modèle de score basé
+                sur une <strong>régression logistique</strong>, proposer une stratégie de ciblage, et justifier l'apport
+                de ce modèle auprès de la direction marketing.
+            </p>
+
+            <!-- Image exemple -->
+            <img src="reg/reg.png" alt="Aperçu des résultats du modèle" class="project-image"
+                onerror="this.src='https://via.placeholder.com/800x500/5A8FBD/FFFFFF?text=R%C3%A9gression+Logistique'">
+        </div>
+
+        <!-- Compétences développées -->
+        <div class="content-section">
+            <h2>Compétences Développées</h2>
+            <ul>
+                <li>Nettoyage, traitement et analyse exploratoire de données (EDA).</li>
+                <li>Modélisation statistique et algorithmique : Régression Logistique.</li>
+                <li>Évaluation de la performance des modèles (Matrice de confusion, Courbe ROC, AUC).</li>
+                <li>Compréhension des enjeux business et marketing (valeur métier).</li>
+                <li>Vulgarisation scientifique et recommandation stratégique (pitch métier).</li>
+            </ul>
+        </div>
+
+        <!-- Résultats et apprentissages -->
+        <div class="content-section">
+            <h2>Résultats et Apprentissages</h2>
+            <h3>Résultats obtenus</h3>
+            <p>
+                Mise en place réussie d'un modèle de scoring capable d'identifier les profils de clients ayant le plus
+                de chances de souscrire. Création d'une stratégie de ciblage permettant de contacter par exemple un
+                sous-ensemble clé des clients pour capter la majorité des souscriptions et économiser les coûts d'appel.
+            </p>
+
+            <h3>Ce que j'ai appris</h3>
+            <p>
+                J'ai appris à faire le pont entre la modélisation statistique avancée et la prise de décision
+                opérationnelle. Savoir traduire un problème business complexe en une solution Data Science est essentiel
+                pour prouver la valeur ajoutée du modèle auprès des décideurs (via un pitch exécutif).
+            </p>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="action-buttons">
+            <a href="../index.html#projets" class="btn btn-secondary">← Retour aux projets</a>
+        </div>
+
+        <!-- Note de confidentialité -->
+        <div
+            style="margin-top: 3rem; padding: 1.5rem; background: #FEF3C7; border-left: 4px solid #F59E0B; border-radius: 8px;">
+            <p style="color: #92400E; margin: 0;">
+                🔒 L'ensemble de ce projet n'est pas open-source. Pour y accéder, n'hésitez pas à <a
+                    href="mailto:pro.theopetit@gmail.com" style="color: #1E3A8A; font-weight: 600;">me contacter</a>.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Brand Section -->
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="logo2.png" alt="Logo" class="footer-logo-img" onerror="this.style.display='none';">
+                    Théo PETIT
+                </div>
+                <p class="footer-address">
+                    IUT de Niort<br>
+                    Département BUT Science des Données<br>
+                    79000 Niort, France
+                </p>
+                <div class="footer-contact">
+                    <div class="footer-contact-item">
+                        <span class="footer-contact-label">Téléphone:</span>
+                        <a href="tel:+33781088125">+33 7 81 08 81 25</a>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-contact-label">Email:</span>
+                        <a href="mailto:pro.theopetit@gmail.com">pro.theopetit@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h4 class="footer-title">Navigation</h4>
+                <div class="footer-links">
+                    <a href="../index.html#top" class="footer-link">Accueil</a>
+                    <a href="../index.html#projets" class="footer-link">Projets</a>
+
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="footer-section">
+                <h4 class="footer-title">Réseaux</h4>
+                <div class="footer-links">
+                    <a href="https://www.linkedin.com/in/théo-petit1" target="_blank" class="footer-link">LinkedIn</a>
+                    <a href="https://x.com/but_sd_niort" target="_blank" class="footer-link">X</a>
+                    <a href="https://www.instagram.com/but_sd_niort/" target="_blank" class="footer-link">Instagram</a>
+                </div>
+            </div>
+
+            <!-- Partenaires -->
+            <div class="footer-section">
+                <h4 class="footer-title">Formation</h4>
+                <div class="footer-logos">
+                    <img src="../but.png" alt="BUT Logo"
+                        style="height: 60px; width: auto; object-fit: contain; opacity: 0.7; filter: brightness(0) invert(1);"
+                        onerror="this.style.display='none';">
+                    <img src="../univ.png" alt="Université Logo"
+                        style="height: 60px; width: auto; object-fit: contain; opacity: 0.7; filter: brightness(0) invert(1); margin-top: 1.5rem;"
+                        onerror="this.style.display='none';">
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="footer-bottom">
+            <p class="footer-copyright">© 2025 Théo PETIT - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Données de recherche
+        const searchData = [
+            // Navigation
+            { title: 'Accueil', url: '../index.html' },
+            { title: 'À propos', url: '../index.html#apropos' },
+            { title: 'Parcours', url: '../index.html#parcours' },
+            { title: 'Projets', url: '../index.html#projets' },
+            { title: 'Contact', url: '../index.html#contact' },
+
+            // Projets
+            { title: 'Projet A.D.R.D', url: 'ADRD.html' },
+            { title: 'Application Excel/VBA', url: 'vba.html' },
+            { title: 'Enquête sur les étudiants', url: 'enquete.html' },
+            { title: 'Conception d\'une BDR', url: 'bdr.html' },
+            { title: 'Régréssion linéaire', url: 'regression.html' },
+            { title: 'Concours DataViz', url: 'dataviz.html' },
+            { title: 'Indicateurs de performances', url: 'indicateurs.html' },
+            { title: 'Estimation par échantillonage', url: 'estimation.html' },
+
+            // Technologies
+            { title: 'Python', url: '../index.html#projets' },
+            { title: 'PowerBI', url: '../index.html#projets' },
+            { title: 'SQL', url: '../index.html#projets' },
+            { title: 'MySQL', url: '../index.html#projets' },
+            { title: 'R', url: '../index.html#projets' },
+            { title: 'Excel', url: '../index.html#projets' },
+            { title: 'VBA', url: '../index.html#projets' },
+            { title: 'Data Analysis', url: '../index.html#apropos' },
+            { title: 'Statistiques', url: '../index.html#statistiques' }
+        ];
+
+        // Gestion de la barre de recherche
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+
+            if (query.length === 0) {
+                searchSuggestions.classList.remove('active');
+                return;
+            }
+
+            const results = searchData.filter(item =>
+                item.title.toLowerCase().includes(query)
+            );
+
+            if (results.length > 0) {
+                searchSuggestions.innerHTML = results.map(item => {
+                    const highlightedTitle = item.title.replace(
+                        new RegExp(query, 'gi'),
+                        match => `<strong>${match}</strong>`
+                    );
+                    return `<div class="suggestion-item" data-url="${item.url}">${highlightedTitle}</div>`;
+                }).join('');
+                searchSuggestions.classList.add('active');
+            } else {
+                searchSuggestions.innerHTML = '<div class="suggestion-item">Aucun résultat trouvé</div>';
+                searchSuggestions.classList.add('active');
+            }
+        });
+
+        // Navigation sur clic de suggestion
+        searchSuggestions.addEventListener('click', (e) => {
+            if (e.target.classList.contains('suggestion-item')) {
+                const url = e.target.getAttribute('data-url');
+                if (url && url !== 'null') {
+                    window.location.href = url;
+                }
+                searchInput.value = '';
+                searchSuggestions.classList.remove('active');
+            }
+        });
+
+        // Fermer les suggestions au clic extérieur
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                searchSuggestions.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
