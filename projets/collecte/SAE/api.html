@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Météo API Dashboard</title>
+    <!-- Import de la police "Outfit" -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================================================================== */
+        /* VARIABLES CSS (Identiques à viz_scrapping.html pour la cohérence) */
+        /* ================================================================== */
+        :root {
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Configuration du fond de page (Dark Mode + Dégradés) */
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--dark);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ================================================================== */
+        /* BARRE DE NAVIGATION */
+        /* ================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ================================================================== */
+        /* STRUCTURE DE LA PAGE */
+        /* ================================================================== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 7rem 2rem 4rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 2rem 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(to bottom right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Grilles */
+        .grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* Style des Cartes (Conteneurs des graphiques) */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text);
+        }
+
+        .card-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Style pour les images et iframes générés par Python */
+        iframe,
+        img {
+            width: 100%;
+            border-radius: 12px;
+            border: none;
+            display: block;
+        }
+
+        iframe {
+            height: 500px;
+            background: #1a1d24;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                padding-top: 6rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="menu.html" class="nav-logo">MÉTÉO API</a>
+        <div class="nav-links">
+            <a href="menu.html" class="nav-link">Accueil</a>
+            <a href="#map-section" class="nav-link">Carte</a>
+            <a href="#charts" class="nav-link">Analyses</a>
+            <a href="#poitiers" class="nav-link">Poitiers</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- EN-TÊTE -->
+        <section class="hero">
+            <h1>Analyse Météorologique</h1>
+            <p>Visualisation en temps réel des données SYNOP (Température, Humidité, Vent).</p>
+        </section>
+
+        <!-- SECTION 1 : CARTE INTERACTIVE (Générée par Folium en Python) -->
+        <!-- L'iframe charge le fichier 'weather_map.html' créé par api_weather.py -->
+        <section id="map-section" class="card" style="margin-bottom: 4rem;">
+            <div class="card-title">Carte des Températures (Moyenne par Station)</div>
+            <iframe src="weather_map.html"></iframe>
+        </section>
+
+        <!-- SECTION 2 : GRAPHIQUES (Générés par Matplotlib/Seaborn) -->
+        <section id="charts" style="display: flex; flex-direction: column; gap: 4rem;">
+            <!-- Graphique Comparatif -->
+            <div class="card">
+                <div class="card-title">Comparatif Régional : Température Moyenne</div>
+                <img src="weather_chart.png" alt="Graphique Comparatif">
+            </div>
+            <!-- Indicateur Personnalisé (Hexbin) -->
+            <div class="card">
+                <div class="card-title">Relation Température / Humidité</div>
+                <img src="extreme_weather.png" alt="Relation Température Humidité">
+            </div>
+        </section>
+
+        <!-- SECTION 3 : FOCUS LOCAL (Poitiers) -->
+        <section id="poitiers" class="card">
+            <div class="card-title">Proximité IUT de Poitiers (< 101km) - Historique Complet</div>
+                    <img src="poitiers_history.png" alt="Historique Météo Poitiers">
+        </section>
+
+    </div>
+
+</body>
+
+</html>

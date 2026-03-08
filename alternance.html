@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portail Alternant - Accès Sécurisé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5A8FBD;
+            --accent: #1E3A8A;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-main: #1F2937;
+            --text-light: #6B7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* LOGIN SCREEN */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a1a1a, #2d3436);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-card h2 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .login-card p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.875rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(90, 143, 189, 0.3);
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            min-height: 1.25rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* MAIN APP CONTENT */
+        #app-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease 0.5s;
+            /* Delay fade in */
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        #app-content.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            color: #ef4444;
+        }
+
+        /* DASHBOARD GRID */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            height: calc(100vh - 12rem);
+            min-height: 600px;
+        }
+
+        /* LEFT SIDEBAR (Controls) */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .period-selector h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .period-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: white;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .period-btn:hover {
+            transform: translateX(5px);
+            border-color: var(--primary);
+        }
+
+        .period-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 20px rgba(90, 143, 189, 0.3);
+        }
+
+        .stats-widget {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: white;
+            margin-top: auto;
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            background: linear-gradient(45deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* MAIN CONTENT AREA */
+        .content-area {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* TABS (Calendar vs Docs) */
+        .view-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 1rem;
+        }
+
+        .view-tab {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .view-tab.active {
+            color: var(--primary);
+            background: rgba(90, 143, 189, 0.1);
+        }
+
+        .view-panel {
+            display: none;
+            flex: 1;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .view-panel.active {
+            display: block;
+        }
+
+        .pdf-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            border: none;
+            background: #f8f9fa;
+        }
+
+        /* DOCUMENTS LIST */
+        .docs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .doc-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+
+        .doc-item:hover {
+            border-color: var(--primary);
+            background: #F9FAFB;
+        }
+
+        .doc-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .doc-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .icon-xlsx {
+            background: #e6f4ea;
+            color: #1e7e34;
+        }
+
+        .icon-docx {
+            background: #e8f0fe;
+            color: #1a73e8;
+        }
+
+        .btn-download {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 1px solid var(--text-light);
+            border-radius: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-download:hover {
+            background: var(--text-main);
+            color: white;
+            border-color: var(--text-main);
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .sidebar {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .content-area {
+                min-height: 500px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOGIN OVERLAY -->
+    <div id="login-overlay">
+        <div class="login-card">
+            <h2>Portail Alternance</h2>
+            <p>Espace réservé au suivi pédagogique</p>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Identifiant</label>
+                    <input type="text" id="username" placeholder="ex: t.petit" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="password" placeholder="••••••••">
+                </div>
+                <button type="submit" class="login-btn">Se connecter</button>
+                <div class="error-msg" id="error-msg">Identifiants incorrects</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app-content">
+        <header>
+            <a href="#" class="logo">Théo.Portal</a>
+            <div class="user-pill">
+                <div class="avatar">TP</div>
+                <span>Théo PETIT</span>
+                <span class="logout-btn" onclick="logout()">• Déconnexion</span>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="period-selector">
+                    <h3>Périodes d'Alternance</h3>
+                    <!-- Périodes générées ou statiques -->
+                    <button class="period-btn active" onclick="selectPeriod(1)">
+                        <span>Période 1</span>
+                        <span>→</span>
+                    </button>
+                    <button class="period-btn" onclick="selectPeriod(2)">
+                        <span>Période 2</span>
+                        <span>→</span>
+                    </button>
+                    <button class="period-btn" onclick="selectPeriod(3)">
+                        <span>Période 3</span>
+                        <span>→</span>
+                    </button>
+                    <button class="period-btn" onclick="selectPeriod(4)">
+                        <span>Période 4</span>
+                        <span>→</span>
+                    </button>
+                </div>
+
+                <div class="stats-widget">
+                    <h3>Jours Réalisés</h3>
+                    <div class="stats-number">35j</div>
+                    <p style="font-size: 0.8rem; opacity: 0.7;">Sur 160 jours totaux</p>
+                </div>
+            </aside>
+
+            <!-- CONTENT -->
+            <main class="content-area">
+                <div class="view-tabs">
+                    <button class="view-tab active" onclick="switchView('calendar')">📅 Calendrier Global</button>
+                    <button class="view-tab" onclick="switchView('docs')">📂 Documents & Rapports</button>
+                </div>
+
+                <!-- VIEW: CALENDAR -->
+                <div id="view-calendar" class="view-panel active" style="height: 100%;">
+                    <iframe src="Calendrier-alternance-2027.pdf" class="pdf-frame" title="Calendrier"></iframe>
+                </div>
+
+                <!-- VIEW: DOCUMENTS -->
+                <div id="view-docs" class="view-panel">
+                    <h2 style="margin-bottom: 2rem;" id="period-title">Documents - Période 1</h2>
+
+                    <div class="docs-list">
+                        <div class="doc-item">
+                            <div class="doc-meta">
+                                <div class="doc-icon icon-xlsx">📊</div>
+                                <div>
+                                    <h3>Récapitulatif Quotidien</h3>
+                                    <p class="text-secondary">Suivi des tâches jour par jour (.xlsx)</p>
+                                </div>
+                            </div>
+                            <a href="#" class="btn-download"
+                                onclick="alert('Téléchargement du récapitulatif...')">Télécharger</a>
+                        </div>
+
+                        <div class="doc-item">
+                            <div class="doc-meta">
+                                <div class="doc-icon icon-docx">📝</div>
+                                <div>
+                                    <h3>Rapport d'Activités</h3>
+                                    <p class="text-secondary">Compte-rendu de fin de période (.docx)</p>
+                                </div>
+                            </div>
+                            <a href="#" class="btn-download"
+                                onclick="alert('Téléchargement du rapport...')">Télécharger</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        // CONFIG SÉCURITÉ (Hardcodée comme demandé)
+        const CREDENTIALS = {
+            user: 'ima',
+            pass: 'f102607'
+        };
+
+        // DOM ELEMENTS
+        const loginForm = document.getElementById('login-form');
+        const loginOverlay = document.getElementById('login-overlay');
+        const appContent = document.getElementById('app-content');
+        const errorMsg = document.getElementById('error-msg');
+
+        // LOGIN HANDLER
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('username').value.toLowerCase().trim();
+            const p = document.getElementById('password').value;
+
+            if (u === CREDENTIALS.user && p === CREDENTIALS.pass) {
+                // Success
+                loginOverlay.style.opacity = '0';
+                loginOverlay.style.visibility = 'hidden';
+                appContent.classList.add('visible');
+
+                // Save session (optionnel, user n'a pas précisé de persistance, on garde simple pour l'instant)
+                // sessionStorage.setItem('auth', 'true'); 
+            } else {
+                // Error
+                errorMsg.style.opacity = '1';
+                setTimeout(() => errorMsg.style.opacity = '0', 3000);
+            }
+        });
+
+        // LOGOUT
+        function logout() {
+            location.reload();
+        }
+
+        // NAVIGATION HANDLERS
+        function selectPeriod(id) {
+            // Update UI Sidebar
+            document.querySelectorAll('.period-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Update Content Title
+            document.getElementById('period-title').innerText = `Documents - Période ${id}`;
+
+            // Auto switch to docs view if we act on sidebar
+            switchView('docs');
+        }
+
+        function switchView(viewName) {
+            // Tabs UI
+            document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Panels UI
+            document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(`view-${viewName}`).classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

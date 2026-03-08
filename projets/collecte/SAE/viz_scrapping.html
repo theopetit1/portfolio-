@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Données Démographiques France</title>
+
+    <!-- ================================================================== -->
+    <!-- IMPORTATION DES LIBRAIRIES -->
+    <!-- ================================================================== -->
+    <!-- Chart.js : Pour créer les graphiques (barres, courbes) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <!-- Leaflet : Pour la carte interactive -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <!-- Google Fonts : Police "Outfit" pour un look moderne -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================================================================== */
+        /* VARIABLES CSS (Thème Global) */
+        /* ================================================================== */
+        :root {
+            --primary: #3b82f6;
+            /* Bleu principal */
+            --secondary: #8b5cf6;
+            /* Violet secondaire */
+            --accent: #10b981;
+            /* Vert pour les valeurs positives */
+            --danger: #ef4444;
+            /* Rouge pour les valeurs négatives */
+            --dark: #0f172a;
+            /* Fond sombre */
+            --card-bg: rgba(30, 41, 59, 0.7);
+            /* Fond des cartes (semi-transparent) */
+            --text: #f8fafc;
+            /* Couleur du texte */
+            --text-muted: #94a3b8;
+            /* Texte secondaire (gris) */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            /* Défilement fluide lors du clic sur les liens */
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--dark);
+            /* Création du fond avec des dégradés radiaux (cercles de lumière) */
+            background-image:
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            /* Le fond reste fixe quand on scrolle */
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ================================================================== */
+        /* BARRE DE NAVIGATION (Navbar) */
+        /* ================================================================== */
+        .navbar {
+            position: fixed;
+            /* Reste collée en haut */
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            /* Fond semi-transparent */
+            backdrop-filter: blur(12px);
+            /* Effet de flou (Glassmorphism) */
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            /* Texte en dégradé */
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+        }
+
+        /* Ligne animée sous les liens au survol */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ================================================================== */
+        /* CONTENEUR PRINCIPAL & HERO */
+        /* ================================================================== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            /* Centrer le contenu */
+            padding: 7rem 2rem 4rem;
+            /* Padding top large pour compenser la navbar fixe */
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 1s ease-out;
+            /* Animation d'apparition */
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to bottom right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ================================================================== */
+        /* COMPOSANTS UI (Cartes, Contrôles, Grilles) */
+        /* ================================================================== */
+
+        /* Barre de contrôle (Sélecteurs d'années) */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        select {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            padding: 0.5rem 2.5rem 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Grilles pour la mise en page (2 ou 3 colonnes) */
+        .grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Style des Cartes (Blocs de contenu) */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            /* Effet de levée au survol */
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Indicateur coloré à gauche du titre */
+        .card-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Carte Leaflet */
+        #map {
+            height: 600px;
+            border-radius: 16px;
+            width: 100%;
+            z-index: 1;
+            background: #1a1d24;
+        }
+
+        /* Indicateurs Clés (KPIs) */
+        .kpi-value {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .kpi-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .positive {
+            color: var(--accent);
+        }
+
+        /* Vert */
+        .negative {
+            color: var(--danger);
+        }
+
+        /* Rouge */
+
+        /* Tableau de données */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1.25rem;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        td {
+            padding: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design (Mobile) */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* Cache les liens sur mobile */
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            /* Passe en 1 colonne */
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="menu.html" class="nav-logo">FRANCE DATA</a>
+        <div class="nav-links">
+            <a href="menu.html" class="nav-link">Accueil</a>
+            <a href="#overview" class="nav-link">Vue d'ensemble</a>
+            <a href="#map-section" class="nav-link">Carte</a>
+            <a href="#charts" class="nav-link">Statistiques</a>
+            <a href="#data" class="nav-link">Données</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- HEADER / HERO -->
+        <section id="overview" class="hero">
+            <h1>Dynamique Démographique</h1>
+            <p>Analyse interactive de l'évolution de la population des régions françaises métropolitaines.</p>
+        </section>
+
+        <!-- CONTROLES (Sélecteurs d'années) -->
+        <div class="controls">
+            <div class="select-wrapper">
+                <select id="year1"></select> <!-- Année de départ -->
+            </div>
+            <div style="color: var(--text-muted); font-weight: 600;">VS</div>
+            <div class="select-wrapper">
+                <select id="year2"></select> <!-- Année d'arrivée -->
+            </div>
+        </div>
+
+        <!-- KPIs (Chiffres Clés) -->
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="kpi-value" id="kpi-regions">0</div>
+                <div class="kpi-label">Régions Analysées</div>
+            </div>
+            <div class="card">
+                <div class="kpi-value" id="kpi-growth">0%</div>
+                <div class="kpi-label">Croissance Moyenne</div>
+            </div>
+            <div class="card">
+                <div class="kpi-value" id="kpi-delta">0</div>
+                <div class="kpi-label">Variation Totale</div>
+            </div>
+        </div>
+
+        <!-- CARTE -->
+        <section id="map-section" class="card" style="margin-bottom: 4rem;">
+            <div class="card-title">Répartition Géographique</div>
+            <div id="map"></div>
+        </section>
+
+        <!-- GRAPHIQUES -->
+        <section id="charts" class="grid grid-2">
+            <div class="card">
+                <div class="card-title">Taux d'Évolution par Région</div>
+                <div class="chart-container">
+                    <canvas id="chartTaux"></canvas> <!-- Canvas pour Chart.js -->
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">Variation en Volume</div>
+                <div class="chart-container">
+                    <canvas id="chartDelta"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- TABLEAU DE DONNÉES -->
+        <section id="data" class="card">
+            <div class="card-title">Données Détaillées</div>
+            <div class="table-container">
+                <table id="dataTable">
+                    <!-- Le contenu sera généré par JS -->
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- LOGIQUE JAVASCRIPT -->
+    <!-- ================================================================== -->
+                    <script>
+        // Variables globales pour stocker les données et les instances de graphiques
+                        let data = null;
+                        let map = null;
+                        let geojsonLayer = null;
+                        let chartTaux = null;
+                        let chartDelta = null;
+                        let regionsGeoJson = null;
+
+                        // --- 1. Initialisation de la Carte (Leaflet) ---
+                        function initMap() {
+                            map = L.map('map', {
+                                center: [46.603354, 1.888334], // Centré sur la France
+                                zoom: 6,
+                                // Désactivation des interactions pour une vue statique propre
+                                dragging: false,
+                                touchZoom: false,
+                                doubleClickZoom: false,
+                                scrollWheelZoom: false,
+                                boxZoom: false,
+                                keyboard: false,
+                                zoomControl: false,
+                                attributionControl: false
+                            });
+
+                        // Ajout du fond de carte (Tiles) style "Dark Matter"
+                        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                            opacity: 0.9,
+                        attribution: '&copy; OpenStreetMap &copy; CartoDB'
+            }).addTo(map);
+
+                        addLegend(); // Ajout de la légende après l'initialisation de la carte
+        }
+
+        // --- 2. Chargement des Données ---
+        window.addEventListener('DOMContentLoaded', () => {
+                            initMap();
+
+                        // Chargement parallèle du CSV et du GeoJSON
+                        Promise.all([
+                fetch('communes_plus_peuplees.csv').then(r => r.text()),
+                fetch('regions.geojson').then(r => r.json())
+            ]).then(([csvText, geoJsonData]) => {
+                            regionsGeoJson = geoJsonData;
+                        parseCSV(csvText);
+            }).catch(console.error);
+        });
+
+                        // Écouteurs d'événements sur les sélecteurs d'années
+                        document.getElementById('year1').addEventListener('change', updateVisualization);
+                        document.getElementById('year2').addEventListener('change', updateVisualization);
+
+                        // --- 3. Parsing du CSV ---
+                        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            const headers = lines[0].split(',').map(h => h.trim());
+
+                        data = {headers, rows: [], years: [] };
+
+            // Extraction des années disponibles depuis les en-têtes (ex: "Population 2022")
+            headers.forEach(h => {
+                if (h.startsWith('Population ')) {
+                    const year = parseInt(h.split(' ')[1]);
+                        if (!isNaN(year)) data.years.push(year);
+                }
+            });
+            data.years.sort((a, b) => b - a); // Tri décroissant
+
+                        // Lecture ligne par ligne
+                        for (let i = 1; i < lines.length; i++) {
+                // Découpage CSV simple (attention aux virgules dans les guillemets si complexe)
+                const values = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.trim().replace(/^"|"$/g, ''));
+                if (values.length >= headers.length) {
+                    const row = { };
+                    headers.forEach((header, idx) => {
+                            row[header] = values[idx];
+                    });
+                        data.rows.push(row);
+                }
+            }
+
+                        populateYearSelects();
+                        aggregateByRegion();
+        }
+
+                        // Remplissage des menus déroulants avec les années trouvées
+                        function populateYearSelects() {
+            const y1 = document.getElementById('year1');
+                        const y2 = document.getElementById('year2');
+                        y1.innerHTML = ''; y2.innerHTML = '';
+
+            data.years.forEach(year => {
+                            y1.add(new Option(year, year));
+                        y2.add(new Option(year, year));
+            });
+
+            // Sélection par défaut : Plus récent vs Plus ancien
+            if (data.years.length > 1) {
+                            y2.selectedIndex = 0;
+                        y1.selectedIndex = data.years.length - 1;
+            }
+        }
+
+                        // --- 4. Agrégation des Données par Région ---
+                        function aggregateByRegion() {
+            const aggregated = { };
+
+            data.rows.forEach(row => {
+                const region = row['Région'] || 'Inconnu';
+                        if (region === 'Inconnu') return;
+
+                        if (!aggregated[region]) {
+                            aggregated[region] = {};
+                    data.years.forEach(y => aggregated[region][`Population ${y}`] = 0);
+                }
+
+                // Somme des populations pour chaque année
+                data.years.forEach(year => {
+                    const col = `Population ${year}`;
+                        let valStr = row[col] || '0';
+                        valStr = valStr.replace(/\s/g, '').replace(/\u00a0/g, ''); // Nettoyage des espaces
+                        const value = parseFloat(valStr) || 0;
+                        aggregated[region][col] += value;
+                });
+            });
+
+            // Conversion en tableau d'objets
+            data.aggregated = Object.entries(aggregated).map(([region, values]) => ({
+                            region,
+                ...values
+            }));
+
+                        updateVisualization();
+        }
+
+                        // --- 5. Mise à jour de l'Interface ---
+                        function updateVisualization() {
+            if (!data || !data.aggregated) return;
+
+                        const year1 = parseInt(document.getElementById('year1').value);
+                        const year2 = parseInt(document.getElementById('year2').value);
+
+                        const col1 = `Population ${year1}`;
+                        const col2 = `Population ${year2}`;
+
+            // Calcul des deltas et taux pour chaque région
+            const enriched = data.aggregated.map(d => {
+                const pop1 = d[col1] || 0;
+                        const pop2 = d[col2] || 0;
+                        const delta = pop2 - pop1;
+                const taux = pop1 > 0 ? (delta / pop1) * 100 : 0;
+                        return {...d, pop1, pop2, delta, taux};
+            }).filter(d => d.pop2 > 0);
+
+                        updateKPIs(enriched);
+                        updateMap(enriched, year1, year2);
+                        updateCharts(enriched);
+                        updateTable(enriched, year1, year2);
+        }
+
+                        // Mise à jour des chiffres clés (KPIs)
+                        function updateKPIs(data) {
+            const nbRegions = data.length;
+            const totalDelta = data.reduce((sum, d) => sum + d.delta, 0);
+            const totalPop1 = data.reduce((sum, d) => sum + d.pop1, 0);
+            const avgGrowth = totalPop1 > 0 ? (totalDelta / totalPop1) * 100 : 0;
+
+                        document.getElementById('kpi-regions').textContent = nbRegions;
+
+                        const growthEl = document.getElementById('kpi-growth');
+            growthEl.textContent = (avgGrowth > 0 ? '+' : '') + avgGrowth.toFixed(2) + '%';
+            growthEl.className = 'kpi-value ' + (avgGrowth >= 0 ? 'positive' : 'negative');
+
+                        const deltaEl = document.getElementById('kpi-delta');
+            deltaEl.textContent = (totalDelta > 0 ? '+' : '') + formatNumber(Math.round(totalDelta));
+            deltaEl.className = 'kpi-value ' + (totalDelta >= 0 ? 'positive' : 'negative');
+        }
+
+                        // Mise à jour de la carte (Choroplèthe + Labels)
+                        function updateMap(data, year1, year2) {
+            if (!regionsGeoJson) return;
+
+                        // Nettoyage des couches précédentes
+                        if (geojsonLayer) map.removeLayer(geojsonLayer);
+
+            // Nettoyage des labels existants (s'il y en a, on pourrait les stocker dans un layerGroup)
+            map.eachLayer(layer => {
+                if (layer.options && layer.options.className === 'region-label') {
+                            map.removeLayer(layer);
+                }
+            });
+
+                        // Création d'un dictionnaire pour accès rapide aux données par région
+                        const regionData = { };
+            data.forEach(d => {
+                            regionData[d.region] = d;
+            });
+
+                        // Fonction de style pour colorer les régions
+                        function style(feature) {
+                const regionName = feature.properties.nom;
+                        const d = regionData[regionName];
+
+                        let color = '#333'; // Gris par défaut
+                        let opacity = 0.2;
+
+                        if (d) {
+                    // Couleur basée sur le taux d'évolution
+                    // Vert si positif, Rouge si négatif
+                    // Opacité basée sur l'intensité (max 5%)
+                    const intensity = Math.min(Math.abs(d.taux) / 5, 1);
+                    color = d.taux >= 0 ? '#10b981' : '#ef4444';
+                        opacity = 0.3 + (intensity * 0.7); // Min 0.3, Max 1.0
+                }
+
+                        return {
+                            fillColor: color,
+                        weight: 1,
+                        opacity: 1,
+                        color: 'white',
+                        dashArray: '3',
+                        fillOpacity: opacity
+                };
+            }
+
+                        // Ajout de la couche GeoJSON
+                        geojsonLayer = L.geoJson(regionsGeoJson, {
+                            style: style,
+                        onEachFeature: function (feature, layer) {
+                    const regionName = feature.properties.nom;
+                        const d = regionData[regionName];
+
+                        // Ajout du label (Nom de la région)
+                        if (layer.getBounds) {
+                        const center = layer.getBounds().getCenter();
+                        L.marker(center, {
+                            icon: L.divIcon({
+                            className: 'region-label',
+                        html: `<div style="
+                                    text-shadow: 0 2px 4px rgba(0,0,0,0.8); 
+                                    color: white; 
+                                    font-weight: 600; 
+                                    font-size: 0.75rem; 
+                                    text-align: center; 
+                                    width: 100px;
+                                    margin-left: -50px;
+                                ">${regionName}</div>`,
+                        iconSize: [0, 0] // Taille nulle pour ne pas gêner
+                            })
+                        }).addTo(map);
+                    }
+
+                        if (d) {
+                            layer.bindPopup(`
+                            <div style="color: #333; font-family: 'Outfit', sans-serif;">
+                                <strong style="font-size: 1.1em;">${regionName}</strong><br/>
+                                <div style="margin-top: 5px; font-size: 0.9em;">
+                                    Pop. ${year2}: <b>${formatNumber(Math.round(d.pop2))}</b><br/>
+                                    Évolution: <span style="color: ${d.taux >= 0 ? '#10b981' : '#ef4444'}">
+                                        ${d.taux > 0 ? '+' : ''}${d.taux.toFixed(2)}%
+                                    </span>
+                                </div>
+                            </div>
+                        `);
+                    }
+                }
+            }).addTo(map);
+        }
+
+                        // Mise à jour des graphiques (Chart.js)
+                        function updateCharts(data) {
+            const sortedByTaux = [...data].sort((a, b) => b.taux - a.taux);
+            const sortedByDelta = [...data].sort((a, b) => b.delta - a.delta);
+
+                        const ctxTaux = document.getElementById('chartTaux').getContext('2d');
+                        const ctxDelta = document.getElementById('chartDelta').getContext('2d');
+
+                        if (chartTaux) chartTaux.destroy();
+                        if (chartDelta) chartDelta.destroy();
+
+                        const commonOptions = {
+                            responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#cbd5e1',
+                        padding: 10,
+                        cornerRadius: 8,
+                        displayColors: false
+                    }
+                },
+                        scales: {
+                            y: {
+                            grid: {color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: {color: '#94a3b8' }
+                    },
+                        x: {
+                            grid: {display: false },
+                        ticks: {color: '#94a3b8' }
+                    }
+                }
+            };
+
+                        // Graphique 1 : Taux d'évolution
+                        chartTaux = new Chart(ctxTaux, {
+                            type: 'bar',
+                        data: {
+                            labels: sortedByTaux.map(d => d.region),
+                        datasets: [{
+                            data: sortedByTaux.map(d => d.taux),
+                        backgroundColor: sortedByTaux.map(d => d.taux >= 0 ? '#10b981' : '#ef4444'),
+                        borderRadius: 4
+                    }]
+                },
+                        options: commonOptions
+            });
+
+                        // Graphique 2 : Variation en volume
+                        chartDelta = new Chart(ctxDelta, {
+                            type: 'bar',
+                        data: {
+                            labels: sortedByDelta.map(d => d.region),
+                        datasets: [{
+                            data: sortedByDelta.map(d => d.delta),
+                        backgroundColor: sortedByDelta.map(d => d.delta >= 0 ? '#3b82f6' : '#ef4444'),
+                        borderRadius: 4
+                    }]
+                },
+                        options: commonOptions
+            });
+        }
+
+                        // Mise à jour du tableau HTML
+                        function updateTable(data, year1, year2) {
+            const sorted = [...data].sort((a, b) => b.pop2 - a.pop2);
+                        const tbody = document.getElementById('dataTable');
+
+                        let html = `
+                        <thead>
+                            <tr>
+                                <th>Région</th>
+                                <th>Population ${year1}</th>
+                                <th>Population ${year2}</th>
+                                <th>Variation</th>
+                                <th>Taux</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            `;
+
+            sorted.forEach(d => {
+                                html += `
+                    <tr>
+                        <td style="font-weight: 600;">${d.region}</td>
+                        <td>${formatNumber(Math.round(d.pop1))}</td>
+                        <td>${formatNumber(Math.round(d.pop2))}</td>
+                        <td class="${d.delta >= 0 ? 'positive' : 'negative'}">
+                            ${d.delta > 0 ? '+' : ''}${formatNumber(Math.round(d.delta))}
+                        </td>
+                        <td class="${d.taux >= 0 ? 'positive' : 'negative'}">
+                            ${d.taux > 0 ? '+' : ''}${d.taux.toFixed(2)}%
+                        </td>
+                    </tr>
+                `;
+            });
+                            html += '</tbody>';
+                        tbody.innerHTML = html;
+        }
+
+                        // --- 6. Ajout de la Légende (Fonction appelée dans initMap) ---
+                        function addLegend() {
+            var legend = L.control({position: 'bottomleft'});
+
+                        legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend');
+                        // Styles injectés directement ou via classe CSS définie plus haut
+                        div.style.backgroundColor = 'rgba(15, 23, 42, 0.9)';
+                        div.style.padding = '15px';
+                        div.style.borderRadius = '12px';
+                        div.style.color = '#f8fafc';
+                        div.style.fontFamily = "'Outfit', sans-serif";
+                        div.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                        div.style.border = '1px solid rgba(255,255,255,0.1)';
+                        div.style.backdropFilter = 'blur(10px)';
+                        div.style.marginBottom = '20px'; // Marge du bas
+                        div.style.marginLeft = '20px';   // Marge de gauche
+
+                        // Contenu HTML de la légende
+                        div.innerHTML = `
+                        <h4 style="margin: 0 0 10px 0; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8;">Évolution</h4>
+                        <div style="display: flex; align-items: center; height: 150px;">
+                            <div style="
+                            width: 12px; 
+                            height: 100%; 
+                            background: linear-gradient(to top, #ef4444, #10b981); 
+                            border-radius: 6px; 
+                            margin-right: 12px;
+                            position: relative;
+                        "></div>
+                            <div style="
+                            display: flex; 
+                            flex-direction: column; 
+                            justify-content: space-between; 
+                            height: 100%; 
+                            font-size: 0.85rem; 
+                            font-weight: 500;
+                        ">
+                                <div style="color: #10b981;">Positive</div>
+                                <div style="color: #94a3b8;">0%</div>
+                                <div style="color: #ef4444;">Négative</div>
+                            </div>
+                        </div>
+                `;
+                return div;
+            };
+
+            legend.addTo(map);
+        }
+
+        // Utilitaire pour formater les nombres (ex: 1000 -> 1 000)
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+    </script>
+</body>
+
+</html>

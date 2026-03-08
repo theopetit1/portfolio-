@@ -1,0 +1,98 @@
+================================================================================
+PROJET : BASE DE DONNÉES CLINIQUE DENTAIRE "DENTISSIMO"
+Rapport de Réalisation Technique
+Date : 01 Décembre 2024
+Auteur(s) : Gabriel.SAGOT / Théo.PETIT
+================================================================================
+
+1. CONTEXTE ET OBJECTIFS
+--------------------------------------------------------------------------------
+Dans le cadre de la modernisation du système d'information de la clinique Dentissimo,
+ce projet visait à concevoir et déployer une base de données relationnelle Oracle
+robuste. L'objectif était de centraliser la gestion des patients, des soins, des
+stocks et du personnel, tout en assurant un suivi précis de l'état buccal et dentaire.
+
+2. PHASE 1 : CONCEPTION ET MODÉLISATION
+--------------------------------------------------------------------------------
+La première étape a consisté à structurer les données pour répondre aux règles de
+gestion complexes de la clinique.
+
+A. Modèle Conceptuel de Données (MCD)
+   - Identification des entités clés : Patient, Personnel, Acte Médical, etc.
+   - Modélisation spécifique du métier dentaire : Entités "Dent", "État_Dent",
+     "Anomalie", "Restauration".
+   - Définition des relations et des cardinalités.
+
+B. Modèle Logique de Données (MLD)
+   - Transformation des entités en tables relationnelles.
+   - Définition des clés primaires (PK) et étrangères (FK) pour assurer
+     l'intégrité référentielle.
+   - Normalisation (3NF) pour éviter les redondances.
+
+3. PHASE 2 : IMPLÉMENTATION TECHNIQUE (DDL)
+--------------------------------------------------------------------------------
+Traduction du modèle logique en langage SQL Oracle.
+
+- Script : `create_table.sql`
+- Création de 19 tables interconnectées.
+- Implémentation de contraintes strictes pour garantir la qualité des données :
+  - CHECK constraints (ex: Sexe 'M'/'F', Montants positifs, Dates logiques).
+  - UNIQUE constraints (ex: Numéro de Sécurité Sociale, Email).
+- Création d'index (`index.sql`) pour optimiser les performances des requêtes
+  fréquentes (recherche par nom, date, type de soin).
+
+4. PHASE 3 : CONSTITUTION DU JEU DE DONNÉES (DML)
+--------------------------------------------------------------------------------
+Peuplement de la base avec un jeu de données réaliste et cohérent pour valider
+le fonctionnement et permettre les analyses.
+
+- Stratégie d'insertion séquentielle (respect des dépendances) :
+  1. Données référentielles (`03a_insertions_base.sql`) : Villes, Pays, Franchises.
+  2. Données patients (`03b_insertions_patient.sql`) : Dossiers, identités.
+  3. Activité médicale (`03c_insertions_soins_partie1 & 2.sql`) : Traitements,
+     Actes, Paiements, Commandes.
+  4. État clinique (`03d_etat_buccal.sql`) : Historique dentaire, anomalies.
+
+- Actions correctives effectuées :
+  - Nettoyage des scripts pour éliminer les violations de clés étrangères (orphelins).
+  - Correction des formats de données (Dates, Encodage).
+  - Ajustement des valeurs pour respecter les contraintes (ex: terminologie masculine/féminine).
+
+5. PHASE 4 : ENVIRONNEMENT DE DÉPLOIEMENT
+--------------------------------------------------------------------------------
+Mise en place d'une infrastructure locale légère et reproductible.
+
+- Architecture : Docker sur macOS (Architecture Apple Silicon/ARM64).
+- Moteur de Base de Données : Oracle Database 23c Free (Image `gvenzl/oracle-free`).
+- Configuration : Fichier `docker-compose.yml` gérant :
+  - Le service de base de données.
+  - La persistance des données (Volume `oradata`).
+  - L'exposition du port 1521 pour l'accès externe.
+
+6. PHASE 5 : AUTOMATISATION ET VALIDATION
+--------------------------------------------------------------------------------
+Mise en place d'outils pour faciliter le déploiement et la recette.
+
+A. Script d'Orchestration (`run_all.sql`)
+   - Permet le déploiement complet de la base en une seule commande.
+   - Enchaîne : Nettoyage (Drop) -> Création -> Insertions -> Indexation.
+
+B. Script d'Analyse et Reporting (`analyse.sql`)
+   - Couverture complète des 8 axes analytiques du cahier des charges (A à H).
+   - Production de métriques clés :
+     - Profil patientèle et fidélité.
+     - Rentabilité par acte et par praticien.
+     - Suivi des stocks et équipements.
+     - Analyse épidémiologique (fréquence des anomalies dentaires).
+
+C. Tests d'Intégration
+   - Validation de la connexion via SQL*Plus (CLI).
+   - Validation de l'accès via interface graphique (DBeaver).
+   - Vérification de la cohérence des données (Row counts, intégrité).
+
+================================================================================
+BILAN
+================================================================================
+Le projet est finalisé et conforme aux attentes. L'infrastructure Docker assure
+une portabilité totale, et les scripts SQL garantissent la reproductibilité
+de la base de données et des analyses.

@@ -1,0 +1,295 @@
+Rang,Code INSEE,Commune,URL Wikipédia,Département,Statut,Région,Population 2023,Population 2017,Population 2012,Population 2007,Population 1999
+1,75056,Paris,https://fr.wikipedia.org/wiki/Paris,Paris,Préfecture et capitale,Île-de-France,2103778,2187526,2240621,2193030,2125246
+2,13055,Marseille,https://fr.wikipedia.org/wiki/Marseille,Bouches-du-Rhône,Préfecture,Provence-Alpes-Côte d'Azur,886040,863310,852516,852395,798430
+3,69123,Lyon,https://fr.wikipedia.org/wiki/Lyon,Métropole de Lyon,Préfecture,Auvergne-Rhône-Alpes,519127,516092,496343,472330,445452
+4,31555,Toulouse,https://fr.wikipedia.org/wiki/Toulouse,Haute-Garonne,Préfecture,Occitanie,514819,479553,453317,439453,390350
+5,06088,Nice,https://fr.wikipedia.org/wiki/Nice,Alpes-Maritimes,Préfecture,Provence-Alpes-Côte d'Azur,357737,340017,343629,348721,342738
+6,44109,Nantes,https://fr.wikipedia.org/wiki/Nantes,Loire-Atlantique,Préfecture,Pays de la Loire,327734,309346,291604,283025,270251
+7,34172,Montpellier,https://fr.wikipedia.org/wiki/Montpellier,Hérault,Préfecture,Occitanie,310240,285121,268456,253712,225392
+8,67482,Strasbourg,https://fr.wikipedia.org/wiki/Strasbourg,Bas-Rhin,Préfecture,Grand Est,293771,280966,274394,272123,264115
+9,33063,Bordeaux,https://fr.wikipedia.org/wiki/Bordeaux,Gironde,Préfecture,Nouvelle-Aquitaine,267991,254436,241287,235178,215363
+10,59350,Lille,https://fr.wikipedia.org/wiki/Lille,Nord,Préfecture,Hauts-de-France,238246,232787,228652,225789,212597
+11,35238,Rennes,https://fr.wikipedia.org/wiki/Rennes,Ille-et-Vilaine,Préfecture,Bretagne,230890,216815,209860,207922,206229
+12,83137,Toulon,https://fr.wikipedia.org/wiki/Toulon,Var,Préfecture,Provence-Alpes-Côte d'Azur,179116,171953,164899,166537,160639
+13,51454,Reims,https://fr.wikipedia.org/wiki/Reims,Marne,Sous-préfecture,Grand Est,177674,182460,181893,183500,187206
+14,42218,Saint-Étienne,https://fr.wikipedia.org/wiki/Saint-Étienne,Loire,Préfecture,Auvergne-Rhône-Alpes,173136,172565,171483,175318,180210
+15,76351,Le Havre,https://fr.wikipedia.org/wiki/Le_Havre,Seine-Maritime,Sous-préfecture,Normandie,166687,170147,173142,179751,190905
+16,69266,Villeurbanne,https://fr.wikipedia.org/wiki/Villeurbanne,Métropole de Lyon,—,Auvergne-Rhône-Alpes,163684,147712,146282,138151,124215
+17,21231,Dijon,https://fr.wikipedia.org/wiki/Dijon,Côte-d'Or,Préfecture,Bourgogne-Franche-Comté,161830,156920,152071,151543,149867
+18,49007,Angers,https://fr.wikipedia.org/wiki/Angers,Maine-et-Loire,Préfecture,Pays de la Loire,159022,152960,149017,151108,151279
+19,38185,Grenoble,https://fr.wikipedia.org/wiki/Grenoble,Isère,Préfecture,Auvergne-Rhône-Alpes,156140,158454,158346,156793,153317
+21,30189,Nîmes,https://fr.wikipedia.org/wiki/Nîmes,Gard,Préfecture,Occitanie,151839,150610,146709,143468,133424
+22,13001,Aix-en-Provence,https://fr.wikipedia.org/wiki/Aix-en-Provence,Bouches-du-Rhône,Sous-préfecture,Provence-Alpes-Côte d'Azur,149695,142482,141148,143404,134222
+23,93066,Saint-Denis,https://fr.wikipedia.org/wiki/Saint-Denis,Seine-Saint-Denis,Sous-préfecture,Île-de-France,149077,141441,136199,129138,111648
+24,63113,Clermont-Ferrand,https://fr.wikipedia.org/wiki/Clermont-Ferrand,Puy-de-Dôme,Préfecture,Auvergne-Rhône-Alpes,146351,143886,141569,139501,137140
+25,72181,Le Mans,https://fr.wikipedia.org/wiki/Le_Mans,Sarthe,Préfecture,Pays de la Loire,146249,142946,143599,144164,146105
+26,29019,Brest,https://fr.wikipedia.org/wiki/Brest,Finistère,Sous-préfecture,Bretagne,142346,140064,139676,142722,149634
+27,37261,Tours,https://fr.wikipedia.org/wiki/Tours,Indre-et-Loire,Préfecture,Centre-Val de Loire,139259,135787,134978,136578,132820
+28,80021,Amiens,https://fr.wikipedia.org/wiki/Amiens,Somme,Préfecture,Hauts-de-France,136449,134057,132727,134737,135501
+29,74010,Annecy,https://fr.wikipedia.org/wiki/Annecy,Haute-Savoie,Préfecture,Auvergne-Rhône-Alpes,132117,126924,119454,116877,112379
+30,87085,Limoges,https://fr.wikipedia.org/wiki/Limoges,Haute-Vienne,Préfecture,Nouvelle-Aquitaine,129937,132175,136221,138882,133968
+31,57463,Metz,https://fr.wikipedia.org/wiki/Metz,Moselle,Préfecture,Grand Est,122572,116429,119551,123580,123776
+32,66136,Perpignan,https://fr.wikipedia.org/wiki/Perpignan,Pyrénées-Orientales,Préfecture,Occitanie,121616,120158,120489,116041,105115
+33,92012,Boulogne-Billancourt,https://fr.wikipedia.org/wiki/Boulogne-Billancourt,Hauts-de-Seine,Sous-préfecture,Île-de-France,119019,120071,117126,111045,106367
+34,25056,Besançon,https://fr.wikipedia.org/wiki/Besançon,Doubs,Préfecture,Bourgogne-Franche-Comté,118489,115934,116353,117836,117733
+35,76540,Rouen,https://fr.wikipedia.org/wiki/Rouen,Seine-Maritime,Préfecture,Normandie,117662,110145,111557,108569,106592
+36,45234,Orléans,https://fr.wikipedia.org/wiki/Orléans,Loiret,Préfecture,Centre-Val de Loire,116357,116685,114286,113234,113126
+37,93048,Montreuil,https://fr.wikipedia.org/wiki/Montreuil,Seine-Saint-Denis,—,Île-de-France,111934,109897,103520,102097,90674
+38,14118,Caen,https://fr.wikipedia.org/wiki/Caen,Calvados,Préfecture,Normandie,109400,105354,108365,109630,113987
+40,95018,Argenteuil,https://fr.wikipedia.org/wiki/Argenteuil,Val-d'Oise,Sous-préfecture,Île-de-France,106130,110210,104962,102572,93961
+41,68224,Mulhouse,https://fr.wikipedia.org/wiki/Mulhouse,Haut-Rhin,Sous-préfecture,Grand Est,104978,109443,110755,111394,110359
+42,54395,Nancy,https://fr.wikipedia.org/wiki/Nancy,Meurthe-et-Moselle,Préfecture,Grand Est,103671,104286,105067,105349,103605
+43,59599,Tourcoing,https://fr.wikipedia.org/wiki/Tourcoing,Nord,—,Hauts-de-France,98772,97368,92707,92118,93540
+44,59512,Roubaix,https://fr.wikipedia.org/wiki/Roubaix,Nord,—,Hauts-de-France,98286,96990,94536,97423,96984
+45,92050,Nanterre,https://fr.wikipedia.org/wiki/Nanterre,Hauts-de-Seine,Préfecture,Île-de-France,97783,95105,90722,88875,84281
+46,94081,Vitry-sur-Seine,https://fr.wikipedia.org/wiki/Vitry-sur-Seine,Val-de-Marne,—,Île-de-France,93963,93557,88102,83650,78908
+47,92004,Asnières-sur-Seine,https://fr.wikipedia.org/wiki/Asnières-sur-Seine,Hauts-de-Seine,—,Île-de-France,93941,85191,83845,82056,75837
+48,94028,Créteil,https://fr.wikipedia.org/wiki/Créteil,Val-de-Marne,Préfecture,Île-de-France,93397,90605,89845,89410,82154
+49,84007,Avignon,https://fr.wikipedia.org/wiki/Avignon,Vaucluse,Préfecture,Provence-Alpes-Côte d'Azur,92188,91921,89380,91283,85935
+50,92025,Colombes,https://fr.wikipedia.org/wiki/Colombes,Hauts-de-Seine,—,Île-de-France,91053,85177,85357,82552,76757
+51,86194,Poitiers,https://fr.wikipedia.org/wiki/Poitiers,Vienne,Préfecture,Nouvelle-Aquitaine,89916,88291,87646,89253,83448
+52,93001,Aubervilliers,https://fr.wikipedia.org/wiki/Aubervilliers,Seine-Saint-Denis,—,Île-de-France,88365,86375,77032,73699,63136
+53,93005,Aulnay-sous-Bois,https://fr.wikipedia.org/wiki/Aulnay-sous-Bois,Seine-Saint-Denis,—,Île-de-France,87599,85740,81899,82513,80021
+54,59183,Dunkerque,https://fr.wikipedia.org/wiki/Dunkerque,Nord,Sous-préfecture,Hauts-de-France,86263,87353,90995,93825,97957
+56,78646,Versailles,https://fr.wikipedia.org/wiki/Versailles,Yvelines,Préfecture,Île-de-France,84095,85862,85424,86979,85726
+57,92026,Courbevoie,https://fr.wikipedia.org/wiki/Courbevoie,Hauts-de-Seine,—,Île-de-France,82902,81719,86854,84974,69694
+58,92063,Rueil-Malmaison,https://fr.wikipedia.org/wiki/Rueil-Malmaison,Hauts-de-Seine,—,Île-de-France,82874,78152,79563,78145,73469
+60,34032,Béziers,https://fr.wikipedia.org/wiki/Béziers,Hérault,Sous-préfecture,Occitanie,81545,77177,72970,72462,69153
+61,64445,Pau,https://fr.wikipedia.org/wiki/Pau,Pyrénées-Atlantiques,Préfecture,Nouvelle-Aquitaine,80441,77130,78506,84978,78732
+62,17300,La Rochelle,https://fr.wikipedia.org/wiki/La_Rochelle,Charente-Maritime,Préfecture,Nouvelle-Aquitaine,79851,75735,74123,76848,76584
+63,50129,Cherbourg-en-Cotentin,https://fr.wikipedia.org/wiki/Cherbourg-en-Cotentin,Manche,Sous-préfecture,Normandie,78258,79200,81103,85149,88588
+64,33281,Mérignac,https://fr.wikipedia.org/wiki/Mérignac,Gironde,—,Nouvelle-Aquitaine,78090,70105,66660,66002,61992
+65,94017,Champigny-sur-Marne,https://fr.wikipedia.org/wiki/Champigny-sur-Marne,Val-de-Marne,—,Île-de-France,78072,77630,75869,74909,74237
+66,06004,Antibes,https://fr.wikipedia.org/wiki/Antibes,Alpes-Maritimes,—,Provence-Alpes-Côte d'Azur,77637,72999,75568,75770,72412
+67,94068,Saint-Maur-des-Fossés,https://fr.wikipedia.org/wiki/Saint-Maur-des-Fossés,Val-de-Marne,—,Île-de-France,76572,74859,74176,75748,73069
+68,2A004,Ajaccio,https://fr.wikipedia.org/wiki/Ajaccio,Corse-du-Sud,Préfecture,Corse,76320,70659,66245,64432,52880
+70,44184,Saint-Nazaire,https://fr.wikipedia.org/wiki/Saint-Nazaire,Loire-Atlantique,Sous-préfecture,Pays de la Loire,74568,69993,67940,68522,65874
+71,06029,Cannes,https://fr.wikipedia.org/wiki/Cannes,Alpes-Maritimes,—,Provence-Alpes-Côte d'Azur,74350,73868,73603,70829,67304
+72,93051,Noisy-le-Grand,https://fr.wikipedia.org/wiki/Noisy-le-Grand,Seine-Saint-Denis,—,Île-de-France,72978,68183,62592,62529,58217
+73,93029,Drancy,https://fr.wikipedia.org/wiki/Drancy,Seine-Saint-Denis,—,Île-de-France,72390,71318,67181,65843,62263
+74,95127,Cergy,https://fr.wikipedia.org/wiki/Cergy,Val-d'Oise,Préfecture,Île-de-France,70906,65177,60528,57600,54781
+75,92044,Levallois-Perret,https://fr.wikipedia.org/wiki/Levallois-Perret,Hauts-de-Seine,—,Île-de-France,68092,64379,64654,63225,54700
+76,92040,Issy-les-Moulineaux,https://fr.wikipedia.org/wiki/Issy-les-Moulineaux,Hauts-de-Seine,—,Île-de-France,67669,68451,65322,62316,52647
+77,62193,Calais,https://fr.wikipedia.org/wiki/Calais,Pas-de-Calais,Sous-préfecture,Hauts-de-France,67571,73911,72589,75293,77333
+78,33318,Pessac,https://fr.wikipedia.org/wiki/Pessac,Gironde,—,Nouvelle-Aquitaine,67339,63808,59223,57851,56143
+79,68066,Colmar,https://fr.wikipedia.org/wiki/Colmar,Haut-Rhin,Préfecture,Grand Est,66970,69105,67257,66560,65136
+80,91228,Évry-Courcouronnes,https://fr.wikipedia.org/wiki/Évry-Courcouronnes,Essonne,Préfecture,Île-de-France,66919,67967,65951,67138,63391
+81,69259,Vénissieux,https://fr.wikipedia.org/wiki/Vénissieux,Métropole de Lyon,—,Auvergne-Rhône-Alpes,65502,65894,61183,56935,56061
+82,94041,Ivry-sur-Seine,https://fr.wikipedia.org/wiki/Ivry-sur-Seine,Val-de-Marne,—,Île-de-France,65064,62052,58579,55583,50972
+83,26362,Valence,https://fr.wikipedia.org/wiki/Valence,Drôme,Préfecture,Auvergne-Rhône-Alpes,64458,63714,62481,64803,64260
+84,92024,Clichy,https://fr.wikipedia.org/wiki/Clichy,Hauts-de-Seine,—,Île-de-France,64410,61070,59240,58646,50179
+85,29232,Quimper,https://fr.wikipedia.org/wiki/Quimper,Finistère,Préfecture,Bretagne,64385,62985,63360,63961,63238
+86,92002,Antony,https://fr.wikipedia.org/wiki/Antony,Hauts-de-Seine,Sous-préfecture,Île-de-France,64263,62570,61624,61761,59855
+87,18033,Bourges,https://fr.wikipedia.org/wiki/Bourges,Cher,Préfecture,Centre-Val de Loire,64186,64551,66666,71155,72480
+88,83126,La Seyne-sur-Mer,https://fr.wikipedia.org/wiki/La_Seyne-sur-Mer,Var,—,Provence-Alpes-Côte d'Azur,63732,63936,63902,58252,60188
+89,82121,Montauban,https://fr.wikipedia.org/wiki/Montauban,Tarn-et-Garonne,Préfecture,Occitanie,62945,60810,56887,55438,51855
+90,59009,Villeneuve-d'Ascq,https://fr.wikipedia.org/wiki/Villeneuve-d'Ascq,Nord,—,Hauts-de-France,62868,63408,62308,61630,65042
+92,93007,Le Blanc-Mesnil,https://fr.wikipedia.org/wiki/Le_Blanc-Mesnil,Seine-Saint-Denis,—,Île-de-France,62376,56783,52213,50910,46936
+93,10387,Troyes,https://fr.wikipedia.org/wiki/Troyes,Aube,Préfecture,Grand Est,62088,61652,60009,61823,60958
+94,93055,Pantin,https://fr.wikipedia.org/wiki/Pantin,Seine-Saint-Denis,—,Île-de-France,61929,57482,53060,53315,49919
+95,94076,Villejuif,https://fr.wikipedia.org/wiki/Villejuif,Val-de-Marne,—,Île-de-France,60183,54753,56504,51410,47384
+96,73065,Chambéry,https://fr.wikipedia.org/wiki/Chambéry,Savoie,Préfecture,Auvergne-Rhône-Alpes,59964,58919,58039,57420,55786
+97,79191,Niort,https://fr.wikipedia.org/wiki/Niort,Deux-Sèvres,Préfecture,Nouvelle-Aquitaine,59854,58707,57607,58576,56663
+98,83061,Fréjus,https://fr.wikipedia.org/wiki/Fréjus,Var,—,Provence-Alpes-Côte d'Azur,59719,52672,52532,52436,46801
+99,92051,Neuilly-sur-Seine,https://fr.wikipedia.org/wiki/Neuilly-sur-Seine,Hauts-de-Seine,—,Île-de-France,59538,60361,62021,60454,59848
+100,95585,Sarcelles,https://fr.wikipedia.org/wiki/Sarcelles,Val-d'Oise,Sous-préfecture,Île-de-France,59173,58587,57499,59594,57871
+102,92023,Clamart,https://fr.wikipedia.org/wiki/Clamart,Hauts-de-Seine,—,Île-de-France,58576,52971,52408,51000,48572
+103,56121,Lorient,https://fr.wikipedia.org/wiki/Lorient,Morbihan,Sous-préfecture,Bretagne,58329,57149,57706,58135,59189
+104,11262,Narbonne,https://fr.wikipedia.org/wiki/Narbonne,Aude,Sous-préfecture,Occitanie,57587,54700,51869,51306,46510
+105,93008,Bobigny,https://fr.wikipedia.org/wiki/Bobigny,Seine-Saint-Denis,Préfecture,Île-de-France,56927,53640,48496,48196,44079
+106,77284,Meaux,https://fr.wikipedia.org/wiki/Meaux,Seine-et-Marne,Sous-préfecture,Île-de-France,56905,54991,53623,48466,49421
+107,94046,Maisons-Alfort,https://fr.wikipedia.org/wiki/Maisons-Alfort,Val-de-Marne,—,Île-de-France,56799,55655,54186,53085,51103
+108,83069,Hyères,https://fr.wikipedia.org/wiki/Hyères,Var,—,Provence-Alpes-Côte d'Azur,55858,55588,55402,54888,51417
+109,56260,Vannes,https://fr.wikipedia.org/wiki/Vannes,Morbihan,Préfecture,Bretagne,55790,53352,52648,52984,51759
+110,60057,Beauvais,https://fr.wikipedia.org/wiki/Beauvais,Oise,Préfecture,Hauts-de-France,55550,56254,54289,55230,55392
+112,85191,La Roche-sur-Yon,https://fr.wikipedia.org/wiki/La_Roche-sur-Yon,Vendée,Préfecture,Pays de la Loire,54849,54372,52808,51124,49262
+113,77108,Chelles,https://fr.wikipedia.org/wiki/Chelles,Seine-et-Marne,—,Île-de-France,54620,54917,53247,51035,45399
+114,91174,Corbeil-Essonnes,https://fr.wikipedia.org/wiki/Corbeil-Essonnes,Essonne,—,Île-de-France,54471,51292,46017,41308,39378
+116,49099,Cholet,https://fr.wikipedia.org/wiki/Cholet,Maine-et-Loire,Sous-préfecture,Pays de la Loire,54404,53917,54181,54371,54204
+117,64102,Bayonne,https://fr.wikipedia.org/wiki/Bayonne,Pyrénées-Atlantiques,Sous-préfecture,Nouvelle-Aquitaine,54306,51228,45855,44498,40078
+118,94033,Fontenay-sous-Bois,https://fr.wikipedia.org/wiki/Fontenay-sous-Bois,Val-de-Marne,—,Île-de-France,53757,52939,52998,52143,50921
+119,93070,Saint-Ouen-sur-Seine,https://fr.wikipedia.org/wiki/Saint-Ouen-sur-Seine,Seine-Saint-Denis,—,Île-de-France,53615,51108,47499,43954,39722
+120,06027,Cagnes-sur-Mer,https://fr.wikipedia.org/wiki/Cagnes-sur-Mer,Alpes-Maritimes,—,Provence-Alpes-Côte d'Azur,53354,50928,46686,48941,43942
+121,69256,Vaulx-en-Velin,https://fr.wikipedia.org/wiki/Vaulx-en-Velin,Métropole de Lyon,—,Auvergne-Rhône-Alpes,53069,49658,43394,40626,39154
+122,93031,Épinay-sur-Seine,https://fr.wikipedia.org/wiki/Épinay-sur-Seine,Seine-Saint-Denis,—,Île-de-France,52833,55084,55140,52020,46409
+123,02691,Saint-Quentin,https://fr.wikipedia.org/wiki/Saint-Quentin,Aisne,Sous-préfecture,Hauts-de-France,52813,53816,56217,56471,59066
+124,78586,Sartrouville,https://fr.wikipedia.org/wiki/Sartrouville,Yvelines,—,Île-de-France,52763,51967,51713,51601,50219
+125,93071,Sevran,https://fr.wikipedia.org/wiki/Sevran,Seine-Saint-Denis,—,Île-de-France,52535,51016,49442,51110,47063
+126,13004,Arles,https://fr.wikipedia.org/wiki/Arles,Bouches-du-Rhône,Sous-préfecture,Provence-Alpes-Côte d'Azur,51811,52548,52439,52197,50513
+127,91377,Massy,https://fr.wikipedia.org/wiki/Massy,Essonne,—,Île-de-France,51729,50833,43524,40386,37712
+128,81004,Albi,https://fr.wikipedia.org/wiki/Albi,Tarn,Préfecture,Occitanie,51290,48970,49231,48889,46274
+130,92036,Gennevilliers,https://fr.wikipedia.org/wiki/Gennevilliers,Hauts-de-Seine,—,Île-de-France,50979,46907,42919,41960,42513
+131,44162,Saint-Herblain,https://fr.wikipedia.org/wiki/Saint-Herblain,Loire-Atlantique,—,Pays de la Loire,50973,46268,43287,43516,43726
+132,06069,Grasse,https://fr.wikipedia.org/wiki/Grasse,Alpes-Maritimes,Sous-préfecture,Provence-Alpes-Côte d'Azur,50970,50396,51021,50257,43874
+133,93010,Bondy,https://fr.wikipedia.org/wiki/Bondy,Seine-Saint-Denis,—,Île-de-France,50595,53353,52787,53159,46826
+134,85194,Les Sables-d'Olonne,https://fr.wikipedia.org/wiki/Les_Sables-d'Olonne,Vendée,Sous-préfecture,Pays de la Loire,49603,44017,41738,41262,38500
+135,53130,Laval,https://fr.wikipedia.org/wiki/Laval,Mayenne,Préfecture,Pays de la Loire,49400,49728,50658,50613,50947
+136,27229,Évreux,https://fr.wikipedia.org/wiki/Évreux,Eure,Préfecture,Normandie,49360,47733,49634,51485,51198
+137,69290,Saint-Priest,https://fr.wikipedia.org/wiki/Saint-Priest,Métropole de Lyon,—,Auvergne-Rhône-Alpes,49229,46207,42488,40917,40974
+138,92073,Suresnes,https://fr.wikipedia.org/wiki/Suresnes,Hauts-de-Seine,—,Île-de-France,48956,48264,47263,44738,39706
+139,13056,Martigues,https://fr.wikipedia.org/wiki/Martigues,Bouches-du-Rhône,—,Provence-Alpes-Côte d'Azur,48298,48188,47624,46247,43493
+140,94080,Vincennes,https://fr.wikipedia.org/wiki/Vincennes,Val-de-Marne,—,Île-de-France,48193,49891,49831,47372,43595
+141,13005,Aubagne,https://fr.wikipedia.org/wiki/Aubagne,Bouches-du-Rhône,—,Provence-Alpes-Côte d'Azur,47529,46209,45243,44804,42638
+142,35288,Saint-Malo,https://fr.wikipedia.org/wiki/Saint-Malo,Ille-et-Vilaine,Sous-préfecture,Bretagne,47439,46097,44620,48563,50675
+143,93046,Livry-Gargan,https://fr.wikipedia.org/wiki/Livry-Gargan,Seine-Saint-Denis,—,Île-de-France,47228,44437,42699,41893,37288
+144,41018,Blois,https://fr.wikipedia.org/wiki/Blois,Loir-et-Cher,Préfecture,Centre-Val de Loire,47219,46086,45903,47854,49171
+145,93064,Rosny-sous-Bois,https://fr.wikipedia.org/wiki/Rosny-sous-Bois,Seine-Saint-Denis,—,Île-de-France,47180,46207,42080,41283,39105
+146,93027,La Courneuve,https://fr.wikipedia.org/wiki/La_Courneuve,Seine-Saint-Denis,—,Île-de-France,47167,43054,39859,37228,35310
+147,19031,Brive-la-Gaillarde,https://fr.wikipedia.org/wiki/Brive-la-Gaillarde,Corrèze,Sous-préfecture,Nouvelle-Aquitaine,47095,46916,47411,50231,49141
+148,2B033,Bastia,https://fr.wikipedia.org/wiki/Bastia,Haute-Corse,Préfecture,Corse,46867,45715,43479,43315,37884
+149,33522,Talence,https://fr.wikipedia.org/wiki/Talence,Gironde,—,Nouvelle-Aquitaine,46338,42606,41358,40940,37210
+150,92048,Meudon,https://fr.wikipedia.org/wiki/Meudon,Hauts-de-Seine,—,Île-de-France,46334,45352,45107,44873,43663
+151,92049,Montrouge,https://fr.wikipedia.org/wiki/Montrouge,Hauts-de-Seine,—,Île-de-France,46324,50260,48909,46500,37733
+152,30007,Alès,https://fr.wikipedia.org/wiki/Alès,Gard,Sous-préfecture,Occitanie,46125,40219,41031,40108,39346
+153,11069,Carcassonne,https://fr.wikipedia.org/wiki/Carcassonne,Aude,Préfecture,Occitanie,46080,46031,47068,47620,43950
+154,77288,Melun,https://fr.wikipedia.org/wiki/Melun,Seine-et-Marne,Préfecture,Île-de-France,45995,40032,40503,37835,35695
+155,94022,Choisy-le-Roi,https://fr.wikipedia.org/wiki/Choisy-le-Roi,Val-de-Marne,—,Île-de-France,45946,45331,41507,37165,34336
+156,78551,Saint-Germain-en-Laye,https://fr.wikipedia.org/wiki/Saint-Germain-en-Laye,Yvelines,Sous-préfecture,Île-de-France,45931,44753,43531,45690,42584
+157,90010,Belfort,https://fr.wikipedia.org/wiki/Belfort,Territoire de Belfort,Préfecture,Bourgogne-Franche-Comté,45912,47656,50102,51327,50417
+158,08105,Charleville-Mézières,https://fr.wikipedia.org/wiki/Charleville-Mézières,Ardennes,Préfecture,Grand Est,45560,46428,49759,51070,55490
+159,94002,Alfortville,https://fr.wikipedia.org/wiki/Alfortville,Val-de-Marne,—,Île-de-France,45531,43881,44397,44116,36232
+160,93053,Noisy-le-Sec,https://fr.wikipedia.org/wiki/Noisy-le-Sec,Seine-Saint-Denis,—,Île-de-France,45510,44136,40161,38802,37312
+161,34301,Sète,https://fr.wikipedia.org/wiki/Sète,Hérault,—,Occitanie,45337,43229,44558,42972,39542
+162,71076,Chalon-sur-Saône,https://fr.wikipedia.org/wiki/Chalon-sur-Saône,Saône-et-Loire,Sous-préfecture,Bourgogne-Franche-Comté,45102,45096,44564,46676,50124
+163,92007,Bagneux,https://fr.wikipedia.org/wiki/Bagneux,Hauts-de-Seine,—,Île-de-France,44572,40918,38398,38592,37252
+164,65440,Tarbes,https://fr.wikipedia.org/wiki/Tarbes,Hautes-Pyrénées,Préfecture,Occitanie,44399,41518,41664,44973,46275
+165,22278,Saint-Brieuc,https://fr.wikipedia.org/wiki/Saint-Brieuc,Côtes-d'Armor,Préfecture,Bretagne,44364,44372,45936,46178,46087
+166,13047,Istres,https://fr.wikipedia.org/wiki/Istres,Bouches-du-Rhône,Sous-préfecture,Provence-Alpes-Côte d'Azur,44292,43133,42944,42775,38993
+167,13103,Salon-de-Provence,https://fr.wikipedia.org/wiki/Salon-de-Provence,Bouches-du-Rhône,—,Provence-Alpes-Côte d'Azur,44194,45528,43771,40943,37129
+168,92062,Puteaux,https://fr.wikipedia.org/wiki/Puteaux,Hauts-de-Seine,—,Île-de-France,44002,44645,44514,43994,40780
+169,69034,Caluire-et-Cuire,https://fr.wikipedia.org/wiki/Caluire-et-Cuire,Métropole de Lyon,—,Auvergne-Rhône-Alpes,43597,43187,42038,41010,41233
+170,44143,Rezé,https://fr.wikipedia.org/wiki/Rezé,Loire-Atlantique,—,Pays de la Loire,43556,41411,39377,37846,35478
+171,78361,Mantes-la-Jolie,https://fr.wikipedia.org/wiki/Mantes-la-Jolie,Yvelines,Sous-préfecture,Île-de-France,43526,44299,43515,42916,43672
+172,59606,Valenciennes,https://fr.wikipedia.org/wiki/Valenciennes,Nord,Sous-préfecture,Hauts-de-France,43468,43336,42989,42670,41278
+173,64024,Anglet,https://fr.wikipedia.org/wiki/Anglet,Pyrénées-Atlantiques,—,Nouvelle-Aquitaine,43271,38929,39223,37934,35263
+174,93006,Bagnolet,https://fr.wikipedia.org/wiki/Bagnolet,Seine-Saint-Denis,—,Île-de-France,43086,35674,34920,34269,32511
+175,69029,Bron,https://fr.wikipedia.org/wiki/Bron,Métropole de Lyon,—,Auvergne-Rhône-Alpes,42982,41543,39232,38833,37369
+176,51108,Châlons-en-Champagne,https://fr.wikipedia.org/wiki/Châlons-en-Champagne,Marne,Préfecture,Grand Est,42971,44753,45225,45829,47339
+177,36044,Châteauroux,https://fr.wikipedia.org/wiki/Châteauroux,Indre,Préfecture,Centre-Val de Loire,42963,43741,44960,47127,49632
+178,62041,Arras,https://fr.wikipedia.org/wiki/Arras,Pas-de-Calais,Préfecture,Hauts-de-France,42875,41019,41239,42672,40590
+179,57672,Thionville,https://fr.wikipedia.org/wiki/Thionville,Moselle,Sous-préfecture,Grand Est,42658,40701,41325,40910,40907
+180,33550,Villenave-d'Ornon,https://fr.wikipedia.org/wiki/Villenave-d'Ornon,Gironde,—,Nouvelle-Aquitaine,42545,34090,29804,29339,27500
+181,81065,Castres,https://fr.wikipedia.org/wiki/Castres,Tarn,—,Occitanie,42505,41636,41529,43347,43496
+182,01053,Bourg-en-Bresse,https://fr.wikipedia.org/wiki/Bourg-en-Bresse,Ain,Préfecture,Auvergne-Rhône-Alpes,42372,41527,40171,40506,40666
+183,74281,Thonon-les-Bains,https://fr.wikipedia.org/wiki/Thonon-les-Bains,Haute-Savoie,Sous-préfecture,Auvergne-Rhône-Alpes,42363,38716,38339,34936,31979
+184,93032,Gagny,https://fr.wikipedia.org/wiki/Gagny,Seine-Saint-Denis,—,Île-de-France,42313,39358,39172,38220,36715
+185,06030,Le Cannet,https://fr.wikipedia.org/wiki/Le_Cannet,Alpes-Maritimes,—,Provence-Alpes-Côte d'Azur,41938,41471,43115,42207,42158
+186,16015,Angoulême,https://fr.wikipedia.org/wiki/Angoulême,Charente,Préfecture,Nouvelle-Aquitaine,41908,41740,42014,42669,43171
+187,95268,Garges-lès-Gonesse,https://fr.wikipedia.org/wiki/Garges-lès-Gonesse,Val-d'Oise,—,Île-de-France,41791,42728,41001,39098,40058
+188,93078,Villepinte,https://fr.wikipedia.org/wiki/Villepinte,Seine-Saint-Denis,—,Île-de-France,41470,36830,35820,35444,33782
+189,93072,Stains,https://fr.wikipedia.org/wiki/Stains,Seine-Saint-Denis,—,Île-de-France,41388,38720,36155,34663,32839
+190,05061,Gap,https://fr.wikipedia.org/wiki/Gap,Hautes-Alpes,Préfecture,Provence-Alpes-Côte d'Azur,41293,40895,40761,37785,36262
+191,78498,Poissy,https://fr.wikipedia.org/wiki/Poissy,Yvelines,—,Île-de-France,40983,37388,37597,37109,35841
+192,31149,Colomiers,https://fr.wikipedia.org/wiki/Colomiers,Haute-Garonne,—,Occitanie,40882,38951,36699,32315,28538
+193,59650,Wattrelos,https://fr.wikipedia.org/wiki/Wattrelos,Nord,—,Hauts-de-France,40847,40958,41633,42077,42753
+194,83050,Draguignan,https://fr.wikipedia.org/wiki/Draguignan,Var,Sous-préfecture,Provence-Alpes-Côte d'Azur,40826,39340,37476,37117,32829
+195,60159,Compiègne,https://fr.wikipedia.org/wiki/Compiègne,Oise,Sous-préfecture,Hauts-de-France,40761,40199,40028,41714,41254
+196,26198,Montélimar,https://fr.wikipedia.org/wiki/Montélimar,Drôme,—,Auvergne-Rhône-Alpes,40595,39097,35704,34636,31344
+197,62160,Boulogne-sur-Mer,https://fr.wikipedia.org/wiki/Boulogne-sur-Mer,Pas-de-Calais,Sous-préfecture,Hauts-de-France,40539,40874,42785,43840,44859
+198,59178,Douai,https://fr.wikipedia.org/wiki/Douai,Nord,Sous-préfecture,Hauts-de-France,40250,39700,41732,42621,42796
+199,59378,Marcq-en-Barœul,https://fr.wikipedia.org/wiki/Marcq-en-Barœul,Nord,—,Hauts-de-France,40184,38617,39600,39101,37177
+200,93050,Neuilly-sur-Marne,https://fr.wikipedia.org/wiki/Neuilly-sur-Marne,Seine-Saint-Denis,—,Île-de-France,39800,34993,34658,33422,32754
+203,77373,Pontault-Combault,https://fr.wikipedia.org/wiki/Pontault-Combault,Seine-et-Marne,—,Île-de-France,39096,37747,37631,34733,32886
+205,13028,La Ciotat,https://fr.wikipedia.org/wiki/La_Ciotat,Bouches-du-Rhône,—,Provence-Alpes-Côte d'Azur,38477,35174,34063,32901,31630
+206,37122,Joué-lès-Tours,https://fr.wikipedia.org/wiki/Joué-lès-Tours,Indre-et-Loire,—,Centre-Val de Loire,38423,37893,37196,35836,36517
+207,93073,Tremblay-en-France,https://fr.wikipedia.org/wiki/Tremblay-en-France,Seine-Saint-Denis,—,Île-de-France,38348,36180,34081,35410,33885
+208,28085,Chartres,https://fr.wikipedia.org/wiki/Chartres,Eure-et-Loir,Préfecture,Centre-Val de Loire,38324,38578,38889,39767,40361
+209,69149,Oullins-Pierre-Bénite,https://fr.wikipedia.org/wiki/Oullins-Pierre-Bénite,Métropole de Lyon,—,Auvergne-Rhône-Alpes,38168,36663,35967,35558,35146
+210,95252,Franconville,https://fr.wikipedia.org/wiki/Franconville,Val-d'Oise,—,Île-de-France,37754,36762,33196,32932,33497
+211,38421,Saint-Martin-d'Hères,https://fr.wikipedia.org/wiki/Saint-Martin-d'Hères,Isère,—,Auvergne-Rhône-Alpes,37695,38487,38105,35502,35777
+212,74012,Annemasse,https://fr.wikipedia.org/wiki/Annemasse,Haute-Savoie,—,Auvergne-Rhône-Alpes,37628,35712,33166,29540,27253
+213,91589,Savigny-sur-Orge,https://fr.wikipedia.org/wiki/Savigny-sur-Orge,Essonne,—,Île-de-France,37601,36533,37135,37469,36258
+214,38151,Échirolles,https://fr.wikipedia.org/wiki/Échirolles,Isère,—,Auvergne-Rhône-Alpes,37491,36840,35826,35383,32806
+215,91477,Palaiseau,https://fr.wikipedia.org/wiki/Palaiseau,Essonne,Sous-préfecture,Île-de-France,37471,35514,30268,30149,28965
+216,93063,Romainville,https://fr.wikipedia.org/wiki/Romainville,Seine-Saint-Denis,—,Île-de-France,37152,27567,25411,25563,23779
+217,83118,Saint-Raphaël,https://fr.wikipedia.org/wiki/Saint-Raphaël,Var,—,Provence-Alpes-Côte d'Azur,37113,35042,34115,34381,30671
+218,83129,Six-Fours-les-Plages,https://fr.wikipedia.org/wiki/Six-Fours-les-Plages,Var,—,Provence-Alpes-Côte d'Azur,37109,32829,34057,35091,32742
+220,78172,Conflans-Sainte-Honorine,https://fr.wikipedia.org/wiki/Conflans-Sainte-Honorine,Yvelines,—,Île-de-France,36958,35846,35135,33888,33327
+221,13117,Vitrolles,https://fr.wikipedia.org/wiki/Vitrolles,Bouches-du-Rhône,—,Provence-Alpes-Côte d'Azur,36758,33310,34843,37479,36784
+222,92020,Châtillon,https://fr.wikipedia.org/wiki/Châtillon,Hauts-de-Seine,—,Île-de-France,36705,37355,34960,32609,28622
+223,69282,Meyzieu,https://fr.wikipedia.org/wiki/Meyzieu,Métropole de Lyon,—,Auvergne-Rhône-Alpes,36687,33477,31493,29014,28009
+224,91027,Athis-Mons,https://fr.wikipedia.org/wiki/Athis-Mons,Essonne,—,Île-de-France,36613,34347,29482,30462,29427
+227,95063,Bezons,https://fr.wikipedia.org/wiki/Bezons,Val-d'Oise,—,Île-de-France,36434,29383,28172,27892,26263
+228,67180,Haguenau,https://fr.wikipedia.org/wiki/Haguenau,Bas-Rhin,Sous-préfecture,Grand Est,36391,34504,34406,35112,32242
+229,60175,Creil,https://fr.wikipedia.org/wiki/Creil,Oise,—,Hauts-de-France,36301,35657,33936,33837,30675
+230,94078,Villeneuve-Saint-Georges,https://fr.wikipedia.org/wiki/Villeneuve-Saint-Georges,Val-de-Marne,—,Île-de-France,36221,33545,32994,30609,28361
+231,69264,Villefranche-sur-Saône,https://fr.wikipedia.org/wiki/Villefranche-sur-Saône,Rhône,Sous-préfecture,Auvergne-Rhône-Alpes,36172,36857,36241,33840,30647
+233,92019,Châtenay-Malabry,https://fr.wikipedia.org/wiki/Châtenay-Malabry,Hauts-de-Seine,—,Île-de-France,35825,33286,32198,31946,30621
+234,42207,Saint-Chamond,https://fr.wikipedia.org/wiki/Saint-Chamond,Loire,—,Auvergne-Rhône-Alpes,35646,34967,35564,35414,37378
+235,91549,Sainte-Geneviève-des-Bois,https://fr.wikipedia.org/wiki/Sainte-Geneviève-des-Bois,Essonne,—,Île-de-France,35438,36207,35035,34411,32125
+236,42187,Roanne,https://fr.wikipedia.org/wiki/Roanne,Loire,Sous-préfecture,Auvergne-Rhône-Alpes,35409,34366,35799,35750,38896
+237,94058,Le Perreux-sur-Marne,https://fr.wikipedia.org/wiki/Le_Perreux-sur-Marne,Val-de-Marne,—,Île-de-France,35260,33879,33248,32100,30080
+238,71270,Mâcon,https://fr.wikipedia.org/wiki/Mâcon,Saône-et-Loire,Préfecture,Bourgogne-Franche-Comté,35177,33638,32917,33865,34469
+239,89024,Auxerre,https://fr.wikipedia.org/wiki/Auxerre,Yonne,Préfecture,Bourgogne-Franche-Comté,35097,34634,35096,37218,37790
+240,67447,Schiltigheim,https://fr.wikipedia.org/wiki/Schiltigheim,Bas-Rhin,—,Grand Est,34708,31894,31691,31729,30841
+241,78621,Trappes,https://fr.wikipedia.org/wiki/Trappes,Yvelines,—,Île-de-France,34689,32584,29774,29327,28812
+242,78440,Les Mureaux,https://fr.wikipedia.org/wiki/Les_Mureaux,Yvelines,—,Île-de-France,34632,32792,30760,32911,31739
+243,78311,Houilles,https://fr.wikipedia.org/wiki/Houilles,Yvelines,—,Île-de-France,33983,32151,32399,30973,29634
+245,13054,Marignane,https://fr.wikipedia.org/wiki/Marignane,Bouches-du-Rhône,—,Provence-Alpes-Côte d'Azur,33692,32920,34405,33159,34006
+246,26281,Romans-sur-Isère,https://fr.wikipedia.org/wiki/Romans-sur-Isère,Drôme,—,Auvergne-Rhône-Alpes,33464,33160,33701,33234,32667
+247,94079,Villiers-sur-Marne,https://fr.wikipedia.org/wiki/Villiers-sur-Marne,Val-de-Marne,—,Île-de-France,33162,28456,27737,28158,26632
+248,03185,Montluçon,https://fr.wikipedia.org/wiki/Montluçon,Allier,Sous-préfecture,Auvergne-Rhône-Alpes,33147,35653,38072,39761,41362
+249,58194,Nevers,https://fr.wikipedia.org/wiki/Nevers,Nièvre,Préfecture,Bourgogne-Franche-Comté,33085,32990,35327,38007,40932
+250,62498,Lens,https://fr.wikipedia.org/wiki/Lens,Pas-de-Calais,Sous-préfecture,Hauts-de-France,32920,31415,32663,36011,36206
+251,94073,Thiais,https://fr.wikipedia.org/wiki/Thiais,Val-de-Marne,—,Île-de-France,32918,29017,29422,29273,28232
+252,33449,Saint-Médard-en-Jalles,https://fr.wikipedia.org/wiki/Saint-Médard-en-Jalles,Gironde,—,Nouvelle-Aquitaine,32910,31145,28839,27243,25566
+253,47001,Agen,https://fr.wikipedia.org/wiki/Agen,Lot-et-Garonne,Préfecture,Nouvelle-Aquitaine,32801,33576,33730,33863,30170
+254,78423,Montigny-le-Bretonneux,https://fr.wikipedia.org/wiki/Montigny-le-Bretonneux,Yvelines,—,Île-de-France,32465,32929,33680,34038,35216
+255,94052,Nogent-sur-Marne,https://fr.wikipedia.org/wiki/Nogent-sur-Marne,Val-de-Marne,Sous-préfecture,Île-de-France,32455,32851,30884,30912,28191
+256,73008,Aix-les-Bains,https://fr.wikipedia.org/wiki/Aix-les-Bains,Savoie,—,Auvergne-Rhône-Alpes,32406,29794,28729,27267,25732
+257,88160,Épinal,https://fr.wikipedia.org/wiki/Épinal,Vosges,Préfecture,Grand Est,32251,31740,32387,33528,35794
+258,06123,Saint-Laurent-du-Var,https://fr.wikipedia.org/wiki/Saint-Laurent-du-Var,Alpes-Maritimes,—,Provence-Alpes-Côte d'Azur,32172,28453,29343,30290,27141
+259,95500,Pontoise,https://fr.wikipedia.org/wiki/Pontoise,Val-d'Oise,Sous-préfecture,Île-de-France,31970,30767,30164,29148,27494
+260,33039,Bègles,https://fr.wikipedia.org/wiki/Bègles,Gironde,—,Nouvelle-Aquitaine,31831,28601,25380,24914,22475
+261,78490,Plaisir,https://fr.wikipedia.org/wiki/Plaisir,Yvelines,—,Île-de-France,31811,31419,31119,30937,31045
+262,95306,Herblay-sur-Seine,https://fr.wikipedia.org/wiki/Herblay-sur-Seine,Val-d'Oise,—,Île-de-France,31779,29342,26944,26137,23083
+263,38544,Vienne,https://fr.wikipedia.org/wiki/Vienne,Isère,Sous-préfecture,Auvergne-Rhône-Alpes,31778,29306,29077,29844,29975
+264,84031,Carpentras,https://fr.wikipedia.org/wiki/Carpentras,Vaucluse,Sous-préfecture,Provence-Alpes-Côte d'Azur,31619,28309,28520,28526,26090
+265,40192,Mont-de-Marsan,https://fr.wikipedia.org/wiki/Mont-de-Marsan,Landes,Préfecture,Nouvelle-Aquitaine,31592,29554,31018,30212,29489
+266,28134,Dreux,https://fr.wikipedia.org/wiki/Dreux,Eure-et-Loir,Sous-préfecture,Centre-Val de Loire,31543,31044,31195,32155,31849
+267,91657,Vigneux-sur-Seine,https://fr.wikipedia.org/wiki/Vigneux-sur-Seine,Essonne,—,Île-de-France,31466,31574,29963,26497,25652
+268,69286,Rillieux-la-Pape,https://fr.wikipedia.org/wiki/Rillieux-la-Pape,Métropole de Lyon,—,Auvergne-Rhône-Alpes,31389,30012,30140,29546,28367
+269,95280,Goussainville,https://fr.wikipedia.org/wiki/Goussainville,Val-d'Oise,—,Île-de-France,31301,30637,31255,30310,27356
+270,91521,Ris-Orangis,https://fr.wikipedia.org/wiki/Ris-Orangis,Essonne,—,Île-de-France,31189,29225,26800,26691,24436
+271,94038,L'Haÿ-les-Roses,https://fr.wikipedia.org/wiki/L'Haÿ-les-Roses,Val-de-Marne,Sous-préfecture,Île-de-France,31188,31204,31168,29357,29660
+273,77445,Savigny-le-Temple,https://fr.wikipedia.org/wiki/Savigny-le-Temple,Seine-et-Marne,—,Île-de-France,31148,29984,29555,26905,22339
+274,59122,Cambrai,https://fr.wikipedia.org/wiki/Cambrai,Nord,Sous-préfecture,Hauts-de-France,31134,32558,32847,32296,33738
+275,94016,Cachan,https://fr.wikipedia.org/wiki/Cachan,Val-de-Marne,—,Île-de-France,31103,31069,28365,27383,24838
+276,86066,Châtellerault,https://fr.wikipedia.org/wiki/Châtellerault,Vienne,Sous-préfecture,Nouvelle-Aquitaine,31003,31840,31537,33993,34126
+278,91687,Viry-Châtillon,https://fr.wikipedia.org/wiki/Viry-Châtillon,Essonne,—,Île-de-France,30838,31093,31221,31249,30257
+279,78158,Le Chesnay-Rocquencourt,https://fr.wikipedia.org/wiki/Le_Chesnay-Rocquencourt,Yvelines,—,Île-de-France,30689,31164,32196,32672,31748
+280,06083,Menton,https://fr.wikipedia.org/wiki/Menton,Alpes-Maritimes,—,Provence-Alpes-Côte d'Azur,30604,28958,29073,28683,28812
+281,78146,Chatou,https://fr.wikipedia.org/wiki/Chatou,Yvelines,—,Île-de-France,30598,30253,30585,30063,28588
+282,92046,Malakoff,https://fr.wikipedia.org/wiki/Malakoff,Hauts-de-Seine,—,Île-de-France,30557,30720,30420,30735,29402
+283,92035,La Garenne-Colombes,https://fr.wikipedia.org/wiki/La_Garenne-Colombes,Hauts-de-Seine,—,Île-de-France,30197,29169,28371,27001,24067
+284,31557,Tournefeuille,https://fr.wikipedia.org/wiki/Tournefeuille,Haute-Garonne,—,Occitanie,30168,26962,26342,25709,22758
+285,38053,Bourgoin-Jallieu,https://fr.wikipedia.org/wiki/Bourgoin-Jallieu,Isère,—,Auvergne-Rhône-Alpes,30151,28387,26773,23759,22947
+286,91201,Draveil,https://fr.wikipedia.org/wiki/Draveil,Essonne,—,Île-de-France,30098,28833,29063,28335,28093
+287,62510,Liévin,https://fr.wikipedia.org/wiki/Liévin,Pas-de-Calais,—,Hauts-de-France,30063,30785,31580,32174,33427
+288,95680,Villiers-le-Bel,https://fr.wikipedia.org/wiki/Villiers-le-Bel,Val-d'Oise,—,Île-de-France,30053,27676,27496,27091,26145
+54547,Vandœuvre-lès-Nancy,Meurthe-et-Moselle,https://fr.wikipedia.org/wiki/Meurthe-et-Moselle,—,Grand Est,29 942,,,,,
+92064,Saint-Cloud,Hauts-de-Seine,https://fr.wikipedia.org/wiki/Hauts-de-Seine,—,Île-de-France,29 855,,,,,
+93077,Villemomble,Seine-Saint-Denis,https://fr.wikipedia.org/wiki/Seine-Saint-Denis,—,Île-de-France,29 795,,,,,
+84087,Orange,Vaucluse,https://fr.wikipedia.org/wiki/Vaucluse,—,Provence-Alpes-Côte d'Azur,29 706,,,,,
+76575,Saint-Étienne-du-Rouvray,Seine-Maritime,https://fr.wikipedia.org/wiki/Seine-Maritime,—,Normandie,29 518,,,,,
+93014,Clichy-sous-Bois,Seine-Saint-Denis,https://fr.wikipedia.org/wiki/Seine-Saint-Denis,—,Île-de-France,29 354,,,,,
+06155,Vallauris,Alpes-Maritimes,https://fr.wikipedia.org/wiki/Alpes-Maritimes,—,Provence-Alpes-Côte d'Azur,29 259,,,,,
+24322,Périgueux,Dordogne,https://fr.wikipedia.org/wiki/Dordogne,Préfecture,Nouvelle-Aquitaine,29 055,,,,,
+76681,Sotteville-lès-Rouen,Seine-Maritime,https://fr.wikipedia.org/wiki/Seine-Maritime,—,Normandie,29 003,,,,,
+92060,Le Plessis-Robinson,Hauts-de-Seine,https://fr.wikipedia.org/wiki/Hauts-de-Seine,—,Île-de-France,28 848,,,,,
+94018,Charenton-le-Pont,Val-de-Marne,https://fr.wikipedia.org/wiki/Val-de-Marne,—,Île-de-France,28 830,,,,,
+59392,Maubeuge,Nord,https://fr.wikipedia.org/wiki/Nord,—,Hauts-de-France,28 767,,,,,
+76217,Dieppe,Seine-Maritime,https://fr.wikipedia.org/wiki/Seine-Maritime,Sous-préfecture,Normandie,28 496,,,,,
+02722,Soissons,Aisne,https://fr.wikipedia.org/wiki/Aisne,Sous-préfecture,Hauts-de-France,28 046,,,,,
+49328,Saumur,Maine-et-Loire,https://fr.wikipedia.org/wiki/Maine-et-Loire,Sous-préfecture,Pays de la Loire,26 241,,,,,
+15014,Aurillac,Cantal,https://fr.wikipedia.org/wiki/Cantal,Préfecture,Auvergne-Rhône-Alpes,26 214,,,,,
+64122,Biarritz,Pyrénées-Atlantiques,https://fr.wikipedia.org/wiki/Pyrénées-Atlantiques,—,Nouvelle-Aquitaine,26 206,,,,,
+76322,Le Grand-Quevilly,Seine-Maritime,https://fr.wikipedia.org/wiki/Seine-Maritime,—,Normandie,25 789,,,,,
+61001,Alençon,Orne,https://fr.wikipedia.org/wiki/Orne,Préfecture,Normandie,25 490,,,,,
+03310,Vichy,Allier,https://fr.wikipedia.org/wiki/Allier,Sous-préfecture,Auvergne-Rhône-Alpes,25 115,,,,,
+18279,Vierzon,Cher,https://fr.wikipedia.org/wiki/Cher,Sous-préfecture,Centre-Val de Loire,25 068,,,,,
+25388,Montbéliard,Doubs,https://fr.wikipedia.org/wiki/Doubs,Sous-préfecture,Bourgogne-Franche-Comté,24 672,,,,,
+94054,Orly,Val-de-Marne,https://fr.wikipedia.org/wiki/Val-de-Marne,—,Île-de-France,24 658,,,,,
+52448,Saint-Dizier,Haute-Marne,https://fr.wikipedia.org/wiki/Haute-Marne,Sous-préfecture,Grand Est,22 858,,,,,
+62178,Bruay-la-Buissière,Pas-de-Calais,https://fr.wikipedia.org/wiki/Pas-de-Calais,—,Hauts-de-France,21 424,,,,,
+71153,Le Creusot,Saône-et-Loire,https://fr.wikipedia.org/wiki/Saône-et-Loire,—,Bourgogne-Franche-Comté,20 509,,,,,

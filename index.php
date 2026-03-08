@@ -28,6 +28,9 @@ file_put_contents($fichier_compteur, $visiteurs);
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <!-- Import style_mobile FIRST so style.css can override it -->
+    <link rel="stylesheet" href="style_mobile.css?v=12">
+    <link rel="stylesheet" href="style.css?v=20">
     <style>
         * {
             margin: 0;
@@ -42,330 +45,6 @@ file_put_contents($fichier_compteur, $visiteurs);
 
         html {
             scroll-behavior: smooth;
-        }
-
-        /* Navbar style Nike */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: white;
-            border-bottom: 1px solid #E5E7EB;
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            padding: 0 3rem;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Logo carré */
-        .logo {
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo:hover {
-            opacity: 0.7;
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
-        /* Navigation centrale */
-        .nav-center {
-            position: relative;
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            justify-content: center;
-            grid-column: 2;
-        }
-
-        /* Indicateur actif qui glisse */
-        .active-indicator {
-            position: absolute;
-            bottom: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #5A8FBD 0%, #B8D4EC 100%);
-            border-radius: 2px;
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: none;
-        }
-
-        .search-container {
-            grid-column: 3;
-            justify-self: end;
-            position: relative;
-            max-width: 180px;
-        }
-
-        .nav-link {
-            position: relative;
-            text-decoration: none;
-            color: #111;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 0.5rem 0;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .nav-link::before {
-            content: '↗';
-            font-size: 0.9rem;
-            opacity: 0;
-            transform: translateX(-5px) translateY(2px);
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover::before {
-            opacity: 1;
-            transform: translateX(0) translateY(-2px);
-        }
-
-        .nav-link:hover {
-            color: #5A8FBD;
-        }
-
-        /* Menu déroulant - chevron qui tourne */
-        .nav-dropdown>.nav-link::before {
-            content: '›';
-            font-size: 1.2rem;
-            font-weight: 700;
-            opacity: 1;
-            transform: translateX(0) translateY(0px);
-            transition: transform 0.3s ease;
-        }
-
-        .nav-dropdown:hover>.nav-link::before {
-            transform: translateX(0) translateY(0px) rotate(90deg);
-        }
-
-        /* Menu déroulant style Nike */
-        .nav-dropdown {
-            position: relative;
-        }
-
-        .dropdown-content {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding-top: 1.5rem;
-            margin-top: 0;
-            opacity: 0;
-            visibility: hidden;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
-        }
-
-        .dropdown-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1.5rem;
-            background: transparent;
-        }
-
-        .dropdown-content>div {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            padding: 2rem;
-            min-width: 280px;
-        }
-
-        .nav-dropdown:hover .dropdown-content {
-            opacity: 1;
-            visibility: visible;
-            max-height: 500px;
-            /* Hauteur suffisante pour le contenu */
-            pointer-events: auto;
-        }
-
-        .dropdown-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #111;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #111;
-            padding-bottom: 0.5rem;
-        }
-
-        .dropdown-links {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            min-width: 300px;
-        }
-
-        .dropdown-link {
-            text-decoration: none;
-            color: #4B5563;
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            display: block;
-            position: relative;
-            overflow: hidden;
-            background: #F9FAFB;
-        }
-
-        .dropdown-link:hover {
-            background: #5A8FBD;
-            color: white;
-            transform: translateX(5px);
-            box-shadow: 0 4px 12px rgba(90, 143, 189, 0.2);
-        }
-
-        /* Dropdown Contact spécifique */
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        /* Contact Dropdown Item Hover */
-        .contact-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            background: #F9FAFB;
-        }
-
-        .contact-link:hover .contact-item {
-            background: #5A8FBD;
-            color: white;
-            transform: translateX(5px);
-            box-shadow: 0 4px 12px rgba(90, 143, 189, 0.2);
-        }
-
-        .contact-link:hover .contact-icon {
-            color: white;
-        }
-
-        .contact-link:hover .contact-text {
-            color: white;
-        }
-
-        .contact-icon {
-            width: 20px;
-            height: 20px;
-            color: #8A8A8A;
-        }
-
-        .contact-text {
-            color: #4B5563;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Barre de recherche à droite */
-
-        .search-box {
-            width: 100%;
-            padding: 0.5rem 1rem 0.5rem 2.5rem;
-            border: none;
-            border-radius: 100px;
-            font-size: 0.9rem;
-            background: #F5F5F5;
-            transition: all 0.3s;
-            outline: none;
-        }
-
-        .search-box:hover {
-            background: #E5E5E5;
-        }
-
-        .search-box:focus {
-            background: #E5E5E5;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
-            color: #111;
-            pointer-events: none;
-        }
-
-        /* Suggestions de recherche */
-        .search-suggestions {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            min-width: 250px;
-            max-height: 400px;
-            overflow-y: auto;
-            display: none;
-            z-index: 1001;
-        }
-
-        .search-suggestions.active {
-            display: block;
-        }
-
-        .suggestion-item {
-            padding: 0.8rem 1.2rem;
-            cursor: pointer;
-            transition: background 0.2s;
-            border-bottom: 1px solid #F3F4F6;
-            font-size: 0.9rem;
-            color: #4B5563;
-        }
-
-        .suggestion-item:last-child {
-            border-bottom: none;
-        }
-
-        .suggestion-item:hover {
-            background: #F9FAFB;
-            color: #111;
-        }
-
-        .suggestion-item strong {
-            color: #2563EB;
-            font-weight: 700;
-            background: #DBEAFE;
-            padding: 0.1rem 0.25rem;
-            border-radius: 3px;
         }
 
         /* Section À propos */
@@ -433,6 +112,74 @@ file_put_contents($fichier_compteur, $visiteurs);
             line-height: 1.8;
             color: #4B5563;
             margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .carousel-progress-container {
+            width: 100%;
+            height: 4px;
+            background: #E5E7EB;
+            border-radius: 2px;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            /* Closer to arrows */
+            overflow: hidden;
+        }
+
+        .carousel-progress-bar {
+            height: 100%;
+            background: #5A8FBD;
+            width: 0%;
+            border-radius: 2px;
+            /* Transition gérée en JS */
+        }
+
+        .carousel-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .carousel-nav-btn {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #4B5563;
+        }
+
+        .carousel-nav-btn:hover {
+            background: #F9FAFB;
+            border-color: #5A8FBD;
+            color: #5A8FBD;
+            transform: scale(1.05);
+        }
+
+        .carousel-nav-btn svg {
+            width: 20px;
+            height: 20px;
         }
 
         .carousel-dots {
@@ -613,16 +360,25 @@ file_put_contents($fichier_compteur, $visiteurs);
             margin-bottom: 4rem;
         }
 
-        .projects-tabs {
+        /* Controls Container */
+        .projects-controls {
             display: flex;
-            justify-content: center;
-            gap: 2rem;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 4rem;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .filters-group {
+            display: flex;
+            gap: 1rem;
             flex-wrap: wrap;
         }
 
+        /* Modernized Tabs */
         .project-tab {
-            padding: 1rem 2.5rem;
+            padding: 0.8rem 2rem;
             background: white;
             border: 2px solid #E5E7EB;
             border-radius: 50px;
@@ -631,18 +387,75 @@ file_put_contents($fichier_compteur, $visiteurs);
             color: #6B7280;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .project-tab:hover {
-            border-color: #8A8A8A;
-            color: #111;
+            border-color: #B8D4EC;
+            color: #5A8FBD;
+            transform: translateY(-2px);
         }
 
         .project-tab.active {
             background: #5A8FBD;
             color: white;
             border-color: #5A8FBD;
+            box-shadow: 0 4px 15px rgba(90, 143, 189, 0.3);
         }
+
+        /* View Toggles */
+        .view-controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .view-btn {
+            width: 44px;
+            height: 44px;
+            border: 2px solid #E5E7EB;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #9CA3AF;
+        }
+
+        .view-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+        }
+
+        .view-btn:hover {
+            border-color: #B8D4EC;
+            color: #5A8FBD;
+        }
+
+        .view-btn.active {
+            border-color: #2C3E50;
+            color: #2C3E50;
+            background: #F3F4F6;
+        }
+
+        /* View Modes Modifier Classes */
+        .projects-grid.view-large {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* In Large/List View, images are always visible and interactions simplified */
+        .projects-grid.view-large .project-image {
+            height: 350px !important;
+            opacity: 1 !important;
+        }
+
+        .projects-grid.view-large .project-card:hover .project-image {
+            transform: scale(1.02);
+            /* Subtle zoom instead of disappearing */
+        }
+
 
         .projects-grid {
             display: grid;
@@ -650,6 +463,7 @@ file_put_contents($fichier_compteur, $visiteurs);
             gap: 2.5rem;
             max-width: 1400px;
             margin: 0 auto;
+            /* Empêche l'étirement des cartes voisines */
         }
 
         .project-card {
@@ -670,16 +484,70 @@ file_put_contents($fichier_compteur, $visiteurs);
         .project-image {
             width: 100%;
             height: 280px;
+            /* Visible par défaut (Mobile) */
+            opacity: 1;
             object-fit: cover;
-            transition: transform 0.4s ease;
+            transition: transform 0.6s ease;
         }
 
         .project-card:hover .project-image {
             transform: scale(1.05);
         }
 
-        .project-content {
-            padding: 2rem;
+        /* Effet de survol uniquement sur PC */
+        @media (min-width: 769px) {
+            .project-image {
+                height: 0;
+                opacity: 0;
+                transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out, transform 0.6s ease;
+            }
+
+            .project-card:hover .project-image {
+                height: 280px;
+                opacity: 1;
+            }
+
+            .project-content {
+                padding: 3.5rem;
+                /* Increased padding for PC to prevent text crowding */
+            }
+        }
+
+        /* Mobile Responsive for Grid Views */
+        @media (max-width: 768px) {
+            .projects-controls {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .filters-group {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .view-controls {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Default Grid on Mobile = 2 Columns (User Request) */
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1rem;
+            }
+
+            /* Large View on Mobile = 1 Column (User Request) */
+            .projects-grid.view-large {
+                grid-template-columns: 1fr !important;
+            }
+
+            .project-card {
+                /* Ensure content fits in 2-col mode */
+            }
+
+            .project-content {
+                padding: 1rem;
+            }
         }
 
         .project-title {
@@ -723,16 +591,33 @@ file_put_contents($fichier_compteur, $visiteurs);
         .experience-section {
             min-height: 100vh;
             padding: 0;
+            background: #FFFFFF;
+            /* White background for header */
             position: relative;
             overflow: hidden;
-            background: #000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .experience-dark-content {
+            background: transparent;
+            /* Transparent to show image behind */
+            position: relative;
+            width: 100%;
+            padding: 0;
+            /* Remove padding to allow full screen */
+            min-height: 800px;
         }
 
         .experience-carousel-container {
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             overflow: hidden;
+            z-index: 1;
+            /* Behind timeline */
         }
 
         .experience-slides {
@@ -757,7 +642,8 @@ file_put_contents($fichier_compteur, $visiteurs);
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.5);
+            filter: brightness(0.6);
+            /* Slightly dark image */
         }
 
         .experience-overlay {
@@ -766,7 +652,8 @@ file_put_contents($fichier_compteur, $visiteurs);
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(44, 62, 80, 0.7) 0%, rgba(90, 143, 189, 0.4) 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
+            /* Dark overlay for text readability */
         }
 
         .experience-content-wrapper {
@@ -776,7 +663,9 @@ file_put_contents($fichier_compteur, $visiteurs);
             width: 90%;
             padding: 4rem;
             color: white;
+            /* White text on dark overlay */
             background: rgba(255, 255, 255, 0.05);
+            /* Glass effect */
             backdrop-filter: blur(20px);
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -802,12 +691,14 @@ file_put_contents($fichier_compteur, $visiteurs);
             object-fit: contain;
             background: white;
             padding: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .experience-period-text {
             font-size: 0.95rem;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.95);
+            color: rgba(255, 255, 255, 0.8);
+            /* Slate gray text */
         }
 
         /* Badge "Actuellement" */
@@ -830,7 +721,7 @@ file_put_contents($fichier_compteur, $visiteurs);
 
             0%,
             100% {
-                box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+                box-shadow: 0 44px 15px rgba(76, 175, 80, 0.4);
             }
 
             50% {
@@ -869,11 +760,12 @@ file_put_contents($fichier_compteur, $visiteurs);
         }
 
         .experience-date-box {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             padding: 1rem 1.8rem;
             border-radius: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .experience-date-label {
@@ -892,16 +784,17 @@ file_put_contents($fichier_compteur, $visiteurs);
         }
 
         .experience-duration {
-            background: linear-gradient(135deg, rgba(184, 212, 236, 0.25) 0%, rgba(90, 143, 189, 0.25) 100%);
+            background: linear-gradient(135deg, rgba(184, 212, 236, 0.15) 0%, rgba(90, 143, 189, 0.15) 100%);
             padding: 0.8rem 1.5rem;
             border-radius: 16px;
-            border: 2px solid rgba(184, 212, 236, 0.4);
+            border: 2px solid rgba(184, 212, 236, 0.2);
         }
 
         .experience-duration-text {
             font-size: 1rem;
             font-weight: 700;
             color: #B8D4EC;
+            /* Light blue for dark bg */
         }
 
         .experience-title-large {
@@ -955,6 +848,7 @@ file_put_contents($fichier_compteur, $visiteurs);
             font-weight: 600;
             color: white;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .experience-skill-large:hover {
@@ -994,14 +888,15 @@ file_put_contents($fichier_compteur, $visiteurs);
         }
 
         /* Frise chronologique (Timeline) - Fixe au dessus du carousel */
+        /* Timeline Container - ensure it's on top */
         .experience-timeline {
-            position: absolute;
-            top: 3rem;
-            left: 0;
-            right: 0;
-            width: 100%;
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto 4rem;
             z-index: 10;
-            pointer-events: none;
+            /* Above carousel */
+            padding-top: 4rem;
+            /* Add padding here instead of wrapper */
         }
 
         .timeline-line {
@@ -1245,70 +1140,124 @@ file_put_contents($fichier_compteur, $visiteurs);
             }
         }
 
-        /* Section Engagements - Cards avec images */
+        /* Experience View All Button */
+        .experience-view-all-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            z-index: 20;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .experience-view-all-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Section Engagements - Modern Alternating Layout */
         .engagements-section {
             min-height: 100vh;
             padding: 6rem 3rem;
             background: linear-gradient(180deg, #F9FAFB 0%, #FFFFFF 50%, #E8F2F9 100%);
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        .engagements-section.visible {
-            opacity: 1;
-            transform: translateY(0);
+            overflow-x: hidden;
+            /* Prevent horizontal scroll from animations */
         }
 
         .engagements-header {
             text-align: left;
-            margin-bottom: 4rem;
+            margin-bottom: 6rem;
         }
 
         .engagements-container {
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 2.5rem;
+            padding: 0 1rem;
         }
 
-        .engagement-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
+        /* Removed .engagement-row styles */
+
+        /* Removed image container styles */
+
+
+
+        .engagement-content {
+            height: 100%;
+            /* Equal height */
+            padding: 3rem;
             display: flex;
             flex-direction: column;
-            height: 100%;
+            justify-content: center;
+
+            /* Background Shape Style */
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .engagement-card:hover {
-            box-shadow: 0 8px 30px rgba(90, 143, 189, 0.2);
-            transform: translateY(-8px);
+        .engagement-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
         }
 
-        .engagement-card.active {
-            box-shadow: 0 8px 30px rgba(90, 143, 189, 0.2);
+        .engagement-title-modern {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2C3E50;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
         }
 
-        /* Mobile responsive */
+        .engagement-org-modern {
+            font-size: 1.1rem;
+            color: #5A8FBD;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .engagement-desc-modern {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #6B7280;
+            margin-bottom: 2rem;
+        }
+
+        .engagement-period-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #F3F4F6;
+            color: #4B5563;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         @media (max-width: 968px) {
             .engagements-container {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 1.5rem;
             }
 
-            .engagement-image-wrapper {
-                height: 250px;
-            }
-        }
-
-        @media (min-width: 769px) and (max-width: 968px) {
-            .engagements-container {
-                grid-template-columns: 1fr;
+            .engagement-content {
+                padding: 2rem;
             }
         }
 
@@ -1405,12 +1354,10 @@ file_put_contents($fichier_compteur, $visiteurs);
         }
 
         .engagement-content {
-            display: none;
+            /* display: none; REMOVED */
         }
 
-        .engagement-card.active .engagement-content {
-            display: none;
-        }
+
 
         .engagement-content-inner {
             padding: 0 3rem 3rem 3rem;
@@ -1532,14 +1479,9 @@ file_put_contents($fichier_compteur, $visiteurs);
             min-height: 100vh;
             padding: 6rem 3rem;
             background: linear-gradient(180deg, #F3F4F6 0%, #FFFFFF 50%, #F9FAFB 100%);
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        .statistics-section.visible {
-            opacity: 1;
-            transform: translateY(0);
+            /* opacity: 0; REMOVED */
+            /* transform: translateY(50px); REMOVED */
+            /* transition: opacity 1s ease, transform 1s ease; REMOVED */
         }
 
         .statistics-header {
@@ -1654,14 +1596,9 @@ file_put_contents($fichier_compteur, $visiteurs);
             padding: 3rem;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             margin-bottom: 3rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .chart-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+            /* opacity: 0; REMOVED */
+            /* transform: translateY(30px); REMOVED */
+            /* transition: all 0.8s ease; REMOVED */
         }
 
         .chart-title {
@@ -1692,12 +1629,56 @@ file_put_contents($fichier_compteur, $visiteurs);
                 padding: 2rem 1.5rem;
             }
 
-            .chart-title {
-                font-size: 1.3rem;
+            .chart-wrapper {
+                height: 300px !important;
+                /* Force uniform height on mobile */
             }
 
-            .chart-wrapper {
-                height: 280px;
+            /* ... existing chart styles ... */
+
+            /* Mobile Stats - KPI Grid */
+            .statistics-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1rem;
+            }
+
+            /* Standardize Section Padding on Mobile */
+            .statistics-section,
+            .engagements-section {
+                padding: 4rem 1.5rem !important;
+                /* Standard mobile padding */
+            }
+
+            .contact-mobile-section {
+                padding: 4rem 1.5rem 0 1.5rem !important;
+                /* No bottom padding to fix gap */
+                margin-bottom: 0 !important;
+                padding-bottom: 3rem !important;
+                /* Some breathing room before footer */
+            }
+
+            .stat-card {
+                padding: 1.5rem 0.5rem;
+            }
+
+            /* ... rest of existing mobile stats styles ... */
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .stat-icon {
+                width: 44px;
+                height: 44px;
+                margin-bottom: 0.8rem;
+            }
+
+            .stat-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .stat-description {
+                display: none;
             }
         }
 
@@ -1709,9 +1690,11 @@ file_put_contents($fichier_compteur, $visiteurs);
         /* Contact Mobile Section */
         .contact-mobile-section {
             display: none;
-            min-height: 100vh;
+            min-height: auto;
+            /* Remove 100vh constraint */
             padding: 6rem 3rem;
             background: linear-gradient(180deg, #FFFFFF 0%, #F3F4F6 50%, #FFFFFF 100%);
+            margin-bottom: 0;
         }
 
         .contact-mobile-header {
@@ -1721,16 +1704,16 @@ file_put_contents($fichier_compteur, $visiteurs);
 
         .contact-mobile-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
             max-width: 600px;
             margin: 0 auto;
         }
 
         .contact-mobile-card {
             background: white;
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            padding: 1.5rem 0.5rem;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             transition: all 0.4s ease;
             text-decoration: none;
@@ -1754,8 +1737,8 @@ file_put_contents($fichier_compteur, $visiteurs);
         }
 
         .contact-mobile-icon {
-            width: 70px;
-            height: 70px;
+            width: 50px;
+            height: 50px;
             background: linear-gradient(135deg, #B8D4EC 0%, #5A8FBD 100%);
             border-radius: 50%;
             display: flex;
@@ -1765,20 +1748,20 @@ file_put_contents($fichier_compteur, $visiteurs);
         }
 
         .contact-mobile-icon svg {
-            width: 35px;
-            height: 35px;
+            width: 24px;
+            height: 24px;
             color: white;
         }
 
         .contact-mobile-title {
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: #2C3E50;
             margin-bottom: 0.8rem;
         }
 
         .contact-mobile-text {
-            font-size: 1rem;
+            font-size: 0.8rem;
             color: #6B7280;
             word-break: break-word;
         }
@@ -2511,142 +2494,6 @@ file_put_contents($fichier_compteur, $visiteurs);
         }
 
         @media (max-width: 768px) {
-            .navbar {
-                padding: 0 1rem !important;
-                display: grid !important;
-                grid-template-columns: auto 1fr auto !important;
-                align-items: center !important;
-                gap: 0.75rem !important;
-            }
-
-            .hamburger {
-                display: flex !important;
-                order: 1 !important;
-                grid-column: 1 !important;
-            }
-
-            .logo {
-                order: 2 !important;
-                grid-column: 2 !important;
-                justify-self: center !important;
-            }
-
-            .search-container {
-                display: block !important;
-                order: 3 !important;
-                grid-column: 3 !important;
-                justify-self: end !important;
-                max-width: 35px !important;
-                min-width: 35px !important;
-                transition: max-width 0.3s ease !important;
-                margin-right: 0 !important;
-            }
-
-            .search-icon {
-                cursor: pointer !important;
-                z-index: 10 !important;
-                pointer-events: all !important;
-                width: 20px !important;
-                height: 20px !important;
-            }
-
-            .search-container input {
-                width: 0 !important;
-                padding: 0 !important;
-                opacity: 0 !important;
-                transition: all 0.3s ease !important;
-                pointer-events: none !important;
-            }
-
-            .search-container.active {
-                max-width: 200px !important;
-            }
-
-            .search-container.active input {
-                width: 150px !important;
-                padding: 0.5rem 0.8rem 0.5rem 2.5rem !important;
-                opacity: 1 !important;
-                pointer-events: all !important;
-            }
-
-            .nav-center {
-                display: none !important;
-                position: fixed !important;
-                top: 60px !important;
-                left: 0 !important;
-                right: 0 !important;
-                background: white !important;
-                flex-direction: column !important;
-                padding: 2rem 1.5rem !important;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-                max-height: calc(100vh - 60px) !important;
-                overflow-y: auto !important;
-                z-index: 1000 !important;
-            }
-
-            .nav-center.active {
-                display: flex !important;
-            }
-
-            .nav-link {
-                width: 100% !important;
-                padding: 1rem 0 !important;
-                border-bottom: 1px solid #E5E7EB !important;
-                transition: all 0.3s ease !important;
-            }
-
-            .nav-link.active {
-                border-bottom: 3px solid #5A8FBD !important;
-                padding-bottom: 0.5rem !important;
-                color: #5A8FBD !important;
-                font-weight: 600 !important;
-            }
-
-            .nav-link::before {
-                display: none !important;
-            }
-
-            .nav-dropdown {
-                width: 100% !important;
-            }
-
-            /* Cacher les dropdowns sur mobile */
-            .nav-dropdown-desktop {
-                display: none !important;
-            }
-
-            /* Afficher les liens simples sur mobile */
-            .nav-link-mobile-only {
-                display: block !important;
-            }
-
-            /* Afficher la section Contact mobile */
-            .contact-mobile-section {
-                display: block !important;
-            }
-
-            .dropdown-content {
-                position: static !important;
-                padding-top: 0 !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-                pointer-events: all !important;
-                display: none !important;
-                margin-top: 0 !important;
-            }
-
-            .nav-dropdown.active .dropdown-content {
-                display: block !important;
-            }
-
-            .dropdown-content>div {
-                box-shadow: none !important;
-                padding: 1rem 0 !important;
-            }
-
-            .active-indicator {
-                display: none !important;
-            }
 
             .section {
                 padding: 6rem 1.5rem 3rem;
@@ -2679,118 +2526,190 @@ file_put_contents($fichier_compteur, $visiteurs);
                 bottom: 12%;
                 max-width: 90%;
             }
-        }
 
-        /* FORCE MOBILE STYLES - Critical for responsive mode */
-        @media screen and (max-width: 768px) {
-            body {
-                font-size: 14px !important;
-            }
-
-            .navbar {
-                height: 60px !important;
-                padding: 0 1rem !important;
-                display: grid !important;
-                grid-template-columns: auto 1fr auto !important;
-                align-items: center !important;
-                gap: 0.75rem !important;
-            }
-
-            .hamburger {
-                display: flex !important;
-                order: 1 !important;
-                grid-column: 1 !important;
-            }
-
-            .logo {
-                order: 2 !important;
-                grid-column: 2 !important;
-                justify-self: center !important;
-                width: 40px !important;
-                height: 40px !important;
-            }
-
-            .search-container {
+            .contact-mobile-section {
                 display: block !important;
-                order: 3 !important;
-                grid-column: 3 !important;
-                justify-self: end !important;
-                max-width: 35px !important;
-                min-width: 35px !important;
-                transition: max-width 0.3s ease !important;
-                margin-right: 0 !important;
             }
 
-            .search-icon {
-                cursor: pointer !important;
-                z-index: 10 !important;
-                pointer-events: all !important;
-                width: 20px !important;
-                height: 20px !important;
+            /* Mobile Catalogue View for Projects */
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1rem !important;
             }
 
-            .search-container input {
-                width: 0 !important;
-                padding: 0 !important;
-                opacity: 0 !important;
-                transition: all 0.3s ease !important;
-                pointer-events: none !important;
+            .project-card {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
             }
 
-            .search-container.active {
-                max-width: 200px !important;
+            .project-image {
+                height: 140px !important;
             }
 
-            .search-container.active input {
-                width: 150px !important;
-                padding: 0.5rem 0.8rem 0.5rem 2.5rem !important;
-                opacity: 1 !important;
-                pointer-events: all !important;
+            .project-content {
+                padding: 0.8rem !important;
             }
 
-            .nav-center {
+            .project-title {
+                font-size: 0.9rem !important;
+                margin-bottom: 0 !important;
+                text-align: center;
+            }
+
+            .project-description,
+            .project-tags {
                 display: none !important;
-                position: fixed !important;
-                top: 60px !important;
-                left: 0 !important;
-                right: 0 !important;
+            }
+
+            /* Mobile Experience Section Refinement */
+            .experience-content-wrapper {
+                padding: 1.5rem !important;
+                width: 92% !important;
+                margin: 0 auto !important;
+                backdrop-filter: blur(15px) !important;
+                background: rgba(255, 255, 255, 0.1) !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            }
+
+            .experience-header-badge {
+                padding: 0.5rem 1rem !important;
+                margin-bottom: 1.5rem !important;
                 width: 100% !important;
-                background: white !important;
-                flex-direction: column !important;
-                padding: 2rem 1.5rem !important;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-                max-height: calc(100vh - 60px) !important;
-                overflow-y: auto !important;
-                z-index: 1000 !important;
-                grid-template-columns: none !important;
+                justify-content: center !important;
             }
 
-            .nav-center.active {
-                display: flex !important;
+            .experience-title-large {
+                font-size: 1.8rem !important;
+                text-align: center !important;
             }
 
-            .active-indicator {
+            .experience-role-large {
+                font-size: 1.1rem !important;
+                text-align: center !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            .experience-section {
+                min-height: auto !important;
+                height: auto !important;
+                padding-bottom: 2rem !important;
+            }
+
+            .experience-description {
+                font-size: 0.95rem !important;
+                text-align: center !important;
+                line-height: 1.6 !important;
+            }
+
+            /* NEW: Mobile Experience Carousel Redesign */
+            .experience-carousel-container,
+            .experience-timeline,
+            .experience-see-more-mobile,
+            .experience-header-desktop {
                 display: none !important;
             }
 
-            .section {
-                padding: 6rem 1.5rem 3rem !important;
+            .experience-dark-content {
+                min-height: auto !important;
+                padding-bottom: 0 !important;
+                height: auto !important;
             }
 
-            .section-title {
-                font-size: 2rem !important;
+            .experience-section {
+                min-height: auto !important;
+                padding-bottom: 1rem !important;
             }
 
-            .engagements-container {
-                display: grid !important;
-                grid-template-columns: 1fr !important;
-                gap: 2rem !important;
+            .experience-mobile-carousel {
+                display: block !important;
+                width: 100% !important;
+                position: relative !important;
+                overflow: hidden !important;
+                padding-bottom: 0 !important;
+                /* Removed unnecessary padding */
             }
 
-            .engagement-image-wrapper {
-                height: 220px !important;
+            .mobile-carousel-track {
+                display: flex !important;
+                transition: transform 0.5s ease-in-out !important;
+                width: 100% !important;
             }
+
+            .mobile-experience-card {
+                min-width: 100% !important;
+                position: relative !important;
+                border-radius: 20px !important;
+                overflow: hidden !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+                aspect-ratio: 16/9 !important;
+                margin-bottom: 0 !important;
+                /* Removed margin */
+            }
+
+            .mobile-exp-img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+            }
+
+            .mobile-exp-overlay {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent) !important;
+                padding: 1rem !important;
+                text-align: center !important;
+            }
+
+            .mobile-exp-title {
+                color: white !important;
+                font-size: 1.4rem !important;
+                font-weight: 800 !important;
+                margin: 0 !important;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.5px !important;
+            }
+
+            .mobile-exp-company {
+                color: rgba(255, 255, 255, 0.95) !important;
+                font-size: 0.95rem !important;
+                font-weight: 500 !important;
+                margin-top: 0.3rem !important;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+            }
+
+            .mobile-exp-link {
+                position: absolute !important;
+                bottom: 20px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                color: white !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+                font-size: 0.9rem !important;
+                background: rgba(255, 255, 255, 0.15) !important;
+                backdrop-filter: blur(4px) !important;
+                padding: 0.4rem 1.2rem !important;
+                border-radius: 50px !important;
+                border: 1px solid rgba(255, 255, 255, 0.4) !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 0.5rem !important;
+                z-index: 10 !important;
+                transition: background 0.3s ease !important;
+                white-space: nowrap !important;
+            }
+
+            .experience-description {
+                font-size: 0.95rem !important;
+                text-align: center !important;
+                line-height: 1.6 !important;
+            }
+
         }
+
+        /* Conflicting inline styles removed to allow external CSS to control Mobile Navbar */
 
         @media screen and (max-width: 480px) {
             .section-title {
@@ -2805,13 +2724,327 @@ file_put_contents($fichier_compteur, $visiteurs);
                 font-size: 2rem !important;
             }
         }
+
+        /* =========================================
+           NEW: Drag Slider Styles (Desktop)
+           ========================================= */
+        .drag-slider-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 2rem 0 4rem;
+        }
+
+        .drag-slider-container {
+            overflow-x: auto;
+            overflow-y: hidden;
+            cursor: grab;
+            padding: 2rem 5%;
+            /* Side padding for peeking */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            user-select: none;
+            /* Prevent text selection while dragging */
+        }
+
+        .drag-slider-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .drag-slider-container.active {
+            cursor: grabbing;
+        }
+
+        .drag-slider-track {
+            display: flex;
+            gap: 2.5rem;
+            width: max-content;
+        }
+
+        .drag-card {
+            width: 700px;
+            /* Wide card */
+            height: 380px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            display: flex;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .drag-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(90, 143, 189, 0.15);
+        }
+
+        .drag-card-image {
+            flex: 0 0 40%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drag-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            pointer-events: none;
+            /* Crucial for drag */
+        }
+
+        .drag-card:hover .drag-card-image img {
+            transform: scale(1.05);
+        }
+
+        .drag-card-content {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .drag-card-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #2C3E50;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .drag-card-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: #5A8FBD;
+            margin-top: 1rem;
+            border-radius: 2px;
+        }
+
+        .drag-card-desc {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #6B7280;
+        }
+
+        /* Progress Bar */
+        .drag-progress-container {
+            width: 200px;
+            height: 4px;
+            background: #E5E7EB;
+            border-radius: 4px;
+            margin: 2rem auto 0;
+            overflow: hidden;
+        }
+
+        .drag-progress-bar {
+            height: 100%;
+            background: #5A8FBD;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* Drag Hint */
+        .drag-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: #9CA3AF;
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.8;
+            animation: pulseHint 2s infinite;
+        }
+
+        .drag-hint svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        @keyframes pulseHint {
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Adapt for Drag Slider */
+        @media (max-width: 768px) {
+            .drag-slider-container {
+                overflow-x: auto;
+                /* Enable native scroll */
+                scroll-snap-type: x mandatory;
+                /* Snap effect */
+                -webkit-overflow-scrolling: touch;
+                /* Momentum scroll */
+                padding: 1rem 5%;
+            }
+
+            .drag-slider-track {
+                gap: 1.5rem;
+                /* Reduce gap */
+            }
+
+            @media (max-width: 768px) {
+                .drag-card {
+                    width: 260px !important;
+                    /* Wider for better reading */
+                    min-width: 260px !important;
+                    height: 380px !important;
+                    /* Taller for content */
+                    flex-direction: column;
+                    justify-content: flex-start !important;
+                    /* Align top */
+                    scroll-snap-align: center;
+                    margin-right: 1.5rem;
+                    padding: 0 !important;
+                    /* Remove padding to let image fill top */
+                    border-radius: 16px;
+                    overflow: hidden;
+                }
+
+                .drag-card-image {
+                    width: 100%;
+                    height: 180px;
+                    /* Fixed height for image */
+                    overflow: hidden;
+                }
+
+                .drag-card-image img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .drag-card-content {
+                    padding: 1.2rem;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    height: calc(100% - 180px);
+                }
+
+                .drag-card-title {
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                    margin-bottom: 0.2rem;
+                    color: #2C3E50;
+                }
+
+                .drag-card-desc {
+                    font-size: 0.9rem;
+                    line-height: 1.5;
+                    color: #000000 !important;
+                    overflow-y: auto;
+                    /* Allow scroll inside text if needed */
+                }
+
+                .drag-card-title {
+                    font-size: 1.2rem;
+                    /* Smaller title */
+                    margin-bottom: 0.5rem;
+                }
+
+                .drag-card-text {
+                    font-size: 0.9rem;
+                    /* Smaller text */
+                    line-height: 1.4;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    /* Limit text lines if needed */
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+
+                .drag-slider-container {
+                    padding: 2rem 1.5rem;
+                    /* Adjust container padding */
+                }
+            }
+
+            /* =========================================
+           Engagements & Charts Refinements
+           ========================================= */
+            /* Accordion Mobile for Engagements */
+            .engagement-expand-btn {
+                display: none;
+            }
+
+            @media (max-width: 968px) {
+
+                .engagement-desc-modern,
+                .engagement-period-badge {
+                    display: none;
+                    /* Hidden by default on mobile */
+                }
+
+                .engagement-content.expanded .engagement-desc-modern,
+                .engagement-content.expanded .engagement-period-badge {
+                    display: block;
+                    animation: fadeIn 0.3s ease;
+                }
+
+                .engagement-expand-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    color: #5A8FBD;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    margin-top: 0.5rem;
+                    cursor: pointer;
+                    background: none;
+                    border: none;
+                    padding: 0;
+                }
+
+                .engagement-expand-btn svg {
+                    transition: transform 0.3s ease;
+                }
+
+                .engagement-content.expanded .engagement-expand-btn svg {
+                    transform: rotate(180deg);
+                }
+
+                @keyframes fadeIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-10px);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            }
+
+            .chart-description {
+                font-size: 0.9rem;
+                color: #6B7280;
+                margin-bottom: 1.5rem;
+                font-style: italic;
+                margin-top: -1.5rem;
+                /* Pull up closer to subtitle */
+            }
     </style>
-    <!-- Mobile CSS loaded last to override inline styles -->
-    <link rel="stylesheet" href="style_mobile.css?v=11">
+
 </head>
 
 <body>
-    <!-- Navbar style Nike -->
+    <!-- Navbar style Nike (Imported from exp.html structure) -->
     <nav class="navbar" id="navbar">
         <!-- Bouton Hamburger (mobile) -->
         <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()">
@@ -2821,8 +3054,8 @@ file_put_contents($fichier_compteur, $visiteurs);
         </button>
 
         <!-- Logo -->
-        <div class="logo" onclick="scrollToTop()">
-            <img src="logo2.png" href="" alt="Logo"
+        <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+            <img src="logo2.png" alt="Logo"
                 onerror="this.style.background='linear-gradient(135deg, #B8B8B8, #8A8A8A)'; this.alt='TP';">
         </div>
 
@@ -2837,13 +3070,9 @@ file_put_contents($fichier_compteur, $visiteurs);
                     <div>
                         <h3 class="dropdown-title">Mes Projets</h3>
                         <div class="dropdown-links">
-                            <a href="#projets" class="dropdown-link"
-                                onclick="event.preventDefault(); navigateToProjects('1ere')">1ère année</a>
-                            <a href="#projets" class="dropdown-link"
-                                onclick="event.preventDefault(); navigateToProjects('2eme')">2ème année</a>
-                            <!-- <a href="#projets" class="dropdown-link" onclick="event.preventDefault(); navigateToProjects('3eme')">3ème année</a> -->
-                            <a href="#projets" class="dropdown-link"
-                                onclick="event.preventDefault(); navigateToProjects('recap')">Récapitulatif</a>
+                            <a href="#projets" class="dropdown-link" onclick="showProjects('1ere');">1ère année</a>
+                            <a href="#projets" class="dropdown-link" onclick="showProjects('2eme');">2ème année</a>
+                            <a href="#projets" class="dropdown-link" onclick="showProjects('recap');">Récapitulatif</a>
                         </div>
                     </div>
                 </div>
@@ -2875,29 +3104,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                                     <span class="contact-text">theo.petit@etu.univ-poitiers.fr</span>
                                 </div>
                             </a>
-                            <a href="tel:+33781088125" class="contact-link">
-                                <div class="contact-item">
-                                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path
-                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                                        </path>
-                                    </svg>
-                                    <span class="contact-text">+33 7 81 08 81 25</span>
-                                </div>
-                            </a>
-                            <a href="mailto:pro.theopetit@gmail.com" class="contact-link">
-                                <div class="contact-item">
-                                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                    </svg>
-                                    <span class="contact-text">pro.theopetit@gmail.com</span>
-                                </div>
-                            </a>
-                            <a href="https://www.linkedin.com/in/théo-petit1
-                            " target="_blank" class="contact-link">
+                            <a href="https://www.linkedin.com/in/théo-petit1" target="_blank" class="contact-link">
                                 <div class="contact-item">
                                     <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
@@ -2970,34 +3177,23 @@ file_put_contents($fichier_compteur, $visiteurs);
         <h2 class="section-title">À propos</h2>
         <p class="section-subtitle">Slidez pour voir !</p>
 
-        <div class="carousel-container">
-            <!-- Contenu texte à gauche -->
-            <div class="carousel-content">
-                <h3 class="carousel-title" id="carouselTitle">Formation Continue</h3>
-                <p class="carousel-description" id="carouselDescription">
-                    Titulaire d\'un BAC Technologique STI2D (Science de l\'Ingénieurie et du Développement Durable) avec
-                    comme spécialités : Mathématiques et Informatique. Je suis actuellement au sein d\'une formation en
-                    Science des Données (SD), un programme de 3 ans, que je devrais terminer en 2027 .
-                </p>
-                <div class="carousel-dots" id="carouselDots"></div>
-
-                <!-- Bouton CV -->
-                <a href="CV_Theo_PETIT.pdf" download class="cv-download-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Télécharger mon CV
-                </a>
-            </div>
-
-            <!-- Cylindre d'images à droite -->
-            <div class="carousel-images">
-                <div class="cylinder-wrapper" id="cylinderWrapper">
-                    <!-- Les images seront insérées ici dynamiquement -->
+        <div class="drag-slider-wrapper">
+            <div class="drag-slider-container" id="dragSliderContainer">
+                <div class="drag-slider-track" id="dragSliderTrack">
+                    <!-- Cards will be injected by JS -->
                 </div>
+            </div>
+            <!-- Progress Bar -->
+            <div class="drag-progress-container">
+                <div class="drag-progress-bar" id="dragProgressBar"></div>
+            </div>
+            <!-- Hint -->
+            <div class="drag-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 10l4 4-4 4"></path>
+                    <path d="M7 14l-4-4 4-4"></path>
+                </svg>
+                <span>Glissez pour découvrir</span>
             </div>
         </div>
     </section>
@@ -3010,18 +3206,40 @@ file_put_contents($fichier_compteur, $visiteurs);
         </div>
 
         <!-- Tabs pour changer d'année -->
-        <div class="projects-tabs">
-            <button class="project-tab active" onclick="showProjects('1ere')">1ère année</button>
-            <button class="project-tab" onclick="showProjects('2eme')">2ème année</button>
-            <!--<button class="project-tab" onclick="showProjects('3eme')">3ème année</button>-->
-            <button class="project-tab" onclick="showProjects('recap')">Récapitulatif</button>
+        <!-- Contrôles : Filtres et Vue -->
+        <div class="projects-controls">
+            <!-- Filtres (Gauche) -->
+            <div class="filters-group">
+                <button class="project-tab active" onclick="showProjects('1ere')">1ère année</button>
+                <button class="project-tab" onclick="showProjects('2eme')">2ème année</button>
+                <button class="project-tab" onclick="showProjects('recap')">Récapitulatif</button>
+            </div>
+
+            <!-- Toggle Vue (Droite) -->
+            <div class="view-controls">
+                <!-- Bouton Vue Large (Split / 2 cols desktop / 1 col mobile) -->
+                <button class="view-btn" id="viewLargeBtn" onclick="setProjectView('large')" title="Vue détaillée">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                        <path d="M12 3v18"></path>
+                    </svg>
+                </button>
+                <!-- Bouton Vue Grille (Grid / 4 cols desktop / 2 cols mobile) -->
+                <button class="view-btn active" id="viewGridBtn" onclick="setProjectView('grid')" title="Vue grille">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <!-- Projets 1ère année -->
         <div id="projets-1ere" class="projects-content active">
             <div class="projects-grid">
-                <a href="projets/ADRD.html" class="project-card" data-note="11,5" data-project-name="ADRD"
-                    data-year="1">
+                <a href="projets/ADRD.html" class="project-card" data-project-name="ADRD" data-year="1">
                     <img src="projets/ADRD/1page.png" alt="Projet 1" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+1'">
                     <div class="project-content">
@@ -3037,8 +3255,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                     </div>
                 </a>
 
-                <a href="projets/indicateurs.html" class="project-card" data-note="9" data-project-name="Indicateurs"
-                    data-year="1">
+                <a href="projets/indicateurs.html" class="project-card" data-project-name="Indicateurs" data-year="1">
                     <img src="projets/Indicateurs/indicateurs.png" alt="Projet 2" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+2'">
                     <div class="project-content">
@@ -3054,8 +3271,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                     </div>
                 </a>
 
-                <a href="projets/dataviz.html" class="project-card" data-note="12" data-project-name="DataViz"
-                    data-year="1">
+                <a href="projets/dataviz.html" class="project-card" data-project-name="DataViz" data-year="1">
                     <img src="projets/dataviz/dataviz.png" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3070,8 +3286,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                         </div>
                     </div>
                 </a>
-                <a href="projets/estimation.html" class="project-card" data-note="13" data-project-name="Estimation"
-                    data-year="1">
+                <a href="projets/estimation.html" class="project-card" data-project-name="Estimation" data-year="1">
                     <img src="projets/estimation/estimation.png" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3088,8 +3303,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                         </div>
                     </div>
                 </a>
-                <a href="projets/regression.html" class="project-card" data-note="16" data-project-name="Régression"
-                    data-year="1">
+                <a href="projets/regression.html" class="project-card" data-project-name="Régression" data-year="1">
                     <img src="projets/regression/regression.png" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3105,7 +3319,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                         </div>
                     </div>
                 </a>
-                <a href="projets/bdr.html" class="project-card" data-note="13.5" data-project-name="BDR" data-year="1">
+                <a href="projets/bdr.html" class="project-card" data-project-name="BDR" data-year="1">
                     <img src="projets/bdr/bdr2.png" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3121,8 +3335,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                         </div>
                     </div>
                 </a>
-                <a href="projets/enquete.html" class="project-card" data-note="14.5" data-project-name="Enquête"
-                    data-year="1">
+                <a href="projets/enquete.html" class="project-card" data-project-name="Enquête" data-year="1">
                     <img src="projets/enquete/enquete.jpeg" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3138,7 +3351,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                         </div>
                     </div>
                 </a>
-                <a href="projets/vba.html" class="project-card" data-note="17" data-project-name="VBA" data-year="1">
+                <a href="projets/vba.html" class="project-card" data-project-name="VBA" data-year="1">
                     <img src="projets/vba/vba2.jpeg" alt="Projet 3" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Projet+3'">
                     <div class="project-content">
@@ -3159,8 +3372,7 @@ file_put_contents($fichier_compteur, $visiteurs);
         <!-- Projets 2ème année -->
         <div id="projets-2eme" class="projects-content">
             <div class="projects-grid">
-                <a href="projets/php.html" class="project-card" data-note="18" data-project-name="Site PHP"
-                    data-year="2">
+                <a href="projets/php.html" class="project-card" data-project-name="Site PHP" data-year="2">
                     <img src="projets/PHP/php.png" alt="Projet Dashboard" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Dashboard+Power+BI'">
                     <div class="project-content">
@@ -3178,8 +3390,57 @@ file_put_contents($fichier_compteur, $visiteurs);
                         </div>
                     </div>
                 </a>
+                <a href="projets/collecte.html" class="project-card" data-project-name="Web Scraping/API" data-year="2">
+                    <img src="projets/collecte/SAE/menu.png" alt="Projet Dashboard" class="project-image"
+                        onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Dashboard+Power+BI'">
+                    <div class="project-content">
+                        <h3 class="project-title">Collecte de données web</h3>
+                        <p class="project-description">
+                            Collecte de données web via le web scraping et l'exploitation d'une API pour produire des
+                            indicateurs visuels impactants.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Web Scraping</span>
+                            <span class="project-tag">API</span>
+                            <span class="project-tag">Data Viz</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="projets/dentissimo.html" class="project-card" data-project-name="Dentissimo" data-year="2">
+                    <img src="projets/AMIN/base.jpeg" alt="Projet Dashboard" class="project-image"
+                        onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Dashboard+Power+BI'">
+                    <div class="project-content">
+                        <h3 class="project-title">Dentissimo</h3>
+                        <p class="project-description">
+                            Création d'une base de données pour un cabinet dentaire.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Oracle</span>
+                            <span class="project-tag">Docker</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="projets/vba(avance).html" class="project-card"
+                    data-project-name="VBA Excel & Google App Script" data-year="2">
+                    <img src="projets/vba(avance)/PROJET/tb.png" alt="Projet Dashboard" class="project-image"
+                        onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Dashboard+Power+BI'">
+                    <div class="project-content">
+                        <h3 class="project-title">VBA Excel & Google App Script</h3>
+                        <p class="project-description">
+                            Application de gestion des retours étudiants (JPO, Salons). Comparaison de deux approches :
+                            Excel VBA (Local) vs Google App Script (Cloud).
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">VBA</span>
+                            <span class="project-tag">Excel</span>
+                            <span class="project-tag">App Script</span>
+                            <span class="project-tag">Sheets</span>
+                        </div>
+                    </div>
+                </a>
                 <!---
-                <a href="projet-details-2-2.html" class="project-card" data-note="16" data-project-name="ML" data-year="2">
+                <a href="projet-details-2-2.html" class="project-card" data-project-name="ML" data-year="2">
                     <img src="projets/2eme/projet2.jpg" alt="Machine Learning" class="project-image" onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Machine+Learning'">
                     <div class="project-content">
                         <h3 class="project-title">Prédiction avec ML</h3>
@@ -3194,7 +3455,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                     </div>
                 </a>
 
-                <a href="projet-details-2-3.html" class="project-card" data-note="14" data-project-name="API REST" data-year="2">
+                <a href="projet-details-2-3.html" class="project-card" data-project-name="API REST" data-year="2">
                     <img src="projets/2eme/projet3.jpg" alt="API REST" class="project-image" onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=API+REST'">
                     <div class="project-content">
                         <h3 class="project-title">API REST Data</h3>
@@ -3209,13 +3470,27 @@ file_put_contents($fichier_compteur, $visiteurs);
                     </div>
                 </a>
             -->
+                <a href="projets/or.html" class="project-card" data-project-name="Prédiction Cours Or" data-year="2">
+                    <img src="projets/ali/or.png" alt="Prédiction Or" class="project-image"
+                        onerror="this.src='https://via.placeholder.com/400x280/D4AF37/FFFFFF?text=Prédiction+Or'">
+                    <div class="project-content">
+                        <h3 class="project-title">Prédiction du Cours de l'Or</h3>
+                        <p class="project-description">
+                            Analyse de séries temporelles et modélisation prédictive.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Séries Temporelles</span>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
 
         <!-- Projets 3ème année
         <div id="projets-3eme" class="projects-content">
             <div class="projects-grid">
-                <a href="projet-details-3-1.html" class="project-card" data-note="19" data-project-name="NoteIt" data-year="3">
+                <a href="projet-details-3-1.html" class="project-card" data-project-name="NoteIt" data-year="3">
                     <img src="projets/3eme/projet1.jpg" alt="NoteIt" class="project-image" onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=NoteIt.fr'">
                     <div class="project-content">
                         <h3 class="project-title">NoteIt.fr - Startup</h3>
@@ -3230,7 +3505,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                     </div>
                 </a>
 
-                <a href="projet-details-3-2.html" class="project-card" data-note="17.5" data-project-name="Deep Learning" data-year="3">
+                <a href="projet-details-3-2.html" class="project-card" data-project-name="Deep Learning" data-year="3">
                     <img src="projets/3eme/projet2.jpg" alt="Deep Learning" class="project-image" onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Deep+Learning'">
                     <div class="project-content">
                         <h3 class="project-title">Classification d'images</h3>
@@ -3245,7 +3520,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                     </div>
                 </a>
 
-                <a href="projet-details-3-3.html" class="project-card" data-note="16.5" data-project-name="Big Data" data-year="3">
+                <a href="projet-details-3-3.html" class="project-card" data-project-name="Big Data" data-year="3">
                     <img src="projets/3eme/projet3.jpg" alt="Big Data" class="project-image" onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Big+Data'">
                     <div class="project-content">
                         <h3 class="project-title">Pipeline Big Data</h3>
@@ -3266,7 +3541,7 @@ file_put_contents($fichier_compteur, $visiteurs);
         <div id="projets-recap" class="projects-content">
             <div class="projects-grid">
                 <a href="./projets/recap/Bilan_1ere_annee.pdf" class="project-card">
-                    <img src="./projets/recap_1.png" alt="Best of 1" class="project-image"
+                    <img src="./projets/recap/recap_1.png" alt="Best of 1" class="project-image"
                         onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Meilleur+1'">
                     <div class="project-content">
                         <h3 class="project-title">1ère année</h3>
@@ -3282,7 +3557,7 @@ file_put_contents($fichier_compteur, $visiteurs);
 
                 <!-- Récapitulatif 
                 <a href="projet-details-2-1.html" class="project-card">
-                    <img src="./projets/recap_2.png" alt="Best of 2" class="project-image" onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Meilleur+2'">
+                    <img src="./projets/recap/recap_2.png" alt="Best of 2" class="project-image" onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Meilleur+2'">
                     <div class="project-content">
                         <h3 class="project-title">Dashboard Power BI - 2ème année</h3>
                         <p class="project-description">
@@ -3296,7 +3571,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                 </a>
 
                 <a href="projet-details-3-1.html" class="project-card">
-                    <img src="./projets/recap_3.png" alt="Best of 3" class="project-image" onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Meilleur+3'">
+                    <img src="./projets/recap/recap_3.png" alt="Best of 3" class="project-image" onerror="this.src='https://via.placeholder.com/400x280/8A8A8A/FFFFFF?text=Meilleur+3'">
                     <div class="project-content">
                         <h3 class="project-title">NoteIt.fr - 3ème année</h3>
                         <p class="project-description">
@@ -3311,46 +3586,349 @@ file_put_contents($fichier_compteur, $visiteurs);
             </div>
         </div>
 
+        <!-- Section Applications (Cloud Style - Desktop Only) -->
+        <style>
+            @media (max-width: 768px) {
+                .desktop-applications-section {
+                    display: none !important;
+                }
+            }
+        </style>
+        <div class="desktop-applications-section" style="background-color: #ffffff; width: 100%;">
+            <h3 class="section-title"
+                style="font-size: 1.8rem; margin: 4rem 0 3rem; color: #1e293b; text-align: center; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
+                MES APPLICATIONS</h3>
+
+            <div class="applications-cloud"
+                style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 3rem; padding: 0 1cm; width: 100%; box-sizing: border-box; margin-bottom: 4rem;">
+
+
+
+                <!-- Word -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/WORD_LOGO.png" alt="Word"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Excel -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/Microsoft_Excel_2013-2019_logo.svg.png" alt="Excel"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Access -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/Microsoft_Office_Access_(2019-2025).svg.png" alt="Access"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Power BI -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/New_Power_BI_Logo.svg.png" alt="Power BI"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- SAS -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/SAS_logo_horiz.svg" alt="SAS"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- R Studio -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/RStudio_logo_flat.svg.png" alt="R Studio"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Python -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/Python-logo-notext.svg.png" alt="Python"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- SQL -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/Sql_data_base_with_logo.png" alt="SQL"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Tableau -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/Tableau-Symbol.png" alt="Tableau"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Canva -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/images-5.png" alt="Canva"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Dev Web -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/images-3.jpeg" alt="Web Dev"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Trello -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/Logo_Trello.svg.png" alt="Trello"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Sphinx -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/Logo-Sphinx-site-Web.png" alt="Sphynx"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- SAP (New) -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/sap_logo_rgb_onwhite_0300_0300.png" alt="SAP"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+
+
+                <!-- QGIS -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/images-3.png" alt="QGIS"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Docker -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/images-4.jpeg" alt="Docker"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Excalidraw -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/images-4.png" alt="Excalidraw"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- CapCut -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/1664284836cap-cut-logo-png.png.webp" alt="CapCut"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- DaVinci Resolve -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/DaVinci_Resolve_Studio.png" alt="DaVinci Resolve"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Misc (images-2) -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/images-2.png" alt="App"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+                <!-- Misc (images-6 - New) -->
+                <div class="app-item" style="transition: transform 0.3s ease;">
+                    <img src="applications/images-6.png" alt="App"
+                        style="width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                </div>
+
+            </div>
+        </div>
+        </div>
+
     </section>
 
     <!-- Section Expérience -->
+    <!-- Section Expérience -->
     <section id="experience" class="experience-section">
-        <!-- Timeline horizontale fixe -->
-        <div class="experience-timeline">
-            <div class="timeline-line">
-                <div class="timeline-progress"></div>
-            </div>
-            <div class="timeline-points-container">
-                <div class="timeline-point active" onclick="goToExperience(0)">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">Sept. 2025</div>
-                </div>
-                <div class="timeline-point" onclick="goToExperience(1)">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">Août. 2025</div>
-                </div>
-                <div class="timeline-point" onclick="goToExperience(2)">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">Juin. 2025</div>
-                </div>
-                <div class="timeline-point" onclick="goToExperience(3)">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">Mars 2023</div>
-                </div>
-            </div>
-        </div>
-
+        <!-- Full Screen Background Carousel -->
         <div class="experience-carousel-container">
             <div class="experience-slides">
 
 
-                <!-- Slide 1 - IMA -->
+                <!-- Slide 1 - POISSON -->
+                <div class="experience-slide active">
+                    <img src="experience/bg-poisson.png" alt="Lerclerc" class="experience-background"
+                        onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920'">
+                    <div class="experience-overlay"></div>
+
+                    <a href="exp.html" class="experience-view-all-btn">Voir toutes les expériences</a>
+
+                    <div class="experience-content-wrapper" style="position: relative;">
+                        <!-- Local Timeline Dot - Slide 1 (Moved to Wrapper) -->
+                        <div class="experience-floating-date"
+                            style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 10;">
+                            <div
+                                style="width: 20px; height: 20px; background: #5A8FBD; border: 4px solid rgba(255, 255, 255, 0.9); border-radius: 50%; margin-top: -10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                            </div>
+                            <div
+                                style="font-size: 0.9rem; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                Mars 2023</div>
+                        </div>
+
+                        <div class="experience-main-content">
+                            <div class="experience-left-section">
+                                <div class="experience-header-section">
+                                    <img src="experience/logo-poisson.jpeg" alt="Poisson logo"
+                                        class="experience-company-logo"
+                                        onerror="this.src='https://via.placeholder.com/80x80/FFFFFF/5A8FBD?text=IUT'">
+                                    <div class="experience-header-text">
+                                        <h2 class="experience-title-large">Vendeur Polyvalent</h2>
+                                        <h3 class="experience-company-large">Les P'tites Pêcheries Trembladaises
+                                        </h3>
+                                        <p class="experience-period">Mars 2023 - Juin 2025</p>
+                                    </div>
+                                </div>
+
+                                <p class="experience-description-large">
+                                    Vente et conseil auprès des clients en poissonnerie. Préparation, mise en valeur
+                                    et
+                                    réassort des produits frais. Respect strict des normes d’hygiène et de
+                                    traçabilité.
+                                    Polyvalence sur la mise en place, le nettoyage du poste et la gestion du service
+                                    client.
+                                </p>
+
+                                <div class="experience-skills-large">
+                                    <span class="experience-skill-large">Vente</span>
+                                    <span class="experience-skill-large">Hygiène & traçabilité</span>
+                                    <span class="experience-skill-large">Relation client</span>
+                                    <span class="experience-skill-large">Polyvalence</span>
+                                    <span class="experience-skill-large">Organisation</span>
+                                </div>
+                            </div>
+
+                            <div class="experience-right-section" style="position: relative;">
+                                <!-- Local Timeline Dot Removed from here -->
+                                <div class="experience-recommendation-large">
+                                    <p class="recommendation-text-large">
+                                        "Durant cette période Theo Petit a participé à l’ensemble des taches de
+                                        l’entreprise.
+                                        Il a fait preuve de rigueur, de ponctualité et d’une très grande régularité.
+                                        En outre son travail comme son attitude positive ont été particulièrement
+                                        apprécié par ses
+                                        collègues.
+                                        Je ne peux que vivement recommander Mr Theo PETIT"
+                                    </p>
+                                    <p class="recommendation-author-large">Mme. PAILLÉ</p>
+                                    <p class="recommendation-role-large">Employeur</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 - LECLERC-->
+                <div class="experience-slide">
+                    <img src="experience/bg-leclerc2.jpeg" alt="Leclerc" class="experience-background"
+                        onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920'">
+                    <div class="experience-overlay"></div>
+                    <a href="exp.html" class="experience-view-all-btn">Voir toutes les expériences</a>
+
+                    <div class="experience-content-wrapper" style="position: relative;">
+                        <!-- Local Timeline Dot -->
+                        <div class="experience-floating-date"
+                            style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 10;">
+                            <div
+                                style="width: 20px; height: 20px; background: #5A8FBD; border: 4px solid rgba(255, 255, 255, 0.9); border-radius: 50%; margin-top: -10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                            </div>
+                            <div
+                                style="font-size: 0.9rem; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                Juin 2025</div>
+                        </div>
+
+                        <div class="experience-header-section">
+                            <img src="experience/logo-leclerc.png" alt="Leclerc logo" class="experience-company-logo"
+                                onerror="this.src='https://via.placeholder.com/80x80/FFFFFF/5A8FBD?text=Note'">
+                            <div class="experience-header-text">
+                                <h2 class="experience-title-large">Employé commercial</h2>
+                                <h3 class="experience-company-large">E. Leclerc</h3>
+                                <p class="experience-period">Juin 2025 - Août 2025</p>
+                            </div>
+                        </div>
+
+                        <p class="experience-description-large">
+                            Mise en rayon et gestion des produits, maintien de la présentation et de la
+                            disponibilité en
+                            magasin. Réassort quotidien et contrôle des dates. Accueil et orientation des clients
+                            avec
+                            une attention particulière portée à la qualité du service. Participation à
+                            l’organisation et
+                            au maintien de la propreté de l’espace de vente.
+                        </p>
+
+                        <div class="experience-skills-large">
+                            <span class="experience-skill-large">Mise en rayon</span>
+                            <span class="experience-skill-large">Gestion des stocks</span>
+                            <span class="experience-skill-large">Relation client</span>
+                            <span class="experience-skill-large">Organisation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 - HERROUET -->
+                <div class="experience-slide">
+                    <img src="experience/bg-herrouet.png" alt="Herrouet" class="experience-background"
+                        onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920'">
+                    <div class="experience-overlay"></div>
+                    <a href="exp.html" class="experience-view-all-btn">Voir toutes les expériences</a>
+
+                    <div class="experience-content-wrapper" style="position: relative;">
+                        <!-- Local Timeline Dot -->
+                        <div class="experience-floating-date"
+                            style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 10;">
+                            <div
+                                style="width: 20px; height: 20px; background: #5A8FBD; border: 4px solid rgba(255, 255, 255, 0.9); border-radius: 50%; margin-top: -10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                            </div>
+                            <div
+                                style="font-size: 0.9rem; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                Août 2025</div>
+                        </div>
+
+                        <div class="experience-header-section">
+                            <img src="experience/logo-herrouet.jpeg" alt="Herrouet logo" class="experience-company-logo"
+                                onerror="this.src='https://via.placeholder.com/80x80/FFFFFF/5A8FBD?text=Note'">
+                            <div class="experience-header-text">
+                                <h2 class="experience-title-large">Serveur en extra</h2>
+                                <h3 class="experience-company-large">SARL Charcuterie Traiteur Les Gourmets</h3>
+                                <p class="experience-period">Août 2025</p>
+                            </div>
+                        </div>
+
+                        <p class="experience-description-large">
+                            Service en salle lors d’évènements et prestations traiteur. Gestion des tables et
+                            maintien
+                            d’un service fluide et de qualité. Participation à la mise en place, au service et au
+                            rangement, avec une attention constante portée à la satisfaction des clients.
+                        </p>
+
+                        <div class="experience-skills-large">
+                            <span class="experience-skill-large">Service en salle</span>
+                            <span class="experience-skill-large">Organisation</span>
+                            <span class="experience-skill-large">Relation client</span>
+                            <span class="experience-skill-large">Travail d'équipe</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4 - IMA -->
                 <div class="experience-slide">
                     <img src="experience/bg-ima2.png" alt="IMA Background" class="experience-background"
                         onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920'">
                     <div class="experience-overlay"></div>
+                    <a href="exp.html" class="experience-view-all-btn">Voir toutes les expériences</a>
 
-                    <div class="experience-content-wrapper">
+                    <div class="experience-content-wrapper" style="position: relative;">
+                        <!-- Local Timeline Dot -->
+                        <div class="experience-floating-date"
+                            style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 10;">
+                            <div
+                                style="width: 20px; height: 20px; background: #5A8FBD; border: 4px solid rgba(255, 255, 255, 0.9); border-radius: 50%; margin-top: -10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                            </div>
+                            <div
+                                style="font-size: 0.9rem; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                Sept. 2025</div>
+                        </div>
                         <div class="experience-current-badge">
                             En poste actuellement
                         </div>
@@ -3379,128 +3957,6 @@ file_put_contents($fichier_compteur, $visiteurs);
                         </div>
                     </div>
                 </div>
-
-                <!-- Slide 2 - HERROUET -->
-                <div class="experience-slide">
-                    <img src="experience/bg-herrouet.png" alt="Herrouet" class="experience-background"
-                        onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920'">
-                    <div class="experience-overlay"></div>
-
-                    <div class="experience-content-wrapper">
-
-                        <div class="experience-header-section">
-                            <img src="experience/logo-herrouet.jpeg" alt="Herrouet logo" class="experience-company-logo"
-                                onerror="this.src='https://via.placeholder.com/80x80/FFFFFF/5A8FBD?text=Note'">
-                            <div class="experience-header-text">
-                                <h2 class="experience-title-large">Serveur en extra</h2>
-                                <h3 class="experience-company-large">SARL Charcuterie Traiteur Les Gourmets</h3>
-                                <p class="experience-period">Aôut 2025</p>
-                            </div>
-                        </div>
-
-                        <p class="experience-description-large">
-                            Service en salle lors d’évènements et prestations traiteur. Gestion des tables et maintien
-                            d’un service fluide et de qualité. Participation à la mise en place, au service et au
-                            rangement, avec une attention constante portée à la satisfaction des clients.
-                        </p>
-
-                        <div class="experience-skills-large">
-                            <span class="experience-skill-large">Service en salle</span>
-                            <span class="experience-skill-large">Organisation</span>
-                            <span class="experience-skill-large">Relation client</span>
-                            <span class="experience-skill-large">Travail d'équipe</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3 - LECLERC-->
-                <div class="experience-slide">
-                    <img src="experience/bg-leclerc2.jpeg" alt="Leclerc" class="experience-background"
-                        onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920'">
-                    <div class="experience-overlay"></div>
-
-                    <div class="experience-content-wrapper">
-
-                        <div class="experience-header-section">
-                            <img src="experience/logo-leclerc.png" alt="Leclerc logo" class="experience-company-logo"
-                                onerror="this.src='https://via.placeholder.com/80x80/FFFFFF/5A8FBD?text=Note'">
-                            <div class="experience-header-text">
-                                <h2 class="experience-title-large">Employé commercial</h2>
-                                <h3 class="experience-company-large">E. Leclerc</h3>
-                                <p class="experience-period">Juin 2025 - Août 2025</p>
-                            </div>
-                        </div>
-
-                        <p class="experience-description-large">
-                            Mise en rayon et gestion des produits, maintien de la présentation et de la disponibilité en
-                            magasin. Réassort quotidien et contrôle des dates. Accueil et orientation des clients avec
-                            une attention particulière portée à la qualité du service. Participation à l’organisation et
-                            au maintien de la propreté de l’espace de vente.
-                        </p>
-
-                        <div class="experience-skills-large">
-                            <span class="experience-skill-large">Mise en rayon</span>
-                            <span class="experience-skill-large">Gestion des stocks</span>
-                            <span class="experience-skill-large">Relation client</span>
-                            <span class="experience-skill-large">Organisation</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 4 - POISSON -->
-                <div class="experience-slide">
-                    <img src="experience/bg-poisson.png" alt="Lerclerc" class="experience-background"
-                        onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920'">
-                    <div class="experience-overlay"></div>
-
-                    <div class="experience-content-wrapper">
-                        <div class="experience-main-content">
-                            <div class="experience-left-section">
-                                <div class="experience-header-section">
-                                    <img src="experience/logo-poisson.jpeg" alt="Poisson logo"
-                                        class="experience-company-logo"
-                                        onerror="this.src='https://via.placeholder.com/80x80/FFFFFF/5A8FBD?text=IUT'">
-                                    <div class="experience-header-text">
-                                        <h2 class="experience-title-large">Vendeur Polyvalent</h2>
-                                        <h3 class="experience-company-large">Les P'tites Pêcheries Trembladaises</h3>
-                                        <p class="experience-period">Mars 2023 - Juin 2025</p>
-                                    </div>
-                                </div>
-
-                                <p class="experience-description-large">
-                                    Vente et conseil auprès des clients en poissonnerie. Préparation, mise en valeur et
-                                    réassort des produits frais. Respect strict des normes d’hygiène et de traçabilité.
-                                    Polyvalence sur la mise en place, le nettoyage du poste et la gestion du service
-                                    client.
-                                </p>
-
-                                <div class="experience-skills-large">
-                                    <span class="experience-skill-large">Vente</span>
-                                    <span class="experience-skill-large">Hygiène & traçabilité</span>
-                                    <span class="experience-skill-large">Relation client</span>
-                                    <span class="experience-skill-large">Polyvalence</span>
-                                    <span class="experience-skill-large">Organisation</span>
-                                </div>
-                            </div>
-
-                            <div class="experience-right-section">
-                                <div class="experience-recommendation-large">
-                                    <p class="recommendation-text-large">
-                                        "Durant cette période Theo Petit a participé à l’ensemble des taches de
-                                        l’entreprise.
-                                        Il a fait preuve de rigueur, de ponctualité et d’une très grande régularité.
-                                        En outre son travail comme son attitude positive ont été particulièrement
-                                        apprécié par ses
-                                        collègues.
-                                        Je ne peux que vivement recommander Mr Theo PETIT"
-                                    </p>
-                                    <p class="recommendation-author-large">Mme. PAILLÉ</p>
-                                    <p class="recommendation-role-large">Employeur</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Navigation -->
@@ -3525,6 +3981,77 @@ file_put_contents($fichier_compteur, $visiteurs);
                 <div class="experience-indicator" onclick="goToExperience(3)"></div>
             </div>
         </div>
+
+        <!-- Desktop Header (Moved Inside) -->
+        <div class="experience-header-desktop"
+            style="text-align: left; padding: 2rem 3rem 2rem; position: relative; z-index: 20; pointer-events: none;">
+            <h2 class="section-title" style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">MES EXPÉRIENCES</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9); text-shadow: 0 1px 2px rgba(0,0,0,0.5);">
+                Découvrez mon parcours professionnel chronologique</p>
+        </div>
+        <!-- Mobile Header (Visible only on mobile via CSS) -->
+        <!-- Mobile Header (Visible only on mobile via CSS) -->
+        <div class="experience-header-mobile"
+            style="display: none; text-align: left; margin-bottom: 1rem; padding: 0 1.5rem;">
+            <h2 class="section-title" style="color: #2C3E50; margin-bottom: 0.5rem; margin-top: 2rem;">MES EXPÉRIENCES
+            </h2>
+            <p class="section-subtitle" style="color: #666; margin-bottom: 2rem;">Découvrez mon parcours professionnel
+                chronologique</p>
+        </div>
+
+        <!-- Timeline removed as per user request -->
+        <div class="experience-dark-content">
+
+            <!-- NEW: Mobile Experience Carousel (Visible only on mobile) -->
+            <div class="experience-mobile-carousel" style="display: none;">
+                <div class="mobile-carousel-track">
+                    <!-- Slide 1: Poisson -->
+                    <div class="mobile-experience-card">
+                        <img src="experience/halles.jpg" alt="Vendeur Polyvalent" class="mobile-exp-img">
+                        <div class="mobile-exp-overlay">
+                            <h3 class="mobile-exp-title">Vendeur Polyvalent</h3>
+                            <p class="mobile-exp-company">Les P'tites Pêcheries</p>
+                        </div>
+                        <a href="exp.html" class="mobile-exp-link">Voir mes expériences</a>
+                    </div>
+                    <!-- Slide 2: Leclerc -->
+                    <div class="mobile-experience-card">
+                        <img src="experience/bg-leclerc2.jpeg" alt="Employé Polyvalent" class="mobile-exp-img">
+                        <div class="mobile-exp-overlay">
+                            <h3 class="mobile-exp-title">Employé Commercial</h3>
+                            <p class="mobile-exp-company">E.Leclerc</p>
+                        </div>
+                        <a href="exp.html" class="mobile-exp-link">Voir mes expériences</a>
+                    </div>
+                    <!-- Slide 3: IMA -->
+                    <div class="mobile-experience-card">
+                        <img src="experience/ima.jpg" alt="Alternance Data" class="mobile-exp-img">
+                        <div class="mobile-exp-overlay">
+                            <h3 class="mobile-exp-title">Alternance Data</h3>
+                            <p class="mobile-exp-company">IMA</p>
+                        </div>
+                        <a href="exp.html" class="mobile-exp-link">Voir mes expériences</a>
+                    </div>
+                    <!-- Slide 4: Herrouet -->
+                    <div class="mobile-experience-card">
+                        <img src="experience/bg-herrouet.png" alt="Stage Découverte" class="mobile-exp-img">
+                        <div class="mobile-exp-overlay">
+                            <h3 class="mobile-exp-title">Serveur</h3>
+                            <p class="mobile-exp-company">Maison Herrouet </p>
+                        </div>
+                        <a href="exp.html" class="mobile-exp-link">Voir mes expériences</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lien Voir Plus (Mobile) -->
+        <div class="experience-see-more-mobile" style="display: none; text-align: center; margin-top: 1rem;">
+            <a href="exp.html" style="color: #5A8FBD; font-size: 0.9rem; text-decoration: none; font-weight: 500;">
+                Voir plus d'expériences →
+            </a>
+        </div>
+        </div> <!-- Closing experience-dark-content -->
     </section>
 
     <!-- Section Engagements - Accordéon -->
@@ -3535,88 +4062,89 @@ file_put_contents($fichier_compteur, $visiteurs);
         </div>
 
         <div class="engagements-container">
-            <!-- Engagement 1 - Suppléant Délégué -->
-            <div class="engagement-card">
-                <div class="engagement-card-header">
-                    <div class="engagement-image-wrapper">
-                        <img src="engagements/delegue.png" alt="Suppléant Délégué" class="engagement-image"
-                            onerror="this.style.display='none'; this.parentElement.querySelector('.engagement-image-placeholder').style.display='flex';">
-                        <div class="engagement-image-placeholder" style="display: none;">👥</div>
-                    </div>
-                    <div class="engagement-card-info">
-                        <div class="engagement-card-top">
-                            <div class="engagement-card-title-group">
-                                <h3 class="engagement-title">Suppléant Délégué</h3>
-                                <p class="engagement-organization">Promotion BUT Science des Données</p>
-                                <span class="engagement-period">2024 - 2027</span>
-                            </div>
-                        </div>
-                        <p class="engagement-short-description">
-                            Liaison entre les étudiants et l'administration pour améliorer la qualité de formation
-                        </p>
-                    </div>
-                </div>
-                <div class="engagement-content">
-                    <div class="engagement-content-inner">
-                        <p class="engagement-description">
-                            En tant que suppléant délégué, j'assure la liaison entre les étudiants et l'administration
-                            pour améliorer continuellement la qualité de notre formation en BUT Science des Données.
-                        </p>
-
-                    </div>
-                </div>
+            <!-- Row 1: Left (Image Left, Text Right) -->
+            <!-- Card 1 -->
+            <div class="engagement-content">
+                <h3 class="engagement-title-modern">Suppléant Délégué</h3>
+                <span class="engagement-org-modern">Promotion BUT Science des Données</span>
+                <p class="engagement-desc-modern">
+                    En tant que suppléant délégué, j'assure la liaison essentielle entre les étudiants et
+                    l'administration.
+                    Mon rôle est d'écouter, de représenter mes camarades et de contribuer activement à
+                    l'amélioration continue de la qualité de notre formation.
+                </p>
+                <span class="engagement-period-badge">2024 - 2027</span>
+                <button class="engagement-expand-btn" onclick="toggleEngagement(this)">
+                    En savoir plus
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"></path>
+                    </svg>
+                </button>
             </div>
 
-            <!-- Engagement 2 - BDE -->
-            <div class="engagement-card">
-                <div class="engagement-card-header">
-                    <div class="engagement-image-wrapper">
-                        <img src="engagements/bde.png" alt="Bureau des Étudiants" class="engagement-image"
-                            onerror="this.style.display='none'; this.parentElement.querySelector('.engagement-image-placeholder').style.display='flex';">
-                        <div class="engagement-image-placeholder" style="display: none;">🎉</div>
-                    </div>
-                    <div class="engagement-card-info">
-                        <div class="engagement-card-top">
-                            <div class="engagement-card-title-group">
-                                <h3 class="engagement-title">Chargé Événementiel</h3>
-                                <p class="engagement-organization">Bureau des Étudiants (BDE)</p>
-                                <span class="engagement-period">2024 - 2027</span>
-                            </div>
-                        </div>
-                        <p class="engagement-short-description">
-                            Organisation d'événements pour dynamiser la vie étudiante et créer de la cohésion
-                        </p>
-                    </div>
-                </div>
-
+            <!-- Row 2: Right (Image Right, Text Left) -->
+            <!-- Row 2: Right (Image Right, Text Left) -->
+            <!-- Card 2 -->
+            <div class="engagement-content">
+                <h3 class="engagement-title-modern">Chargé Événementiel</h3>
+                <span class="engagement-org-modern">Bureau des Étudiants (BDE)</span>
+                <p class="engagement-desc-modern">
+                    Au coeur de la vie étudiante, je participe à l'organisation d'événements fédérateurs.
+                    Mon objectif est de dynamiser le campus et de renforcer la cohésion entre les différentes
+                    promotions à travers des projets conviviaux et ambitieux.
+                </p>
+                <span class="engagement-period-badge">2024 - 2027</span>
+                <button class="engagement-expand-btn" onclick="toggleEngagement(this)">
+                    En savoir plus
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"></path>
+                    </svg>
+                </button>
             </div>
 
-            <!-- Engagement 3 - Délégué Alternant -->
-            <div class="engagement-card">
-                <div class="engagement-card-header">
-                    <div class="engagement-image-wrapper">
-                        <img src="engagements/alternant.png" alt="Délégué Alternant" class="engagement-image"
-                            onerror="this.style.display='none'; this.parentElement.querySelector('.engagement-image-placeholder').style.display='flex';">
-                        <div class="engagement-image-placeholder" style="display: none;">💼</div>
-                    </div>
-                    <div class="engagement-card-info">
-                        <div class="engagement-card-top">
-                            <div class="engagement-card-title-group">
-                                <h3 class="engagement-title">Délégué Alternant</h3>
-                                <p class="engagement-organization">Représentant des Étudiants en Alternance</p>
-                                <span class="engagement-period">2025 - 2027</span>
-                            </div>
-                        </div>
-                        <p class="engagement-short-description">
-                            Faciliter la communication entre le monde académique et professionnel
-                        </p>
-                    </div>
-                </div>
+            <!-- Row 3: Left -->
+            <!-- Row 3: Left -->
+            <!-- Card 3 -->
+            <div class="engagement-content">
+                <h3 class="engagement-title-modern">Délégué Alternant</h3>
+                <span class="engagement-org-modern">Représentant des Étudiants en Alternance</span>
+                <p class="engagement-desc-modern">
+                    Porte-parole des étudiants en alternance, je facilite la communication entre le monde académique
+                    et professionnel.
+                    Je veille à ce que les spécificités de notre rythme soient prises en compte et valorisées.
+                </p>
+                <span class="engagement-period-badge">2025 - 2027</span>
+                <button class="engagement-expand-btn" onclick="toggleEngagement(this)">
+                    En savoir plus
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"></path>
+                    </svg>
+                </button>
+            </div>
 
+            <!-- Row 4: Right -->
+            <!-- Row 4: Right -->
+            <!-- Card 4 -->
+            <div class="engagement-content">
+                <h3 class="engagement-title-modern">Élu au Conseil</h3>
+                <span class="engagement-org-modern">Conseil d'Institut de l'Université de Poitiers</span>
+                <p class="engagement-desc-modern">
+                    En tant qu'élu, je participe aux décisions stratégiques de l'Institut.
+                    C'est un engagement fort pour défendre les intérêts des étudiants et participer à la gouvernance
+                    de l'université.
+                </p>
+                <span class="engagement-period-badge">2025 - 2026</span>
+                <button class="engagement-expand-btn" onclick="toggleEngagement(this)">
+                    En savoir plus
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </section>
 
+    <!-- Section Statistiques -->
     <!-- Section Statistiques -->
     <section id="statistiques" class="statistics-section">
         <div class="statistics-header">
@@ -3638,7 +4166,9 @@ file_put_contents($fichier_compteur, $visiteurs);
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
                 </div>
-                <div class="stat-number counter"><?php echo number_format($visiteurs, 0, ',', ' '); ?></div>
+                <div class="stat-number counter">
+                    <?php echo number_format($visiteurs + 100, 0, ',', ' '); ?>
+                </div>
                 <div class="stat-label">Visiteurs</div>
                 <div class="stat-description">Nombre de visites sur ce portfolio</div>
             </div>
@@ -3684,6 +4214,9 @@ file_put_contents($fichier_compteur, $visiteurs);
 
         </div>
 
+
+
+
         <!-- Graphiques de progression -->
         <div class="statistics-header">
             <h2 class="section-title">En graphiques</h2>
@@ -3693,27 +4226,46 @@ file_put_contents($fichier_compteur, $visiteurs);
 
 
             <!-- Graphique 1 : Répartition des Projets (Doughnut) -->
-            <div class="chart-card">
+            <!-- Graphique 1 : Répartition des Projets (Doughnut) -->
+            <div class="chart-card" style="position: relative;">
+                <a href="BUT SD - Présentation des compétences.pdf" target="_blank" title="Voir les compétences (PDF)"
+                    style="position: absolute; top: 1.5rem; right: 1.5rem; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: #EEF2FF; border-radius: 8px; color: #5A8FBD; transition: all 0.2s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <line x1="10" y1="9" x2="8" y2="9" />
+                    </svg>
+                </a>
                 <h4 class="chart-title">Répartition des Projets</h4>
                 <p class="chart-subtitle">Domaines d'intervention</p>
+
                 <div class="chart-wrapper">
                     <canvas id="projectDistributionChart"></canvas>
                 </div>
             </div>
 
-            <!-- Graphique 2 : Maîtrise des Outils (Horizontal Bar) -->
-            <div class="chart-card">
-                <h4 class="chart-title">Maîtrise des Outils</h4>
-                <p class="chart-subtitle">Niveau technique</p>
-                <div class="chart-wrapper">
-                    <canvas id="toolsChart"></canvas>
-                </div>
-            </div>
+
 
             <!-- Graphique 3 : Profil de Compétences (Radar) -->
-            <div class="chart-card">
+            <!-- Graphique 3 : Profil de Compétences (Radar) -->
+            <div class="chart-card" style="position: relative;">
+                <a href="BUT SD - Présentation des compétences.pdf" target="_blank" title="Voir les compétences (PDF)"
+                    style="position: absolute; top: 1.5rem; right: 1.5rem; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: #EEF2FF; border-radius: 8px; color: #5A8FBD; transition: all 0.2s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <line x1="10" y1="9" x2="8" y2="9" />
+                    </svg>
+                </a>
                 <h4 class="chart-title">Profil de Compétences</h4>
                 <p class="chart-subtitle">Vue d'ensemble</p>
+
                 <div class="chart-wrapper">
                     <canvas id="skillsRadarChart"></canvas>
                 </div>
@@ -3780,7 +4332,8 @@ file_put_contents($fichier_compteur, $visiteurs);
     <!-- Newsletter Section -->
 
 
-    <!-- Footer -->
+
+
     <footer class="footer" style="margin-top: 0; padding-top: 2rem;">
         <div class="footer-content">
             <!-- Brand Section -->
@@ -3868,7 +4421,7 @@ file_put_contents($fichier_compteur, $visiteurs);
             { title: 'Bénévolat', url: '#engagements' },
             { title: 'Associatif', url: '#engagements' },
             { title: 'Statistiques', url: '#statistiques' },
-            { title: 'Compétences', url: '#statistiques' },
+
             { title: 'Skills', url: '#statistiques' },
 
             // Projets par année
@@ -3906,6 +4459,11 @@ file_put_contents($fichier_compteur, $visiteurs);
             { title: 'Université', url: '#apropos' },
             { title: 'IUT', url: '#apropos' },
             { title: 'Alternance', url: '#experience' },
+            { title: 'Calendrier Alternance', url: 'Calendrier-alternance-2027.pdf' },
+            { title: 'Calendrier', url: 'Calendrier-alternance-2027.pdf' },
+            { title: 'Portail Alternant', url: 'alternance.html' },
+            { title: 'Emploi du temps', url: 'planning.html' },
+            { title: 'Compétences étudiées', url: 'BUT SD - Présentation des compétences.pdf' },
         ];
 
         // Gestion de la barre de recherche
@@ -4028,59 +4586,7 @@ file_put_contents($fichier_compteur, $visiteurs);
                 });
             }
 
-            // ========== GRAPHIQUE 2: Maîtrise des Outils (Horizontal Bar) ==========
-            const ctx2 = document.getElementById('toolsChart');
-            if (ctx2) {
-                new Chart(ctx2, {
-                    type: 'bar',
-                    indexAxis: 'y', // Barres horizontales
-                    data: {
-                        labels: ['Python', 'SQL', 'Power BI', 'Excel / VBA', 'R', 'Git / GitHub'],
-                        datasets: [{
-                            label: 'Niveau de maîtrise (%)',
-                            data: [90, 85, 85, 80, 70, 75],
-                            backgroundColor: colors.primary,
-                            borderRadius: 4,
-                            barPercentage: 0.6
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                beginAtZero: true,
-                                max: 100,
-                                grid: { display: false }
-                            },
-                            y: {
-                                grid: { display: false }
-                            }
-                        },
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                backgroundColor: colors.dark,
-                                callbacks: {
-                                    label: function (context) {
-                                        return ` Maîtrise: ${context.parsed.x}%`;
-                                    }
-                                }
-                            },
-                            datalabels: {
-                                color: '#fff',
-                                font: {
-                                    weight: 'bold',
-                                    size: 12
-                                },
-                                anchor: 'end',
-                                align: 'end',
-                                formatter: (value) => value + '%'
-                            }
-                        }
-                    }
-                });
-            }
+
 
             // ========== GRAPHIQUE 3: Profil de Compétences (Radar) ==========
             const ctx3 = document.getElementById('skillsRadarChart');
@@ -4187,6 +4693,38 @@ file_put_contents($fichier_compteur, $visiteurs);
                 clickedTab.classList.add('active');
             }
         }
+
+        // Gestion de la vue des projets (Grille vs Large)
+        function setProjectView(mode) {
+            const grids = document.querySelectorAll('.projects-grid');
+            const largeBtn = document.getElementById('viewLargeBtn');
+            const gridBtn = document.getElementById('viewGridBtn');
+
+            if (mode === 'large') {
+                grids.forEach(grid => grid.classList.add('view-large'));
+                largeBtn.classList.add('active');
+                gridBtn.classList.remove('active');
+            } else {
+                grids.forEach(grid => grid.classList.remove('view-large'));
+                largeBtn.classList.remove('active');
+                gridBtn.classList.add('active');
+            }
+        }
+
+        // Animation des Engagements (Apparition au scroll)
+        const engagementObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Stop observing once visible to prevent re-animation
+                    engagementObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2, rootMargin: "0px 0px -100px 0px" });
+
+        document.querySelectorAll('.engagement-row').forEach(row => {
+            engagementObserver.observe(row);
+        });
 
         // Navigation vers projets avec sélection d'année
         function navigateToProjects(year) {
@@ -4334,13 +4872,12 @@ file_put_contents($fichier_compteur, $visiteurs);
         });
 
 
-        // Données du carousel À propos (images format 9:16 portrait)
+        // Données du carousel À propos (Drag Slider)
         const carouselData = [
             {
                 title: 'Formation BAC+3',
                 description: 'Titulaire d\'un BAC Technologique STI2D (Science de l\'Ingénieurie et du Développement Durable) avec comme spécialités : Mathématiques et Informatique. Je suis actuellement au sein d\'une formation en Science des Données (SD), un programme de 3 ans, que je devrais terminer en 2027 .',
-
-                image: 'propos/moi.jpg' // Remplacer par vos images 9:16
+                image: 'propos/moi.jpg'
             },
             {
                 title: 'Alternance - IMA',
@@ -4354,7 +4891,7 @@ file_put_contents($fichier_compteur, $visiteurs);
             },
             {
                 title: 'Projets Universitaires',
-                description: 'Au cours de ma formation, j\'ai mené de nombreux projets universitaires, qui m\'m\'ont permis de maîtriser un ensemble complet d\'outils, de méthodes et de techniques, couvrant aussi bien la data, le développement web, les statistiques, l\'ETL ou encore la visualisation de données.',
+                description: 'Au cours de ma formation, j\'ai mené de nombreux projets universitaires, qui m\'ont permis de maîtriser un ensemble complet d\'outils, de méthodes et de techniques, couvrant aussi bien la data, le développement web, les statistiques, l\'ETL ou encore la visualisation de données.',
                 image: 'propos/projets.png'
             },
             {
@@ -4369,147 +4906,88 @@ file_put_contents($fichier_compteur, $visiteurs);
             }
         ];
 
-        // Initialiser le carousel
-        let currentAboutSlide = 0;
-        const cylinderWrapper = document.getElementById('cylinderWrapper');
-        const carouselTitle = document.getElementById('carouselTitle');
-        const carouselDescription = document.getElementById('carouselDescription');
-        const carouselDots = document.getElementById('carouselDots');
+        // INIT DRAG SLIDER
+        const sliderContainer = document.getElementById('dragSliderContainer');
+        const sliderTrack = document.getElementById('dragSliderTrack');
+        const sliderBar = document.getElementById('dragProgressBar');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
 
-        // Variables pour la gestion du temps
-        let aboutCarouselInterval;
-        let aboutCarouselTimeout;
-        const AUTO_ROTATION_DELAY = 6000; // 6 secondes
-        const PAUSE_DELAY = 8000; // 8 secondes
+        function initDragSlider() {
+            if (!sliderTrack) return;
 
-        // Créer les images du cylindre (3D Logic)
-        function initCarousel() {
-            // Clear existing
-            cylinderWrapper.innerHTML = '';
-            carouselDots.innerHTML = '';
-
-            const totalImages = carouselData.length;
-            const angleStep = 360 / totalImages;
-
-            carouselData.forEach((item, index) => {
-                const imageDiv = document.createElement('div');
-                imageDiv.className = `cylinder-image ${index === 0 ? 'active' : ''}`;
-                imageDiv.innerHTML = `<img src="${item.image}" alt="${item.title}" onerror="this.src='https://via.placeholder.com/280x500/8A8A8A/FFFFFF?text=${item.title}'">`;
-
-                // 3D Positioning
-                const angle = angleStep * index;
-                const translateZ = 350; // Radius
-                imageDiv.style.transform = `translate(-50%, -50%) rotateY(${angle}deg) translateZ(${translateZ}px)`;
-
-                // Click to pause
-                imageDiv.addEventListener('click', () => {
-                    pauseAboutCarousel();
-                    goToSlideAbout(index);
-                });
-
-                cylinderWrapper.appendChild(imageDiv);
-
-                // Create dots
-                const dot = document.createElement('div');
-                dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
-                dot.onclick = () => {
-                    pauseAboutCarousel();
-                    goToSlideAbout(index);
-                };
-                carouselDots.appendChild(dot);
+            sliderTrack.innerHTML = '';
+            carouselData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'drag-card';
+                card.innerHTML = `
+            <div class="drag-card-image">
+                <img src="${item.image}" alt="${item.title}" onerror="this.src='https://via.placeholder.com/300x400/8A8A8A/FFFFFF?text=${item.title}'">
+            </div>
+            <div class="drag-card-content">
+                <h3 class="drag-card-title">${item.title}</h3>
+                <p class="drag-card-desc">${item.description}</p>
+            </div>
+        `;
+                sliderTrack.appendChild(card);
             });
 
-            updateCarouselContent();
+            // Update bar initially
+            updateProgressBar();
         }
 
-        function updateCarouselContent() {
-            const currentData = carouselData[currentAboutSlide];
+        // Mouse Events
+        sliderContainer.addEventListener('mousedown', (e) => {
+            if (window.innerWidth <= 768) return; // Disable on mobile
+            isDown = true;
+            sliderContainer.classList.add('active');
+            startX = e.pageX - sliderContainer.offsetLeft;
+            scrollLeft = sliderContainer.scrollLeft;
+        });
 
-            // Update Text with fade
-            carouselTitle.style.opacity = 0;
-            carouselDescription.style.opacity = 0;
+        sliderContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+            sliderContainer.classList.remove('active');
+        });
 
-            setTimeout(() => {
-                carouselTitle.textContent = currentData.title;
-                carouselDescription.textContent = currentData.description;
-                carouselTitle.style.opacity = 1;
-                carouselDescription.style.opacity = 1;
-            }, 200);
+        sliderContainer.addEventListener('mouseup', () => {
+            isDown = false;
+            sliderContainer.classList.remove('active');
+        });
 
-            // Update Dots
-            document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentAboutSlide);
-            });
+        sliderContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - sliderContainer.offsetLeft;
+            const walk = (x - startX) * 2; // Scroll-fast
+            sliderContainer.scrollLeft = scrollLeft - walk;
+        });
 
-            // Update Images (3D Logic)
-            document.querySelectorAll('.cylinder-image').forEach((img, index) => {
-                img.classList.toggle('active', index === currentAboutSlide);
-            });
-
-            // Rotate Cylinder
-            const angleStep = 360 / carouselData.length;
-            const rotation = -angleStep * currentAboutSlide;
-            cylinderWrapper.style.transform = `rotateY(${rotation}deg)`;
-        }
-
-        // Gestion du timer
-        function startAboutCarousel() {
-            stopAboutCarousel(); // Sécurité
-            aboutCarouselInterval = setInterval(() => {
-                nextSlideAbout(false); // false = pas d'interaction utilisateur
-            }, AUTO_ROTATION_DELAY);
-        }
-
-        function stopAboutCarousel() {
-            if (aboutCarouselInterval) {
-                clearInterval(aboutCarouselInterval);
-                aboutCarouselInterval = null;
-            }
-            if (aboutCarouselTimeout) {
-                clearTimeout(aboutCarouselTimeout);
-                aboutCarouselTimeout = null;
-            }
-        }
-
-        function pauseAboutCarousel() {
-            stopAboutCarousel();
-            aboutCarouselTimeout = setTimeout(() => {
-                startAboutCarousel();
-            }, PAUSE_DELAY);
-        }
-
-        // Navigation
-        function nextSlideAbout(isUserInteraction = true) {
-            currentAboutSlide = (currentAboutSlide + 1) % carouselData.length;
-            updateCarouselContent();
-
-            if (isUserInteraction) {
-                pauseAboutCarousel();
-            }
-        }
-
-        function prevSlideAbout() {
-            currentAboutSlide = (currentAboutSlide - 1 + carouselData.length) % carouselData.length;
-            updateCarouselContent();
-            pauseAboutCarousel();
-        }
-
-        function goToSlideAbout(index) {
-            currentAboutSlide = index;
-            updateCarouselContent();
-            pauseAboutCarousel();
-        }
-
-        // Initialiser au chargement
-        initCarousel();
-        startAboutCarousel(); // Start auto-rotation
-
-        // Auto-rotation du carousel toutes les 8 secondes - SUPPRIMÉ car géré par startAboutCarousel
+        // Touch Events - Disabled on mobile to let native scroll work
+        // Only enabled if we w        ant "drag" feeling, but native is better.
+        // We remove e.preve        ntDefault() to allow scrol                         l.
         /*
-       setInterval(() => {
-           nextSlideAbout();
-       }, 8000);
-       */
+sliderContainer.addEventListener('touchstart', (e) => {
+// Let native scroll handle it
+});
+*/
+
+        // Scroll Progress
+        sliderContainer.addEventListener('scroll', updateProgressBar);
+
+        function updateProgressBar() {
+            const maxScroll = sliderContainer.scrollWidth - sliderContainer.clientWidth;
+            const currentScroll = sliderContainer.scrollLeft;
+            const width = (currentScroll / maxScroll) * 100;
+            if (sliderBar) {
+                sliderBar.style.width = width + '%';
+            }
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', initDragSlider);
+
 
         // Textes pour chaque image
         const texts = [
@@ -4524,7 +5002,7 @@ file_put_contents($fichier_compteur, $visiteurs);
 
             {
                 title: "Une formation appliquée",
-                description: "Axée sur les données, mêlant informatique, s        tatistiques et mathématiques"
+                description: "Axée sur les données, mêlant informatique, statistiques et mathématiques"
             },
             {
                 title: "Une formation appliquée",
@@ -4744,6 +5222,7 @@ file_put_contents($fichier_compteur, $visiteurs);
 
             navCenter.classList.toggle('active');
             hamburgerBtn.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
         }
 
         // Toggle barre de recherche sur mobile
@@ -4908,10 +5387,59 @@ file_put_contents($fichier_compteur, $visiteurs);
             });
         }
 
+        // 3. Desktop Horizontal Scroll on Vertical Wheel (About Section)
+        // 3. Desktop Horizontal Scroll on Vertical Wheel (About Section)
+        // Simple version maintained as fallback if needed, or left empty if user wants purely manual drag
+        function enableDesktopWheelScroll() {
+            const container = document.getElementById('dragSliderContainer');
+            if (!container) return;
+
+            container.addEventListener('wheel', (e) => {
+                // Only on Desktop
+                if (window.innerWidth <= 768) return;
+
+                // Vertical scroll (deltaY)
+                if (e.deltaY !== 0) {
+                    // We removed the complex logic. 
+                    // If user wants NO hijacking, we do nothing.
+                    // If user wants simple conversion:
+                    /*
+                   e.preventDefault();
+                   container.scrollLeft += e.deltaY;
+                    */
+                }
+            }, { passive: false });
+        }
+
+
+        // 3. Vertical Scroll Reveal Logic (GSAP-like)
+        function initScrollAnimations() {
+            if (window.innerWidth <= 768) return;
+
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Once visible, stay visible
+                    }
+                });
+            }, observerOptions);
+
+            const elements = document.querySelectorAll('.reveal-on-scroll');
+            elements.forEach(el => observer.observe(el));
+        }
+
         // Init Drag & Drop
         document.addEventListener('DOMContentLoaded', () => {
             enableDragRotation();
             enableDragSlide();
+            enableDesktopWheelScroll();
+
         });
         if (window.innerWidth <= 768) {
             const searchContainer = document.querySelector('.search-container');
@@ -4967,6 +5495,38 @@ file_put_contents($fichier_compteur, $visiteurs);
                 }
             });
         });
+        // Mobile Experience Carousel Logic (Auto-Scroll)
+        function initMobileExperienceCarousel() {
+            const track = document.querySelector('.mobile-carousel-track');
+            if (!track) return;
+
+            let currentIndex = 0;
+            const slides = track.querySelectorAll('.mobile-experience-card');
+            const totalSlides = slides.length;
+
+            function nextSlideMobile() {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
+            // Auto scroll every 3 seconds
+            let mobileInterval = setInterval(nextSlideMobile, 3000);
+
+            // Pause on touch to allow reading/clicking
+            track.addEventListener('touchstart', () => clearInterval(mobileInterval));
+            track.addEventListener('touchend', () => {
+                clearInterval(mobileInterval);
+                mobileInterval = setInterval(nextSlideMobile, 3000);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initMobileExperienceCarousel);
+    </script>
+    <script>
+        function toggleEngagement(btn) {
+            const content = btn.closest('.engagement-content');
+            content.classList.toggle('expanded');
+        }
     </script>
 </body>
 

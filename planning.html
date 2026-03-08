@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emploi du Temps - UNIV POITIERS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #f4f6f9;
+            --text-main: #1F2937;
+            --text-light: #6B7280;
+            --primary: #5A8FBD;
+            --grid-line: #e5e7eb;
+            --card-radius: 8px;
+
+            /* Event Colors */
+            --color-td: #d1fae5;
+            --border-td: #34d399;
+            --text-td: #065f46;
+
+            --color-tp: #fee2e2;
+            --border-tp: #f87171;
+            --text-tp: #991b1b;
+
+            --color-exam: #fce7f3;
+            --border-exam: #f472b6;
+            --text-exam: #831843;
+
+            --color-other: #e0f2fe;
+            --border-other: #38bdf8;
+            --text-other: #075985;
+
+            --color-lunch: #f3f4f6;
+            --text-lunch: #6b7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            padding-bottom: 2rem;
+        }
+
+        /* HEADER */
+        header {
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: #f3f4f6;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .page-title h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .page-title p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .week-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #f3f4f6;
+            padding: 0.25rem;
+            border-radius: 8px;
+        }
+
+        .nav-btn {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* SCHEDULE GRID */
+        .schedule-container {
+            max-width: 1600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            overflow-x: auto;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(6, 1fr);
+            /* Time + 6 Days (Mon-Sat) */
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            min-width: 1000px;
+            /* Ensure readability on standard screens */
+        }
+
+        /* DAYS HEADER */
+        .day-header {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--grid-line);
+            border-left: 1px solid var(--grid-line);
+            background: #fafafa;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .day-header.today {
+            background: #eff6ff;
+            color: var(--primary);
+        }
+
+        .time-header-cell {
+            border-bottom: 1px solid var(--grid-line);
+            background: #fafafa;
+        }
+
+        /* TIME SLOTS */
+        .time-column {
+            display: grid;
+            grid-template-rows: repeat(26, 60px);
+            /* 8:00 to 21:00 (13h * 2 for 30min slots) */
+        }
+
+        .time-slot {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            border-bottom: 1px solid transparent;
+            /* Align with grid */
+            height: 60px;
+            /* 30 mins = 60px height for generous spacing */
+        }
+
+        .time-slot:nth-child(even) {
+            /* Hour labels visually aligned */
+        }
+
+        /* DAYS COLUMNS */
+        .day-column {
+            position: relative;
+            border-left: 1px solid var(--grid-line);
+            background: repeating-linear-gradient(to bottom,
+                    transparent 0px,
+                    transparent 59px,
+                    var(--grid-line) 60px);
+            /* Grid lines every 30 mins */
+            height: 1560px;
+            /* 26 slots * 60px */
+        }
+
+        /* EVENT CARD */
+        .event {
+            position: absolute;
+            width: 94%;
+            left: 3%;
+            padding: 0.6rem;
+            border-radius: var(--card-radius);
+            font-size: 0.8rem;
+            border-left: 4px solid;
+            overflow: hidden;
+            transition: all 0.2s;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .event:hover {
+            transform: scale(1.02);
+            z-index: 10;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-time {
+            font-size: 0.7rem;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .event-title {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .event-info {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .event-room {
+            margin-top: auto;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* TYPES */
+        .type-td {
+            background: var(--color-td);
+            border-color: var(--border-td);
+            color: var(--text-td);
+        }
+
+        .type-tp {
+            background: var(--color-tp);
+            border-color: var(--border-tp);
+            color: var(--text-tp);
+        }
+
+        .type-exam {
+            background: var(--color-exam);
+            border-color: var(--border-exam);
+            color: var(--text-exam);
+        }
+
+        .type-other {
+            background: var(--color-other);
+            border-color: var(--border-other);
+            color: var(--text-other);
+        }
+
+        .type-lunch {
+            background: var(--color-lunch);
+            border-color: #d1d5db;
+            color: var(--text-lunch);
+            border-left-width: 0;
+            box-shadow: none;
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 900px) {
+            .schedule-grid {
+                display: flex;
+                flex-direction: column;
+                min-width: auto;
+            }
+
+            .time-column,
+            .time-header-cell {
+                display: none;
+            }
+
+            .day-column {
+                height: auto !important;
+                background: none;
+                border: none;
+                padding: 1rem;
+            }
+
+            .day-header {
+                text-align: left;
+                background: #f3f4f6;
+                position: sticky;
+                top: 70px;
+                z-index: 50;
+                border: none;
+                margin-top: 1rem;
+                border-radius: 8px;
+            }
+
+            .event {
+                position: relative;
+                width: 100%;
+                left: 0;
+                top: 0 !important;
+                height: auto !important;
+                margin-bottom: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-left">
+            <a href="index.php" class="back-btn">← Retour</a>
+            <div class="page-title">
+                <h1>Mon Planning</h1>
+                <p>Semaine 4 (19 Jan - 25 Jan)</p>
+            </div>
+        </div>
+        <div class="week-nav">
+            <div class="nav-btn">‹</div>
+            <span style="font-size: 0.9rem; font-weight: 600;">Semaine 4</span>
+            <div class="nav-btn">›</div>
+        </div>
+    </header>
+
+    <div class="schedule-container">
+        <div class="schedule-grid">
+            <!-- HEADER ROW -->
+            <div class="time-header-cell"></div>
+            <div class="day-header">Lundi 19</div>
+            <div class="day-header today">Mardi 20</div>
+            <div class="day-header">Mercredi 21</div>
+            <div class="day-header">Jeudi 22</div>
+            <div class="day-header">Vendredi 23</div>
+            <div class="day-header">Samedi 24</div>
+
+            <!-- TIME COLUMN -->
+            <div class="time-column">
+                <div class="time-slot">08:00</div>
+                <div class="time-slot">08:30</div>
+                <div class="time-slot">09:00</div>
+                <div class="time-slot">09:30</div>
+                <div class="time-slot">10:00</div>
+                <div class="time-slot">10:30</div>
+                <div class="time-slot">11:00</div>
+                <div class="time-slot">11:30</div>
+                <div class="time-slot">12:00</div>
+                <div class="time-slot">12:30</div>
+                <div class="time-slot">13:00</div>
+                <div class="time-slot">13:30</div>
+                <div class="time-slot">14:00</div>
+                <div class="time-slot">14:30</div>
+                <div class="time-slot">15:00</div>
+                <div class="time-slot">15:30</div>
+                <div class="time-slot">16:00</div>
+                <div class="time-slot">16:30</div>
+                <div class="time-slot">17:00</div>
+                <div class="time-slot">17:30</div>
+                <div class="time-slot">18:00</div>
+                <div class="time-slot">18:30</div>
+                <div class="time-slot">19:00</div>
+                <div class="time-slot">19:30</div>
+                <div class="time-slot">20:00</div>
+                <div class="time-slot">20:30</div>
+            </div>
+
+            <!-- LUNDI -->
+            <div class="day-column">
+                <!-- 9:00 - 12:00 (3h = 6 slots) Start at 8:00 (0) -> 9:00 is slot 2 (120px top) -->
+                <div class="event type-td" style="top: 120px; height: 360px;">
+                    <div class="event-time">09:00 - 12:00</div>
+                    <div class="event-title">SIG TD</div>
+                    <div class="event-info">Pellerin Benjamin</div>
+                    <div class="event-room">Salle EMS</div>
+                </div>
+
+                <!-- 14:00 - 16:00 (2h = 4 slots) 14:00 is slot 12 (720px) -->
+                <div class="event type-td" style="top: 720px; height: 240px;">
+                    <div class="event-time">14:00 - 16:00</div>
+                    <div class="event-title">SIG TD</div>
+                    <div class="event-info">Pellerin Benjamin</div>
+                    <div class="event-room">Salle EMS</div>
+                </div>
+
+                <!-- 16:00 - 18:00 (2h = 4 slots) -->
+                <div class="event type-td" style="top: 960px; height: 240px;">
+                    <div class="event-time">16:00 - 18:00</div>
+                    <div class="event-title">Bataille de la Tech (TD)</div>
+                    <div class="event-info">Huche Nicolas</div>
+                    <div class="event-room">Salle EMS</div>
+                </div>
+            </div>
+
+            <!-- MARDI -->
+            <div class="day-column">
+                <!-- 9:00 - 10:30 (1.5h = 3 slots) -->
+                <div class="event type-td" style="top: 120px; height: 180px;">
+                    <div class="event-time">09:00 - 10:30</div>
+                    <div class="event-title">Comm. Organisationnelle</div>
+                    <div class="event-info">Bieber Helene</div>
+                </div>
+
+                <!-- 10:30 - 12:00 (1.5h = 3 slots) -->
+                <div class="event type-td" style="top: 300px; height: 180px;">
+                    <div class="event-time">10:30 - 12:00</div>
+                    <div class="event-title">Automatisation & Test</div>
+                    <div class="event-info">Mesmoudi Amin</div>
+                    <div class="event-room">VCOD</div>
+                </div>
+
+                <!-- 13:30 - 15:30 (2h = 4 slots) 13:30 is 660px -->
+                <div class="event type-td" style="top: 660px; height: 240px;">
+                    <div class="event-time">13:30 - 15:30</div>
+                    <div class="event-title">Bataille de la Tech</div>
+                    <div class="event-info">Ibazizen Mohamed</div>
+                </div>
+
+                <!-- 15:30 - 17:00 (1.5h = 3 slots) -->
+                <div class="event type-td" style="top: 900px; height: 180px;">
+                    <div class="event-time">15:30 - 17:00</div>
+                    <div class="event-title">Comm. Professionnelle</div>
+                    <div class="event-info">Bieber Helene</div>
+                    <div class="event-room">Salle EMS</div>
+                </div>
+
+                <!-- 17:00 - 18:00 (1h) -->
+                <div class="event type-exam" style="top: 1080px; height: 120px;">
+                    <div class="event-time">17:00 - 18:00</div>
+                    <div class="event-title">SAE Métier de la Donnée</div>
+                    <div class="event-info">Conférence</div>
+                    <div class="event-room">Amphi</div>
+                </div>
+            </div>
+
+            <!-- MERCREDI -->
+            <div class="day-column">
+                <!-- 9:00 - 10:30 -->
+                <div class="event type-td" style="top: 120px; height: 180px;">
+                    <div class="event-time">09:00 - 10:30</div>
+                    <div class="event-title">Automatisation & Test</div>
+                    <div class="event-info">Mesmoudi Amin</div>
+                    <div class="event-room">S2 - TD</div>
+                </div>
+
+                <!-- 10:30 - 12:15 (1h45 = 3.5 slots = 210px) -->
+                <div class="event type-td" style="top: 300px; height: 210px;">
+                    <div class="event-time">10:30 - 12:15</div>
+                    <div class="event-title">EMS - Compléments</div>
+                    <div class="event-info">Bureau Laurent</div>
+                    <div class="event-room">S2 - TD</div>
+                </div>
+
+                <!-- 13:30 - 15:00 -->
+                <div class="event type-exam" style="top: 660px; height: 180px;">
+                    <div class="event-time">13:30 - 15:00</div>
+                    <div class="event-title">Tests d'Hypothèses</div>
+                    <div class="event-info">Ibazizen Mohamed</div>
+                    <div class="event-room">EXAM</div>
+                </div>
+            </div>
+
+            <!-- JEUDI -->
+            <div class="day-column">
+                <!-- 9:00 - 10:30 -->
+                <div class="event type-td" style="top: 120px; height: 180px;">
+                    <div class="event-time">09:00 - 10:30</div>
+                    <div class="event-title">Régression Logistique</div>
+                    <div class="event-info">Cadra Loic</div>
+                    <div class="event-room">S2 - TD</div>
+                </div>
+                <!-- 10:30 - 12:15 -->
+                <div class="event type-td" style="top: 300px; height: 210px;">
+                    <div class="event-time">10:30 - 12:15</div>
+                    <div class="event-title">Régression Logistique</div>
+                    <div class="event-info">Cadra Loic</div>
+                    <div class="event-room">S2 - TD</div>
+                </div>
+
+                <!-- 12:30 - 13:30 Panier Bios -->
+                <div class="event type-lunch" style="top: 540px; height: 120px;">
+                    <div class="event-time">12:30 - 13:30</div>
+                    <div class="event-title">Distribution Paniers Bios</div>
+                    <div class="event-room">Cafétéria</div>
+                </div>
+
+                <!-- 14:00 - 15:30 -->
+                <div class="event type-tp" style="top: 720px; height: 180px;">
+                    <div class="event-time">14:00 - 15:30</div>
+                    <div class="event-title">Anglais Scientifique</div>
+                    <div class="event-info">Payet Eric</div>
+                    <div class="event-room">TP - A</div>
+                </div>
+
+                <!-- 15:30 - 17:30 (2h) -->
+                <div class="event type-other" style="top: 900px; height: 240px;">
+                    <div class="event-time">15:30 - 17:30</div>
+                    <div class="event-title">LV2 Espagnol</div>
+                    <div class="event-info">HSE1 / HSE2 / SD2</div>
+                </div>
+            </div>
+
+            <!-- VENDREDI -->
+            <div class="day-column">
+                <!-- 09:00 - 10:30 -->
+                <div class="event type-td" style="top: 120px; height: 180px;">
+                    <div class="event-time">09:00 - 10:30</div>
+                    <div class="event-title">Comm. Organisationnelle</div>
+                    <div class="event-info">Bieber Helene</div>
+                </div>
+
+                <!-- 10:45 - 12:15 (1.5h = 330px from 8:00 (0) -> 8:00=0, 9=120, 10=240, 10:30=300, 10:45=330) -->
+                <div class="event type-tp" style="top: 330px; height: 180px;">
+                    <div class="event-time">10:45 - 12:15</div>
+                    <div class="event-title">Anglais Scientifique</div>
+                    <div class="event-info">Payet Eric</div>
+                    <div class="event-room">TP - A</div>
+                </div>
+
+                <!-- 12:00 - 13:30 -->
+                <div class="event type-lunch" style="top: 480px; height: 180px;">
+                    <div class="event-time">12:00 - 13:30</div>
+                    <div class="event-title">Stand CAMJI</div>
+                    <div class="event-room">Cafétéria</div>
+                </div>
+
+                <!-- 13:30 - 15:00 -->
+                <div class="event type-tp" style="top: 660px; height: 180px;">
+                    <div class="event-time">13:30 - 15:00</div>
+                    <div class="event-title">Comm. Scientifique</div>
+                    <div class="event-info">Bieber Helene</div>
+                    <div class="event-room">TP</div>
+                </div>
+
+                <!-- 15:15 - 16:45 (1h30 = 90 mins -> 330px + 660px ? No. 15:15 -> 15h = 840px + 15min(30px) = 870px) -->
+                <div class="event type-td" style="top: 870px; height: 180px;">
+                    <div class="event-time">15:15 - 16:45</div>
+                    <div class="event-title">Régression Logistique</div>
+                    <div class="event-info">Cadra Loic</div>
+                </div>
+
+                <!-- 17:30 - 19:30 -->
+                <div class="event type-other"
+                    style="top: 1140px; height: 240px; border-color: #6366f1; background: #e0e7ff; color: #3730a3;">
+                    <div class="event-time">17:30 - 19:30</div>
+                    <div class="event-title">Remise de Diplômes</div>
+                    <div class="event-info">Master IPHD</div>
+                    <div class="event-room">Cafétéria</div>
+                </div>
+            </div>
+
+            <!-- SAMEDI -->
+            <div class="day-column">
+                <!-- 08:00 - 12:15 -->
+                <div class="event type-td" style="top: 0px; height: 510px;">
+                    <div class="event-time">08:00 - 12:15</div>
+                    <div class="event-title">Méthodes Factorielles</div>
+                    <div class="event-info">Qannari Abdellah</div>
+                    <div class="event-room">CM + TD</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

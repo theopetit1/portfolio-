@@ -1,0 +1,2471 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_9cb7028b4ecc0ac2884bbef3d570dcb1 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+        <div style="position: fixed; 
+                    bottom: 50px; left: 50px; width: 150px; height: 130px; 
+                    border:2px solid grey; z-index:9999; font-size:14px;
+                    background-color:rgba(255, 255, 255, 0.8);
+                    border-radius: 10px; padding: 10px;">
+            <b>Température</b><br>
+            <i class="fa fa-thermometer-half" style="color:blue"></i> &lt; 10°C<br>
+            <i class="fa fa-thermometer-half" style="color:green"></i> 10-20°C<br>
+            <i class="fa fa-thermometer-half" style="color:orange"></i> 20-30°C<br>
+            <i class="fa fa-thermometer-half" style="color:red"></i> &gt; 30°C
+        </div>
+        
+    
+            <div class="folium-map" id="map_9cb7028b4ecc0ac2884bbef3d570dcb1" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_9cb7028b4ecc0ac2884bbef3d570dcb1 = L.map(
+                "map_9cb7028b4ecc0ac2884bbef3d570dcb1",
+                {
+                    center: [46.603354, 1.888334],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 6,
+  "zoomControl": true,
+  "preferCanvas": false,
+  "attributionControl": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_96a77a9ee03cdb8d85cda6d2a383a703 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_96a77a9ee03cdb8d85cda6d2a383a703.addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var marker_2e28ec697e05169f0295e481bf1ec3f3 = L.marker(
+                [50.136, 1.834],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_a70eb9f35bee56289346d37f2f10c5d2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ada3eef999a95f01649e9782b60c79f2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0317c47b9b363b6b8e11a88c3fbff544 = $(`<div id="html_0317c47b9b363b6b8e11a88c3fbff544" style="width: 100.0%; height: 100.0%;"><b>ABBEVILLE</b><br>Temp: 8.3°C</div>`)[0];
+                popup_ada3eef999a95f01649e9782b60c79f2.setContent(html_0317c47b9b363b6b8e11a88c3fbff544);
+            
+        
+
+        marker_2e28ec697e05169f0295e481bf1ec3f3.bindPopup(popup_ada3eef999a95f01649e9782b60c79f2)
+        ;
+
+        
+    
+    
+                marker_2e28ec697e05169f0295e481bf1ec3f3.setIcon(icon_a70eb9f35bee56289346d37f2f10c5d2);
+            
+    
+            var marker_1f133953e14d78ea9381b37955af6a8e = L.marker(
+                [41.918, 8.792667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_f49b10fe57027454fb289c104a55dde0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b5eee13a74da65ac09dc5ecf89849062 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_96e2c6403a38c54f771c8a47e291c602 = $(`<div id="html_96e2c6403a38c54f771c8a47e291c602" style="width: 100.0%; height: 100.0%;"><b>AJACCIO</b><br>Temp: 11.3°C</div>`)[0];
+                popup_b5eee13a74da65ac09dc5ecf89849062.setContent(html_96e2c6403a38c54f771c8a47e291c602);
+            
+        
+
+        marker_1f133953e14d78ea9381b37955af6a8e.bindPopup(popup_b5eee13a74da65ac09dc5ecf89849062)
+        ;
+
+        
+    
+    
+                marker_1f133953e14d78ea9381b37955af6a8e.setIcon(icon_f49b10fe57027454fb289c104a55dde0);
+            
+    
+            var marker_754815f87d218984020c685cb93a2818 = L.marker(
+                [48.4455, 0.110167],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_07d5c6cd4bfa1ce8e01cc14f07eb17dc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f3df6ae644bd4edb5912ee051d77da29 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bb0f9770f02bbed4537ff94f0bcde71e = $(`<div id="html_bb0f9770f02bbed4537ff94f0bcde71e" style="width: 100.0%; height: 100.0%;"><b>ALENCON</b><br>Temp: 8.8°C</div>`)[0];
+                popup_f3df6ae644bd4edb5912ee051d77da29.setContent(html_bb0f9770f02bbed4537ff94f0bcde71e);
+            
+        
+
+        marker_754815f87d218984020c685cb93a2818.bindPopup(popup_f3df6ae644bd4edb5912ee051d77da29)
+        ;
+
+        
+    
+    
+                marker_754815f87d218984020c685cb93a2818.setIcon(icon_07d5c6cd4bfa1ce8e01cc14f07eb17dc);
+            
+    
+            var marker_30fc6305b7e044038a1472dce8d7ae01 = L.marker(
+                [47.614333, 7.51],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_11f0344f269a2b3e85da5c15f64805a2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7798afed8e11c98926d3c3ed19035bc7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6fae43119bae6da310d470b874166410 = $(`<div id="html_6fae43119bae6da310d470b874166410" style="width: 100.0%; height: 100.0%;"><b>BALE-MULHOUSE</b><br>Temp: 7.4°C</div>`)[0];
+                popup_7798afed8e11c98926d3c3ed19035bc7.setContent(html_6fae43119bae6da310d470b874166410);
+            
+        
+
+        marker_30fc6305b7e044038a1472dce8d7ae01.bindPopup(popup_7798afed8e11c98926d3c3ed19035bc7)
+        ;
+
+        
+    
+    
+                marker_30fc6305b7e044038a1472dce8d7ae01.setIcon(icon_11f0344f269a2b3e85da5c15f64805a2);
+            
+    
+            var marker_567bc2e2d3023669a1ca59c219020471 = L.marker(
+                [42.540667, 9.485167],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_0fe2d4c53ca5ddc8cb77cad1868e6241 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b758cea178a1cad8355b7c5cb97af19b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_20b3faf893c28b86377b7cd7e5b5f111 = $(`<div id="html_20b3faf893c28b86377b7cd7e5b5f111" style="width: 100.0%; height: 100.0%;"><b>BASTIA</b><br>Temp: 10.4°C</div>`)[0];
+                popup_b758cea178a1cad8355b7c5cb97af19b.setContent(html_20b3faf893c28b86377b7cd7e5b5f111);
+            
+        
+
+        marker_567bc2e2d3023669a1ca59c219020471.bindPopup(popup_b758cea178a1cad8355b7c5cb97af19b)
+        ;
+
+        
+    
+    
+                marker_567bc2e2d3023669a1ca59c219020471.setIcon(icon_0fe2d4c53ca5ddc8cb77cad1868e6241);
+            
+    
+            var marker_9b394198cbc4d87bb7afe26657a57072 = L.marker(
+                [47.294333, -3.218333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_6145578a26e818c4f69a37426acbc27d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f82d55aa4303383af288933188e842ad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5259970cf64f844885aa6a5bbfe466a0 = $(`<div id="html_5259970cf64f844885aa6a5bbfe466a0" style="width: 100.0%; height: 100.0%;"><b>BELLE ILE-LE TALUT</b><br>Temp: 11.8°C</div>`)[0];
+                popup_f82d55aa4303383af288933188e842ad.setContent(html_5259970cf64f844885aa6a5bbfe466a0);
+            
+        
+
+        marker_9b394198cbc4d87bb7afe26657a57072.bindPopup(popup_f82d55aa4303383af288933188e842ad)
+        ;
+
+        
+    
+    
+                marker_9b394198cbc4d87bb7afe26657a57072.setIcon(icon_6145578a26e818c4f69a37426acbc27d);
+            
+    
+            var marker_261a76f80ff373b0005abb219e1a3f42 = L.marker(
+                [44.830667, -0.691333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_c7c106551b16e47daf8c5223f45072b8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0eb71ce1883a9c2a36367a8d050048f2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_10fa205bdec50222db66ba6f3ff79e73 = $(`<div id="html_10fa205bdec50222db66ba6f3ff79e73" style="width: 100.0%; height: 100.0%;"><b>BORDEAUX-MERIGNAC</b><br>Temp: 10.5°C</div>`)[0];
+                popup_0eb71ce1883a9c2a36367a8d050048f2.setContent(html_10fa205bdec50222db66ba6f3ff79e73);
+            
+        
+
+        marker_261a76f80ff373b0005abb219e1a3f42.bindPopup(popup_0eb71ce1883a9c2a36367a8d050048f2)
+        ;
+
+        
+    
+    
+                marker_261a76f80ff373b0005abb219e1a3f42.setIcon(icon_c7c106551b16e47daf8c5223f45072b8);
+            
+    
+            var marker_45ec717d93deb04bbeb450c59f2bb81b = L.marker(
+                [47.059167, 2.359833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_429497db011264a790c4659be4676655 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_40b6037ef13e4c15b1b45b53cceb036d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ca48100c75606b37f01a665273667f97 = $(`<div id="html_ca48100c75606b37f01a665273667f97" style="width: 100.0%; height: 100.0%;"><b>BOURGES</b><br>Temp: 7.7°C</div>`)[0];
+                popup_40b6037ef13e4c15b1b45b53cceb036d.setContent(html_ca48100c75606b37f01a665273667f97);
+            
+        
+
+        marker_45ec717d93deb04bbeb450c59f2bb81b.bindPopup(popup_40b6037ef13e4c15b1b45b53cceb036d)
+        ;
+
+        
+    
+    
+                marker_45ec717d93deb04bbeb450c59f2bb81b.setIcon(icon_429497db011264a790c4659be4676655);
+            
+    
+            var marker_3e5700385397120cc7e84f5c9492498e = L.marker(
+                [48.444167, -4.412],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_c27c19557470e80e9256bb0a93229f06 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aca87182b07ea6db8c10813c0884d8eb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7c879404cc31c34d2033444b3bbd5fed = $(`<div id="html_7c879404cc31c34d2033444b3bbd5fed" style="width: 100.0%; height: 100.0%;"><b>BREST-GUIPAVAS</b><br>Temp: 10.3°C</div>`)[0];
+                popup_aca87182b07ea6db8c10813c0884d8eb.setContent(html_7c879404cc31c34d2033444b3bbd5fed);
+            
+        
+
+        marker_3e5700385397120cc7e84f5c9492498e.bindPopup(popup_aca87182b07ea6db8c10813c0884d8eb)
+        ;
+
+        
+    
+    
+                marker_3e5700385397120cc7e84f5c9492498e.setIcon(icon_c27c19557470e80e9256bb0a93229f06);
+            
+    
+            var marker_4c7b1be3c7b18ab84cf5fbba65cac908 = L.marker(
+                [49.18, -0.456167],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_e41c135e268ce711d5e91d1536d79fff = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b594ca160e45a38e4d501be617dda6d1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_88b7ca840be8439f8c0ca0676c742432 = $(`<div id="html_88b7ca840be8439f8c0ca0676c742432" style="width: 100.0%; height: 100.0%;"><b>CAEN-CARPIQUET</b><br>Temp: 9.9°C</div>`)[0];
+                popup_b594ca160e45a38e4d501be617dda6d1.setContent(html_88b7ca840be8439f8c0ca0676c742432);
+            
+        
+
+        marker_4c7b1be3c7b18ab84cf5fbba65cac908.bindPopup(popup_b594ca160e45a38e4d501be617dda6d1)
+        ;
+
+        
+    
+    
+                marker_4c7b1be3c7b18ab84cf5fbba65cac908.setIcon(icon_e41c135e268ce711d5e91d1536d79fff);
+            
+    
+            var marker_8299ef8fe510f340fce670ae6aa3bb58 = L.marker(
+                [43.079333, 5.940833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_70e6a0f1424198607684597fb2ae94a6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_25ded9af1df086f6d831cbd5440ca366 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7ad8f7a3a144d7d88499fd6afbd22f8b = $(`<div id="html_7ad8f7a3a144d7d88499fd6afbd22f8b" style="width: 100.0%; height: 100.0%;"><b>CAP CEPET</b><br>Temp: nan°C</div>`)[0];
+                popup_25ded9af1df086f6d831cbd5440ca366.setContent(html_7ad8f7a3a144d7d88499fd6afbd22f8b);
+            
+        
+
+        marker_8299ef8fe510f340fce670ae6aa3bb58.bindPopup(popup_25ded9af1df086f6d831cbd5440ca366)
+        ;
+
+        
+    
+    
+                marker_8299ef8fe510f340fce670ae6aa3bb58.setIcon(icon_70e6a0f1424198607684597fb2ae94a6);
+            
+    
+            var marker_3d2419fe43edc634f11375b80d6af9eb = L.marker(
+                [4.822333, -52.365333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_b6245fb8d75b2993358094313c155417 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0a5d9ddbdf5a4df911d9da561b89e9ce = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a4aa8fd7de1ea8eb7bb26f6133cfd5eb = $(`<div id="html_a4aa8fd7de1ea8eb7bb26f6133cfd5eb" style="width: 100.0%; height: 100.0%;"><b>CAYENNE-MATOURY</b><br>Temp: 28.3°C</div>`)[0];
+                popup_0a5d9ddbdf5a4df911d9da561b89e9ce.setContent(html_a4aa8fd7de1ea8eb7bb26f6133cfd5eb);
+            
+        
+
+        marker_3d2419fe43edc634f11375b80d6af9eb.bindPopup(popup_0a5d9ddbdf5a4df911d9da561b89e9ce)
+        ;
+
+        
+    
+    
+                marker_3d2419fe43edc634f11375b80d6af9eb.setIcon(icon_b6245fb8d75b2993358094313c155417);
+            
+    
+            var marker_5a615cd35381627c99e94a9f18fd1cfe = L.marker(
+                [45.786833, 3.149333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_8c4d76450174b95f0e2cdeea6270e0f6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8444ee0ab962360a9f083aae6e127757 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7ae06d8bc504a6dfda3d427c7e12f0fa = $(`<div id="html_7ae06d8bc504a6dfda3d427c7e12f0fa" style="width: 100.0%; height: 100.0%;"><b>CLERMONT-FD</b><br>Temp: 8.3°C</div>`)[0];
+                popup_8444ee0ab962360a9f083aae6e127757.setContent(html_7ae06d8bc504a6dfda3d427c7e12f0fa);
+            
+        
+
+        marker_5a615cd35381627c99e94a9f18fd1cfe.bindPopup(popup_8444ee0ab962360a9f083aae6e127757)
+        ;
+
+        
+    
+    
+                marker_5a615cd35381627c99e94a9f18fd1cfe.setIcon(icon_8c4d76450174b95f0e2cdeea6270e0f6);
+            
+    
+            var marker_7563e6698cfe0c28fa44ee190d699e50 = L.marker(
+                [-46.4325, 51.856667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_4b34bf9a31010dee8c7a9af161684c06 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_844a0302002501fb413a317e20825b87 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ad048374cfb4340426543939276c8eb4 = $(`<div id="html_ad048374cfb4340426543939276c8eb4" style="width: 100.0%; height: 100.0%;"><b>CROZET</b><br>Temp: 5.6°C</div>`)[0];
+                popup_844a0302002501fb413a317e20825b87.setContent(html_ad048374cfb4340426543939276c8eb4);
+            
+        
+
+        marker_7563e6698cfe0c28fa44ee190d699e50.bindPopup(popup_844a0302002501fb413a317e20825b87)
+        ;
+
+        
+    
+    
+                marker_7563e6698cfe0c28fa44ee190d699e50.setIcon(icon_4b34bf9a31010dee8c7a9af161684c06);
+            
+    
+            var marker_813f56c2eca70cb75f66b351600dcf47 = L.marker(
+                [47.267833, 5.088333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_94565b292e44f5b99b2c72425bbf66e7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_999870954235cd6e6911b3ccfacb7c70 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_22931ee60a4f1f4f0626070702a5a4e8 = $(`<div id="html_22931ee60a4f1f4f0626070702a5a4e8" style="width: 100.0%; height: 100.0%;"><b>DIJON-LONGVIC</b><br>Temp: 8.0°C</div>`)[0];
+                popup_999870954235cd6e6911b3ccfacb7c70.setContent(html_22931ee60a4f1f4f0626070702a5a4e8);
+            
+        
+
+        marker_813f56c2eca70cb75f66b351600dcf47.bindPopup(popup_999870954235cd6e6911b3ccfacb7c70)
+        ;
+
+        
+    
+    
+                marker_813f56c2eca70cb75f66b351600dcf47.setIcon(icon_94565b292e44f5b99b2c72425bbf66e7);
+            
+    
+            var marker_0f191dd216e2f411adad353574bad684 = L.marker(
+                [-66.663167, 140.001],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_23fc4d49b51a157061f450dea26a8830 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_77dfec7a239ee8c506fa956ce6b613ef = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_745b7d359ba12b93fff32ee7f3ffa9b5 = $(`<div id="html_745b7d359ba12b93fff32ee7f3ffa9b5" style="width: 100.0%; height: 100.0%;"><b>DUMONT D'URVILLE</b><br>Temp: -5.4°C</div>`)[0];
+                popup_77dfec7a239ee8c506fa956ce6b613ef.setContent(html_745b7d359ba12b93fff32ee7f3ffa9b5);
+            
+        
+
+        marker_0f191dd216e2f411adad353574bad684.bindPopup(popup_77dfec7a239ee8c506fa956ce6b613ef)
+        ;
+
+        
+    
+    
+                marker_0f191dd216e2f411adad353574bad684.setIcon(icon_23fc4d49b51a157061f450dea26a8830);
+            
+    
+            var marker_ba0f5284f8aea8af50174827b0933d29 = L.marker(
+                [44.565667, 6.502333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_87e4e5e6b8eaf9f283fe8e3e4d7c3c56 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5aeb8e500bc78b4b9e4027e6566c3913 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a3bdfde305fcbf13339e1765a8c256c9 = $(`<div id="html_a3bdfde305fcbf13339e1765a8c256c9" style="width: 100.0%; height: 100.0%;"><b>EMBRUN</b><br>Temp: 6.2°C</div>`)[0];
+                popup_5aeb8e500bc78b4b9e4027e6566c3913.setContent(html_a3bdfde305fcbf13339e1765a8c256c9);
+            
+        
+
+        marker_ba0f5284f8aea8af50174827b0933d29.bindPopup(popup_5aeb8e500bc78b4b9e4027e6566c3913)
+        ;
+
+        
+    
+    
+                marker_ba0f5284f8aea8af50174827b0933d29.setIcon(icon_87e4e5e6b8eaf9f283fe8e3e4d7c3c56);
+            
+    
+            var marker_c92b59a2da04406e4915fc33bb1f06f8 = L.marker(
+                [-22.344167, 40.340667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_d425f3ca88f69be177d113a64eb93bd5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e066f64a63b4a8c04649a6953a94aa13 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f60a4ac0a30f67238250320fbff86684 = $(`<div id="html_f60a4ac0a30f67238250320fbff86684" style="width: 100.0%; height: 100.0%;"><b>EUROPA</b><br>Temp: 27.0°C</div>`)[0];
+                popup_e066f64a63b4a8c04649a6953a94aa13.setContent(html_f60a4ac0a30f67238250320fbff86684);
+            
+        
+
+        marker_c92b59a2da04406e4915fc33bb1f06f8.bindPopup(popup_e066f64a63b4a8c04649a6953a94aa13)
+        ;
+
+        
+    
+    
+                marker_c92b59a2da04406e4915fc33bb1f06f8.setIcon(icon_d425f3ca88f69be177d113a64eb93bd5);
+            
+    
+            var marker_af45e5da1a36b8d164787298e12eec2d = L.marker(
+                [-20.8925, 55.528667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_f40f3b16d389bcafb1a6356b42ae4741 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e37c394eca0031f50c085b2f21efe4e6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_75599058fe46124a14313f37b0deb8ec = $(`<div id="html_75599058fe46124a14313f37b0deb8ec" style="width: 100.0%; height: 100.0%;"><b>GILLOT-AEROPORT</b><br>Temp: 27.0°C</div>`)[0];
+                popup_e37c394eca0031f50c085b2f21efe4e6.setContent(html_75599058fe46124a14313f37b0deb8ec);
+            
+        
+
+        marker_af45e5da1a36b8d164787298e12eec2d.bindPopup(popup_e37c394eca0031f50c085b2f21efe4e6)
+        ;
+
+        
+    
+    
+                marker_af45e5da1a36b8d164787298e12eec2d.setIcon(icon_f40f3b16d389bcafb1a6356b42ae4741);
+            
+    
+            var marker_ac84fd6abaea2ea30e61307019125146 = L.marker(
+                [-11.582667, 47.289667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_c1b271963546fc858f044466b45d0e16 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_363b607d83c5a167c45ae2e42314a945 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_be412190256751f70f1f9894ebf7c4ed = $(`<div id="html_be412190256751f70f1f9894ebf7c4ed" style="width: 100.0%; height: 100.0%;"><b>GLORIEUSES</b><br>Temp: 27.9°C</div>`)[0];
+                popup_363b607d83c5a167c45ae2e42314a945.setContent(html_be412190256751f70f1f9894ebf7c4ed);
+            
+        
+
+        marker_ac84fd6abaea2ea30e61307019125146.bindPopup(popup_363b607d83c5a167c45ae2e42314a945)
+        ;
+
+        
+    
+    
+                marker_ac84fd6abaea2ea30e61307019125146.setIcon(icon_c1b271963546fc858f044466b45d0e16);
+            
+    
+            var marker_772e963ceed508e7f4b658a1abbd0a7d = L.marker(
+                [44.745, 1.396667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_a86d492797c5bf4b532275c281a96e4d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_620f85372c97d00448d585130f7e812d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_67716988303a8484ee36be0e12e35423 = $(`<div id="html_67716988303a8484ee36be0e12e35423" style="width: 100.0%; height: 100.0%;"><b>GOURDON</b><br>Temp: 8.4°C</div>`)[0];
+                popup_620f85372c97d00448d585130f7e812d.setContent(html_67716988303a8484ee36be0e12e35423);
+            
+        
+
+        marker_772e963ceed508e7f4b658a1abbd0a7d.bindPopup(popup_620f85372c97d00448d585130f7e812d)
+        ;
+
+        
+    
+    
+                marker_772e963ceed508e7f4b658a1abbd0a7d.setIcon(icon_a86d492797c5bf4b532275c281a96e4d);
+            
+    
+            var marker_ffa28928cbd26ce24bdbdeefc1bc753e = L.marker(
+                [-17.054667, 42.712],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_3cf8b5c793fc10cf68e3e009a4cad3a9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9c5448ba366521bbf5c0d664617fd21a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_71c23a858017c41ca4ca3fcf8b979f3c = $(`<div id="html_71c23a858017c41ca4ca3fcf8b979f3c" style="width: 100.0%; height: 100.0%;"><b>JUAN DE NOVA</b><br>Temp: 29.4°C</div>`)[0];
+                popup_9c5448ba366521bbf5c0d664617fd21a.setContent(html_71c23a858017c41ca4ca3fcf8b979f3c);
+            
+        
+
+        marker_ffa28928cbd26ce24bdbdeefc1bc753e.bindPopup(popup_9c5448ba366521bbf5c0d664617fd21a)
+        ;
+
+        
+    
+    
+                marker_ffa28928cbd26ce24bdbdeefc1bc753e.setIcon(icon_3cf8b5c793fc10cf68e3e009a4cad3a9);
+            
+    
+            var marker_0a62df876914321adb8e8f4ea3c1e161 = L.marker(
+                [-49.352333, 70.243333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_bb8a67cfb142e48658a69f69f35f6631 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_30e14395357f0d9b0f9c9fac316c34e9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_88ae43962e8c5bb03cc9f54492407ee6 = $(`<div id="html_88ae43962e8c5bb03cc9f54492407ee6" style="width: 100.0%; height: 100.0%;"><b>KERGUELEN</b><br>Temp: 4.8°C</div>`)[0];
+                popup_30e14395357f0d9b0f9c9fac316c34e9.setContent(html_88ae43962e8c5bb03cc9f54492407ee6);
+            
+        
+
+        marker_0a62df876914321adb8e8f4ea3c1e161.bindPopup(popup_30e14395357f0d9b0f9c9fac316c34e9)
+        ;
+
+        
+    
+    
+                marker_0a62df876914321adb8e8f4ea3c1e161.setIcon(icon_bb8a67cfb142e48658a69f69f35f6631);
+            
+    
+            var marker_3da63cfc8d2a1fb4a116e76146d85dbd = L.marker(
+                [16.335, -61.004],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_5b6a84de8edd672094c347e9afe63963 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_84ed1ec554f8dbabae915a923a8a731c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d07fbf7b6e23290068d5ac4975e70919 = $(`<div id="html_d07fbf7b6e23290068d5ac4975e70919" style="width: 100.0%; height: 100.0%;"><b>LA DESIRADE METEO</b><br>Temp: 27.1°C</div>`)[0];
+                popup_84ed1ec554f8dbabae915a923a8a731c.setContent(html_d07fbf7b6e23290068d5ac4975e70919);
+            
+        
+
+        marker_3da63cfc8d2a1fb4a116e76146d85dbd.bindPopup(popup_84ed1ec554f8dbabae915a923a8a731c)
+        ;
+
+        
+    
+    
+                marker_3da63cfc8d2a1fb4a116e76146d85dbd.setIcon(icon_5b6a84de8edd672094c347e9afe63963);
+            
+    
+            var marker_587fe4e461aeeaf924924ae2d68b78f3 = L.marker(
+                [14.595333, -60.995667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_d1e7c128be479bb640927de4b3b8759e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ac92a983f6f8d9a665978821cfbd797f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_09d1a8459e011227ca027594668f2c5f = $(`<div id="html_09d1a8459e011227ca027594668f2c5f" style="width: 100.0%; height: 100.0%;"><b>LAMENTIN-AERO</b><br>Temp: 26.9°C</div>`)[0];
+                popup_ac92a983f6f8d9a665978821cfbd797f.setContent(html_09d1a8459e011227ca027594668f2c5f);
+            
+        
+
+        marker_587fe4e461aeeaf924924ae2d68b78f3.bindPopup(popup_ac92a983f6f8d9a665978821cfbd797f)
+        ;
+
+        
+    
+    
+                marker_587fe4e461aeeaf924924ae2d68b78f3.setIcon(icon_d1e7c128be479bb640927de4b3b8759e);
+            
+    
+            var marker_ba06cff4481bbfb2b56bda2b836a85cb = L.marker(
+                [45.0745, 3.764],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_493fe405362e1ff6f7a88c708c49c6cd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_574f304b6e9fbf12c45da05fed20ed16 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5b086dca935e493305234103bef22e82 = $(`<div id="html_5b086dca935e493305234103bef22e82" style="width: 100.0%; height: 100.0%;"><b>LE PUY-LOUDES</b><br>Temp: 4.6°C</div>`)[0];
+                popup_574f304b6e9fbf12c45da05fed20ed16.setContent(html_5b086dca935e493305234103bef22e82);
+            
+        
+
+        marker_ba06cff4481bbfb2b56bda2b836a85cb.bindPopup(popup_574f304b6e9fbf12c45da05fed20ed16)
+        ;
+
+        
+    
+    
+                marker_ba06cff4481bbfb2b56bda2b836a85cb.setIcon(icon_493fe405362e1ff6f7a88c708c49c6cd);
+            
+    
+            var marker_65ddfb642eb7b677639b3e3bf017a900 = L.marker(
+                [16.264, -61.516333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_3a859a5c88f6861ba40d3a38c6fde977 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a27bf250c3d6b57a69015a4e09edc139 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_862d38537467469570321c03ab95ff5b = $(`<div id="html_862d38537467469570321c03ab95ff5b" style="width: 100.0%; height: 100.0%;"><b>LE RAIZET AERO</b><br>Temp: 26.2°C</div>`)[0];
+                popup_a27bf250c3d6b57a69015a4e09edc139.setContent(html_862d38537467469570321c03ab95ff5b);
+            
+        
+
+        marker_65ddfb642eb7b677639b3e3bf017a900.bindPopup(popup_a27bf250c3d6b57a69015a4e09edc139)
+        ;
+
+        
+    
+    
+                marker_65ddfb642eb7b677639b3e3bf017a900.setIcon(icon_3a859a5c88f6861ba40d3a38c6fde977);
+            
+    
+            var marker_e7ddf1025604c1aacb5fb9f7ff609ff8 = L.marker(
+                [50.57, 3.0975],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_2553df3baf7c7d4db5b51fa8d34d855b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b792997ae620fdc83725eb578241c923 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3b39eb0e568c9d8a4990b146d22ad6b0 = $(`<div id="html_3b39eb0e568c9d8a4990b146d22ad6b0" style="width: 100.0%; height: 100.0%;"><b>LILLE-LESQUIN</b><br>Temp: 8.0°C</div>`)[0];
+                popup_b792997ae620fdc83725eb578241c923.setContent(html_3b39eb0e568c9d8a4990b146d22ad6b0);
+            
+        
+
+        marker_e7ddf1025604c1aacb5fb9f7ff609ff8.bindPopup(popup_b792997ae620fdc83725eb578241c923)
+        ;
+
+        
+    
+    
+                marker_e7ddf1025604c1aacb5fb9f7ff609ff8.setIcon(icon_2553df3baf7c7d4db5b51fa8d34d855b);
+            
+    
+            var marker_e6aff57aeca588f50a02083504f9c10d = L.marker(
+                [45.861167, 1.175],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_69fa3eabb2cac1ef0fa611e219bdb2c0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c0db0cabb7b2f5653fdee464eccaaca1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9bfbcc3a1df30b070d5c56d84393ec4a = $(`<div id="html_9bfbcc3a1df30b070d5c56d84393ec4a" style="width: 100.0%; height: 100.0%;"><b>LIMOGES-BELLEGARDE</b><br>Temp: 7.9°C</div>`)[0];
+                popup_c0db0cabb7b2f5653fdee464eccaaca1.setContent(html_9bfbcc3a1df30b070d5c56d84393ec4a);
+            
+        
+
+        marker_e6aff57aeca588f50a02083504f9c10d.bindPopup(popup_c0db0cabb7b2f5653fdee464eccaaca1)
+        ;
+
+        
+    
+    
+                marker_e6aff57aeca588f50a02083504f9c10d.setIcon(icon_69fa3eabb2cac1ef0fa611e219bdb2c0);
+            
+    
+            var marker_e0a7d64cf719d0e7664b2a4fa9ff90ee = L.marker(
+                [45.7265, 5.077833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_092ff65b4c7a632f08de54e96d3822c7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cc4f6c72c67e379bcd9a05d2ee6e3774 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ebd22912a3cc83b38022df4e5fe78eae = $(`<div id="html_ebd22912a3cc83b38022df4e5fe78eae" style="width: 100.0%; height: 100.0%;"><b>LYON-ST EXUPERY</b><br>Temp: 7.8°C</div>`)[0];
+                popup_cc4f6c72c67e379bcd9a05d2ee6e3774.setContent(html_ebd22912a3cc83b38022df4e5fe78eae);
+            
+        
+
+        marker_e0a7d64cf719d0e7664b2a4fa9ff90ee.bindPopup(popup_cc4f6c72c67e379bcd9a05d2ee6e3774)
+        ;
+
+        
+    
+    
+                marker_e0a7d64cf719d0e7664b2a4fa9ff90ee.setIcon(icon_092ff65b4c7a632f08de54e96d3822c7);
+            
+    
+            var marker_a9c34cb8948a8c18f8c3319ff809b5e7 = L.marker(
+                [43.437667, 5.216],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_63eeff2695d3900867b690edb2f2aa39 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fe20d8b3f64b48694e6fe1c958e042b6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b30d57b5ea126d6040dc84c49c7406e5 = $(`<div id="html_b30d57b5ea126d6040dc84c49c7406e5" style="width: 100.0%; height: 100.0%;"><b>MARIGNANE</b><br>Temp: 9.0°C</div>`)[0];
+                popup_fe20d8b3f64b48694e6fe1c958e042b6.setContent(html_b30d57b5ea126d6040dc84c49c7406e5);
+            
+        
+
+        marker_a9c34cb8948a8c18f8c3319ff809b5e7.bindPopup(popup_fe20d8b3f64b48694e6fe1c958e042b6)
+        ;
+
+        
+    
+    
+                marker_a9c34cb8948a8c18f8c3319ff809b5e7.setIcon(icon_63eeff2695d3900867b690edb2f2aa39);
+            
+    
+            var marker_c8a61deb2703dd92c150dd62fdedb294 = L.marker(
+                [3.640167, -54.028333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_74ccfe39fbbd4eb820b1889ecdc2c413 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d869bc5aae73d779117bb5806a641062 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7e1bb6bfc11b493321f4af59970695c0 = $(`<div id="html_7e1bb6bfc11b493321f4af59970695c0" style="width: 100.0%; height: 100.0%;"><b>MARIPASOULA</b><br>Temp: 29.5°C</div>`)[0];
+                popup_d869bc5aae73d779117bb5806a641062.setContent(html_7e1bb6bfc11b493321f4af59970695c0);
+            
+        
+
+        marker_c8a61deb2703dd92c150dd62fdedb294.bindPopup(popup_d869bc5aae73d779117bb5806a641062)
+        ;
+
+        
+    
+    
+                marker_c8a61deb2703dd92c150dd62fdedb294.setIcon(icon_74ccfe39fbbd4eb820b1889ecdc2c413);
+            
+    
+            var marker_b5a7c78f29ebbde2c79e7ebcbecd84cd = L.marker(
+                [44.1185, 3.0195],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_11693124699750dfca3530e603d54695 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_38831fd87695f878b771a186f528a567 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_75e5f945655918d6f7c949514a941ac5 = $(`<div id="html_75e5f945655918d6f7c949514a941ac5" style="width: 100.0%; height: 100.0%;"><b>MILLAU</b><br>Temp: 6.4°C</div>`)[0];
+                popup_38831fd87695f878b771a186f528a567.setContent(html_75e5f945655918d6f7c949514a941ac5);
+            
+        
+
+        marker_b5a7c78f29ebbde2c79e7ebcbecd84cd.bindPopup(popup_38831fd87695f878b771a186f528a567)
+        ;
+
+        
+    
+    
+                marker_b5a7c78f29ebbde2c79e7ebcbecd84cd.setIcon(icon_11693124699750dfca3530e603d54695);
+            
+    
+            var marker_c6cef92fd4402d6187f652c6b306a65d = L.marker(
+                [43.909833, -0.500167],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_0d0d50d75a147fa78c348d5624a65f00 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cbd30ee8b2c4b90af05f1f903cf91add = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f4ce3ec57e8eebd7e297876434db2f7f = $(`<div id="html_f4ce3ec57e8eebd7e297876434db2f7f" style="width: 100.0%; height: 100.0%;"><b>MONT-DE-MARSAN</b><br>Temp: 9.3°C</div>`)[0];
+                popup_cbd30ee8b2c4b90af05f1f903cf91add.setContent(html_f4ce3ec57e8eebd7e297876434db2f7f);
+            
+        
+
+        marker_c6cef92fd4402d6187f652c6b306a65d.bindPopup(popup_cbd30ee8b2c4b90af05f1f903cf91add)
+        ;
+
+        
+    
+    
+                marker_c6cef92fd4402d6187f652c6b306a65d.setIcon(icon_0d0d50d75a147fa78c348d5624a65f00);
+            
+    
+            var marker_82d0d59233ab9eccc6e412c6370b19b7 = L.marker(
+                [44.581167, 4.733],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_e036bd5b767943367d03fb8ba1e8d7be = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_27990abb47a29d983cdcc27953d03a49 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1c96c9a7d726270a7692302b61b949e5 = $(`<div id="html_1c96c9a7d726270a7692302b61b949e5" style="width: 100.0%; height: 100.0%;"><b>MONTELIMAR</b><br>Temp: 8.5°C</div>`)[0];
+                popup_27990abb47a29d983cdcc27953d03a49.setContent(html_1c96c9a7d726270a7692302b61b949e5);
+            
+        
+
+        marker_82d0d59233ab9eccc6e412c6370b19b7.bindPopup(popup_27990abb47a29d983cdcc27953d03a49)
+        ;
+
+        
+    
+    
+                marker_82d0d59233ab9eccc6e412c6370b19b7.setIcon(icon_e036bd5b767943367d03fb8ba1e8d7be);
+            
+    
+            var marker_b58fe74bcc7d43bc563ba50466550d14 = L.marker(
+                [43.577, 3.963167],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_f56290cb5c1b1a903b76b84c8f9e5e1f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0a1aa26e5d2a41695292e2249a145645 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3dc1436b1eebc40aa5b2514b91ade0e9 = $(`<div id="html_3dc1436b1eebc40aa5b2514b91ade0e9" style="width: 100.0%; height: 100.0%;"><b>MONTPELLIER</b><br>Temp: 10.3°C</div>`)[0];
+                popup_0a1aa26e5d2a41695292e2249a145645.setContent(html_3dc1436b1eebc40aa5b2514b91ade0e9);
+            
+        
+
+        marker_b58fe74bcc7d43bc563ba50466550d14.bindPopup(popup_0a1aa26e5d2a41695292e2249a145645)
+        ;
+
+        
+    
+    
+                marker_b58fe74bcc7d43bc563ba50466550d14.setIcon(icon_f56290cb5c1b1a903b76b84c8f9e5e1f);
+            
+    
+            var marker_a4a3e0014d5fc41a22726db6c5a16192 = L.marker(
+                [48.581, 5.959833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_7d780bf6fa609cc0a85d7611acd12a36 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4c24b6e8b752413a0244a6ac1cb99df9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a96d11c211aca1bbd15740fe8810f168 = $(`<div id="html_a96d11c211aca1bbd15740fe8810f168" style="width: 100.0%; height: 100.0%;"><b>NANCY-OCHEY</b><br>Temp: 6.2°C</div>`)[0];
+                popup_4c24b6e8b752413a0244a6ac1cb99df9.setContent(html_a96d11c211aca1bbd15740fe8810f168);
+            
+        
+
+        marker_a4a3e0014d5fc41a22726db6c5a16192.bindPopup(popup_4c24b6e8b752413a0244a6ac1cb99df9)
+        ;
+
+        
+    
+    
+                marker_a4a3e0014d5fc41a22726db6c5a16192.setIcon(icon_7d780bf6fa609cc0a85d7611acd12a36);
+            
+    
+            var marker_fd30686d4946f2fc5072bdd90a0f99d7 = L.marker(
+                [47.15, -1.608833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_a063f33cea79c361a3db00064c7949df = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d3ecbaee87b35c833f130e838acc3f14 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_022c715b0f76aba4495ca02b15c0e426 = $(`<div id="html_022c715b0f76aba4495ca02b15c0e426" style="width: 100.0%; height: 100.0%;"><b>NANTES-BOUGUENAIS</b><br>Temp: 9.4°C</div>`)[0];
+                popup_d3ecbaee87b35c833f130e838acc3f14.setContent(html_022c715b0f76aba4495ca02b15c0e426);
+            
+        
+
+        marker_fd30686d4946f2fc5072bdd90a0f99d7.bindPopup(popup_d3ecbaee87b35c833f130e838acc3f14)
+        ;
+
+        
+    
+    
+                marker_fd30686d4946f2fc5072bdd90a0f99d7.setIcon(icon_a063f33cea79c361a3db00064c7949df);
+            
+    
+            var marker_4f7ec4b475c4eef89788202d8b5ee64f = L.marker(
+                [43.648833, 7.209],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_7c0c17eada6dc0dfa1efa92f89e92cf8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a430c084cd2ffeeaf6417318df771375 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dfd27f68b79ceab5f1a1c08c2dfd58fe = $(`<div id="html_dfd27f68b79ceab5f1a1c08c2dfd58fe" style="width: 100.0%; height: 100.0%;"><b>NICE</b><br>Temp: 11.5°C</div>`)[0];
+                popup_a430c084cd2ffeeaf6417318df771375.setContent(html_dfd27f68b79ceab5f1a1c08c2dfd58fe);
+            
+        
+
+        marker_4f7ec4b475c4eef89788202d8b5ee64f.bindPopup(popup_a430c084cd2ffeeaf6417318df771375)
+        ;
+
+        
+    
+    
+                marker_4f7ec4b475c4eef89788202d8b5ee64f.setIcon(icon_7c0c17eada6dc0dfa1efa92f89e92cf8);
+            
+    
+            var marker_4089c3ec6e908f3db6179b44adcc70e4 = L.marker(
+                [-37.795167, 77.569167],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_cbd895b699e51c27086395d3bea20e58 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a961f2e44eabac6dff2de29f6149fdbe = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1a80a0ce179b6a8a311db102a7a000bb = $(`<div id="html_1a80a0ce179b6a8a311db102a7a000bb" style="width: 100.0%; height: 100.0%;"><b>NOUVELLE AMSTERDAM</b><br>Temp: 15.8°C</div>`)[0];
+                popup_a961f2e44eabac6dff2de29f6149fdbe.setContent(html_1a80a0ce179b6a8a311db102a7a000bb);
+            
+        
+
+        marker_4089c3ec6e908f3db6179b44adcc70e4.bindPopup(popup_a961f2e44eabac6dff2de29f6149fdbe)
+        ;
+
+        
+    
+    
+                marker_4089c3ec6e908f3db6179b44adcc70e4.setIcon(icon_cbd895b699e51c27086395d3bea20e58);
+            
+    
+            var marker_d44070e9b10668dd6ecc9e6ea04351b8 = L.marker(
+                [48.716833, 2.384333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_e411c21176097bf9fe7a18210bc34170 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e4fd7c99b2a1715f89fe621495dbb0f1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_896981aba6d54a99d103d9cb918166a7 = $(`<div id="html_896981aba6d54a99d103d9cb918166a7" style="width: 100.0%; height: 100.0%;"><b>ORLY</b><br>Temp: 8.0°C</div>`)[0];
+                popup_e4fd7c99b2a1715f89fe621495dbb0f1.setContent(html_896981aba6d54a99d103d9cb918166a7);
+            
+        
+
+        marker_d44070e9b10668dd6ecc9e6ea04351b8.bindPopup(popup_e4fd7c99b2a1715f89fe621495dbb0f1)
+        ;
+
+        
+    
+    
+                marker_d44070e9b10668dd6ecc9e6ea04351b8.setIcon(icon_e411c21176097bf9fe7a18210bc34170);
+            
+    
+            var marker_0e0233e8eda7fd560b18d38722f56893 = L.marker(
+                [-12.8055, 45.282833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_ed2be712f382ce87a2a98ac1a8d5f225 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_db1b24da37ba4133dcedb92e34432956 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cc27de4c6600dc4fb5e3f0c272f9d41f = $(`<div id="html_cc27de4c6600dc4fb5e3f0c272f9d41f" style="width: 100.0%; height: 100.0%;"><b>PAMANDZI</b><br>Temp: 28.9°C</div>`)[0];
+                popup_db1b24da37ba4133dcedb92e34432956.setContent(html_cc27de4c6600dc4fb5e3f0c272f9d41f);
+            
+        
+
+        marker_0e0233e8eda7fd560b18d38722f56893.bindPopup(popup_db1b24da37ba4133dcedb92e34432956)
+        ;
+
+        
+    
+    
+                marker_0e0233e8eda7fd560b18d38722f56893.setIcon(icon_ed2be712f382ce87a2a98ac1a8d5f225);
+            
+    
+            var marker_8e46334df39219ff531d9f6cabefb143 = L.marker(
+                [42.737167, 2.872833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_6338cbce70534add866391d524282af1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3547c68c93f2c104d9048adbfa8b7e2f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5a3369d9c97152e9b021145d181bf277 = $(`<div id="html_5a3369d9c97152e9b021145d181bf277" style="width: 100.0%; height: 100.0%;"><b>PERPIGNAN</b><br>Temp: 11.6°C</div>`)[0];
+                popup_3547c68c93f2c104d9048adbfa8b7e2f.setContent(html_5a3369d9c97152e9b021145d181bf277);
+            
+        
+
+        marker_8e46334df39219ff531d9f6cabefb143.bindPopup(popup_3547c68c93f2c104d9048adbfa8b7e2f)
+        ;
+
+        
+    
+    
+                marker_8e46334df39219ff531d9f6cabefb143.setIcon(icon_6338cbce70534add866391d524282af1);
+            
+    
+            var marker_6d8d30e007c24ae10a4d25d9bd2acbd4 = L.marker(
+                [48.825833, -3.473167],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_08be325ea2db022514a36310ccd7f3f3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e7b737a1ce1bd471a6355e417a13c896 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b1baaa10b8afd29af9a64474d0cad3ef = $(`<div id="html_b1baaa10b8afd29af9a64474d0cad3ef" style="width: 100.0%; height: 100.0%;"><b>PLOUMANAC'H</b><br>Temp: 11.0°C</div>`)[0];
+                popup_e7b737a1ce1bd471a6355e417a13c896.setContent(html_b1baaa10b8afd29af9a64474d0cad3ef);
+            
+        
+
+        marker_6d8d30e007c24ae10a4d25d9bd2acbd4.bindPopup(popup_e7b737a1ce1bd471a6355e417a13c896)
+        ;
+
+        
+    
+    
+                marker_6d8d30e007c24ae10a4d25d9bd2acbd4.setIcon(icon_08be325ea2db022514a36310ccd7f3f3);
+            
+    
+            var marker_8b06426f583dbf4eb529d7715c527974 = L.marker(
+                [46.593833, 0.314333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_bd39839710154c77f2bf8c59a6117611 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7ee7fc32d52b3b25120541e87e3405e9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4105605d58cff1ed709076f2515f2a0c = $(`<div id="html_4105605d58cff1ed709076f2515f2a0c" style="width: 100.0%; height: 100.0%;"><b>POITIERS-BIARD</b><br>Temp: 7.9°C</div>`)[0];
+                popup_7ee7fc32d52b3b25120541e87e3405e9.setContent(html_4105605d58cff1ed709076f2515f2a0c);
+            
+        
+
+        marker_8b06426f583dbf4eb529d7715c527974.bindPopup(popup_7ee7fc32d52b3b25120541e87e3405e9)
+        ;
+
+        
+    
+    
+                marker_8b06426f583dbf4eb529d7715c527974.setIcon(icon_bd39839710154c77f2bf8c59a6117611);
+            
+    
+            var marker_ca73ff7da717fd0f318848175d1ec4e6 = L.marker(
+                [46.046833, -1.4115],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_d4eb8b36402f4cc596b8e2f7ca66ea53 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_db0f21591ca0c60c6d7e9a7b44eea28a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4ce6ad788893f9749811125e7cf4bc0d = $(`<div id="html_4ce6ad788893f9749811125e7cf4bc0d" style="width: 100.0%; height: 100.0%;"><b>PTE DE CHASSIRON</b><br>Temp: 8.8°C</div>`)[0];
+                popup_db0f21591ca0c60c6d7e9a7b44eea28a.setContent(html_4ce6ad788893f9749811125e7cf4bc0d);
+            
+        
+
+        marker_ca73ff7da717fd0f318848175d1ec4e6.bindPopup(popup_db0f21591ca0c60c6d7e9a7b44eea28a)
+        ;
+
+        
+    
+    
+                marker_ca73ff7da717fd0f318848175d1ec4e6.setIcon(icon_d4eb8b36402f4cc596b8e2f7ca66ea53);
+            
+    
+            var marker_39726ceffe5e246c9ccd8f834cade420 = L.marker(
+                [49.725167, -1.939833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_6da4503d8a8ec0f5f3e23f19b6117236 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7980d6b8f6506ec885af2b976a3dc32d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_de1d07ec9e02499276728763fe098f3d = $(`<div id="html_de1d07ec9e02499276728763fe098f3d" style="width: 100.0%; height: 100.0%;"><b>PTE DE LA HAGUE</b><br>Temp: 10.2°C</div>`)[0];
+                popup_7980d6b8f6506ec885af2b976a3dc32d.setContent(html_de1d07ec9e02499276728763fe098f3d);
+            
+        
+
+        marker_39726ceffe5e246c9ccd8f834cade420.bindPopup(popup_7980d6b8f6506ec885af2b976a3dc32d)
+        ;
+
+        
+    
+    
+                marker_39726ceffe5e246c9ccd8f834cade420.setIcon(icon_6da4503d8a8ec0f5f3e23f19b6117236);
+            
+    
+            var marker_5764b7fbd2cd5b8fa9b64a6beb7dd48f = L.marker(
+                [49.209667, 4.155333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_6dd842f74b4200dc8a6a42c58734db16 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_15560b9d4478c16784d924432ea03207 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3afdb28f59c46cc87fe9254a9b3b3584 = $(`<div id="html_3afdb28f59c46cc87fe9254a9b3b3584" style="width: 100.0%; height: 100.0%;"><b>REIMS-PRUNAY</b><br>Temp: 6.8°C</div>`)[0];
+                popup_15560b9d4478c16784d924432ea03207.setContent(html_3afdb28f59c46cc87fe9254a9b3b3584);
+            
+        
+
+        marker_5764b7fbd2cd5b8fa9b64a6beb7dd48f.bindPopup(popup_15560b9d4478c16784d924432ea03207)
+        ;
+
+        
+    
+    
+                marker_5764b7fbd2cd5b8fa9b64a6beb7dd48f.setIcon(icon_6dd842f74b4200dc8a6a42c58734db16);
+            
+    
+            var marker_e15b5cf3b905540db2f08569f1b9b194 = L.marker(
+                [48.068833, -1.734],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_928cb0401630b8b9400418e9b03b1c9a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_db794a6e5d6deb4af5bf5d542c2cf4dd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_537d8ba0b92ec059fb0f66985945d541 = $(`<div id="html_537d8ba0b92ec059fb0f66985945d541" style="width: 100.0%; height: 100.0%;"><b>RENNES-ST JACQUES</b><br>Temp: 10.5°C</div>`)[0];
+                popup_db794a6e5d6deb4af5bf5d542c2cf4dd.setContent(html_537d8ba0b92ec059fb0f66985945d541);
+            
+        
+
+        marker_e15b5cf3b905540db2f08569f1b9b194.bindPopup(popup_db794a6e5d6deb4af5bf5d542c2cf4dd)
+        ;
+
+        
+    
+    
+                marker_e15b5cf3b905540db2f08569f1b9b194.setIcon(icon_928cb0401630b8b9400418e9b03b1c9a);
+            
+    
+            var marker_c34bc0a402de8e8e0a66f8a4dc98bce5 = L.marker(
+                [49.383, 1.181667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_1393bfe07995da48afbe3e1c8af743ea = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4eadadcca22f986aa1d0bbedc03be4be = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5e1061f338640fea5855615d3b6b3577 = $(`<div id="html_5e1061f338640fea5855615d3b6b3577" style="width: 100.0%; height: 100.0%;"><b>ROUEN-BOOS</b><br>Temp: 8.1°C</div>`)[0];
+                popup_4eadadcca22f986aa1d0bbedc03be4be.setContent(html_5e1061f338640fea5855615d3b6b3577);
+            
+        
+
+        marker_c34bc0a402de8e8e0a66f8a4dc98bce5.bindPopup(popup_4eadadcca22f986aa1d0bbedc03be4be)
+        ;
+
+        
+    
+    
+                marker_c34bc0a402de8e8e0a66f8a4dc98bce5.setIcon(icon_1393bfe07995da48afbe3e1c8af743ea);
+            
+    
+            var marker_f4ae5eba4b1ade44afa5209d056e0bbc = L.marker(
+                [3.890667, -51.804667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_7ae4cafe118322621e94f30e3762e076 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_701ba671dfe44787017fc324fe1c03ac = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0c900cb80f59e3e392a6aa0a79d6b879 = $(`<div id="html_0c900cb80f59e3e392a6aa0a79d6b879" style="width: 100.0%; height: 100.0%;"><b>SAINT GEORGES</b><br>Temp: 28.6°C</div>`)[0];
+                popup_701ba671dfe44787017fc324fe1c03ac.setContent(html_0c900cb80f59e3e392a6aa0a79d6b879);
+            
+        
+
+        marker_f4ae5eba4b1ade44afa5209d056e0bbc.bindPopup(popup_701ba671dfe44787017fc324fe1c03ac)
+        ;
+
+        
+    
+    
+                marker_f4ae5eba4b1ade44afa5209d056e0bbc.setIcon(icon_7ae4cafe118322621e94f30e3762e076);
+            
+    
+            var marker_cc9fb0f1117fcb9baa0e82935039f603 = L.marker(
+                [5.4855, -54.031667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_dad43ab53a537af3bf5d5c76938b1fd2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_caab989cc742efd1810f33b4180f7e11 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5f42bf6f6789e6bda6c0b9f2f872fea6 = $(`<div id="html_5f42bf6f6789e6bda6c0b9f2f872fea6" style="width: 100.0%; height: 100.0%;"><b>SAINT LAURENT</b><br>Temp: 28.9°C</div>`)[0];
+                popup_caab989cc742efd1810f33b4180f7e11.setContent(html_5f42bf6f6789e6bda6c0b9f2f872fea6);
+            
+        
+
+        marker_cc9fb0f1117fcb9baa0e82935039f603.bindPopup(popup_caab989cc742efd1810f33b4180f7e11)
+        ;
+
+        
+    
+    
+                marker_cc9fb0f1117fcb9baa0e82935039f603.setIcon(icon_dad43ab53a537af3bf5d5c76938b1fd2);
+            
+    
+            var marker_aa4ee8c9d3e4a4d9ad902a6d8e18a13f = L.marker(
+                [43.005333, 1.106833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_4ae939ce9561e7bab4d269af791a1114 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1d2d08a9f804e7e3cb1ca47ad231c9bf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a946920c6d3f6936e70244eb4c752104 = $(`<div id="html_a946920c6d3f6936e70244eb4c752104" style="width: 100.0%; height: 100.0%;"><b>ST GIRONS</b><br>Temp: 8.4°C</div>`)[0];
+                popup_1d2d08a9f804e7e3cb1ca47ad231c9bf.setContent(html_a946920c6d3f6936e70244eb4c752104);
+            
+        
+
+        marker_aa4ee8c9d3e4a4d9ad902a6d8e18a13f.bindPopup(popup_1d2d08a9f804e7e3cb1ca47ad231c9bf)
+        ;
+
+        
+    
+    
+                marker_aa4ee8c9d3e4a4d9ad902a6d8e18a13f.setIcon(icon_4ae939ce9561e7bab4d269af791a1114);
+            
+    
+            var marker_63b65c3bc246d472f501e062ed7fe480 = L.marker(
+                [17.9015, -62.852167],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_c947e479b8d1b4ab089266f4a2215269 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_840b1394df39737b25716bd50df2084e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1d75d02f954a174156731cc70ce63ed3 = $(`<div id="html_1d75d02f954a174156731cc70ce63ed3" style="width: 100.0%; height: 100.0%;"><b>ST-BARTHELEMY METEO</b><br>Temp: 27.7°C</div>`)[0];
+                popup_840b1394df39737b25716bd50df2084e.setContent(html_1d75d02f954a174156731cc70ce63ed3);
+            
+        
+
+        marker_63b65c3bc246d472f501e062ed7fe480.bindPopup(popup_840b1394df39737b25716bd50df2084e)
+        ;
+
+        
+    
+    
+                marker_63b65c3bc246d472f501e062ed7fe480.setIcon(icon_c947e479b8d1b4ab089266f4a2215269);
+            
+    
+            var marker_62e67ad8d44164a2a2bfd9f08fd89e0f = L.marker(
+                [46.766333, -56.179167],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_f0562d439322b867facffcfe17ac53d2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f2be84af9eab77feb859bb0a9d5d86af = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ad19894963967eb02e86f05dbec3bfdb = $(`<div id="html_ad19894963967eb02e86f05dbec3bfdb" style="width: 100.0%; height: 100.0%;"><b>ST-PIERRE</b><br>Temp: -2.2°C</div>`)[0];
+                popup_f2be84af9eab77feb859bb0a9d5d86af.setContent(html_ad19894963967eb02e86f05dbec3bfdb);
+            
+        
+
+        marker_62e67ad8d44164a2a2bfd9f08fd89e0f.bindPopup(popup_f2be84af9eab77feb859bb0a9d5d86af)
+        ;
+
+        
+    
+    
+                marker_62e67ad8d44164a2a2bfd9f08fd89e0f.setIcon(icon_f0562d439322b867facffcfe17ac53d2);
+            
+    
+            var marker_7a986365803f4b03cc269797012af36b = L.marker(
+                [48.5495, 7.640333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_db7a216729164ab9dd4e8784ae747655 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_39a73ae85c05365e7b03fbcd56c02192 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_38eaf19d123d195bb0bf03502313e149 = $(`<div id="html_38eaf19d123d195bb0bf03502313e149" style="width: 100.0%; height: 100.0%;"><b>STRASBOURG-ENTZHEIM</b><br>Temp: 7.3°C</div>`)[0];
+                popup_39a73ae85c05365e7b03fbcd56c02192.setContent(html_38eaf19d123d195bb0bf03502313e149);
+            
+        
+
+        marker_7a986365803f4b03cc269797012af36b.bindPopup(popup_39a73ae85c05365e7b03fbcd56c02192)
+        ;
+
+        
+    
+    
+                marker_7a986365803f4b03cc269797012af36b.setIcon(icon_db7a216729164ab9dd4e8784ae747655);
+            
+    
+            var marker_780bfc3cdf02067c56486e95ca5e29b3 = L.marker(
+                [43.188, 0.0],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_78c6dd6a490bb6bd637c7ca8b2e7b233 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a472391fb84f4c2b2a210b08e517d983 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a76158f38da7dd48228ba454b52d4eb6 = $(`<div id="html_a76158f38da7dd48228ba454b52d4eb6" style="width: 100.0%; height: 100.0%;"><b>TARBES-OSSUN</b><br>Temp: 8.6°C</div>`)[0];
+                popup_a472391fb84f4c2b2a210b08e517d983.setContent(html_a76158f38da7dd48228ba454b52d4eb6);
+            
+        
+
+        marker_780bfc3cdf02067c56486e95ca5e29b3.bindPopup(popup_a472391fb84f4c2b2a210b08e517d983)
+        ;
+
+        
+    
+    
+                marker_780bfc3cdf02067c56486e95ca5e29b3.setIcon(icon_78c6dd6a490bb6bd637c7ca8b2e7b233);
+            
+    
+            var marker_ee1e55921b1776732b6de988cb0f0a6f = L.marker(
+                [43.621, 1.378833],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_3e9e79740f102af5ee20b36b45fdd176 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d02f57f1de01841e97b2714bc605c651 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3ae3ed27c847ea39d748ccb55da069bb = $(`<div id="html_3ae3ed27c847ea39d748ccb55da069bb" style="width: 100.0%; height: 100.0%;"><b>TOULOUSE-BLAGNAC</b><br>Temp: 9.7°C</div>`)[0];
+                popup_d02f57f1de01841e97b2714bc605c651.setContent(html_3ae3ed27c847ea39d748ccb55da069bb);
+            
+        
+
+        marker_ee1e55921b1776732b6de988cb0f0a6f.bindPopup(popup_d02f57f1de01841e97b2714bc605c651)
+        ;
+
+        
+    
+    
+                marker_ee1e55921b1776732b6de988cb0f0a6f.setIcon(icon_3e9e79740f102af5ee20b36b45fdd176);
+            
+    
+            var marker_19ef102beebbd3b72446853fde2e3a1b = L.marker(
+                [47.4445, 0.727333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_f6dc542058a157213618ae3ddd295102 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_43a5839dfd41468658f963ec826c3263 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a536a7465a27460279844f73fd805996 = $(`<div id="html_a536a7465a27460279844f73fd805996" style="width: 100.0%; height: 100.0%;"><b>TOURS</b><br>Temp: 8.8°C</div>`)[0];
+                popup_43a5839dfd41468658f963ec826c3263.setContent(html_a536a7465a27460279844f73fd805996);
+            
+        
+
+        marker_19ef102beebbd3b72446853fde2e3a1b.bindPopup(popup_43a5839dfd41468658f963ec826c3263)
+        ;
+
+        
+    
+    
+                marker_19ef102beebbd3b72446853fde2e3a1b.setIcon(icon_f6dc542058a157213618ae3ddd295102);
+            
+    
+            var marker_85322db0a5b628d5271c5d2f7c2e33d1 = L.marker(
+                [14.7745, -60.875333],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_fc1c23f754f8c3469b45fd4f057a86ca = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a2a02dbbcbe9f55f1f4ba955d3901dfa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c610f343066868761290dc5c72f0aa61 = $(`<div id="html_c610f343066868761290dc5c72f0aa61" style="width: 100.0%; height: 100.0%;"><b>TRINITE-CARAVEL</b><br>Temp: 27.1°C</div>`)[0];
+                popup_a2a02dbbcbe9f55f1f4ba955d3901dfa.setContent(html_c610f343066868761290dc5c72f0aa61);
+            
+        
+
+        marker_85322db0a5b628d5271c5d2f7c2e33d1.bindPopup(popup_a2a02dbbcbe9f55f1f4ba955d3901dfa)
+        ;
+
+        
+    
+    
+                marker_85322db0a5b628d5271c5d2f7c2e33d1.setIcon(icon_fc1c23f754f8c3469b45fd4f057a86ca);
+            
+    
+            var marker_d76374a4474b5af2cafec58b379ea0c3 = L.marker(
+                [-15.887667, 54.520667],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_28fff10619564341597c59a08a43e75b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_196d3687657f96664fde13c9877b5ea9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4cdbb0d2fd3bdb1c99c6d608298d3c34 = $(`<div id="html_4cdbb0d2fd3bdb1c99c6d608298d3c34" style="width: 100.0%; height: 100.0%;"><b>TROMELIN</b><br>Temp: 28.3°C</div>`)[0];
+                popup_196d3687657f96664fde13c9877b5ea9.setContent(html_4cdbb0d2fd3bdb1c99c6d608298d3c34);
+            
+        
+
+        marker_d76374a4474b5af2cafec58b379ea0c3.bindPopup(popup_196d3687657f96664fde13c9877b5ea9)
+        ;
+
+        
+    
+    
+                marker_d76374a4474b5af2cafec58b379ea0c3.setIcon(icon_28fff10619564341597c59a08a43e75b);
+            
+    
+            var marker_64be836bcb26581ccd160ede2cd55343 = L.marker(
+                [48.324667, 4.02],
+                {
+}
+            ).addTo(map_9cb7028b4ecc0ac2884bbef3d570dcb1);
+        
+    
+            var icon_025d2876ad21853f71a0db9f024db453 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "thermometer-half",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_17dc90295e45be48592afddc88570a20 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_122f4f25c763b245fa6789d2864597ca = $(`<div id="html_122f4f25c763b245fa6789d2864597ca" style="width: 100.0%; height: 100.0%;"><b>TROYES-BARBEREY</b><br>Temp: 7.9°C</div>`)[0];
+                popup_17dc90295e45be48592afddc88570a20.setContent(html_122f4f25c763b245fa6789d2864597ca);
+            
+        
+
+        marker_64be836bcb26581ccd160ede2cd55343.bindPopup(popup_17dc90295e45be48592afddc88570a20)
+        ;
+
+        
+    
+    
+                marker_64be836bcb26581ccd160ede2cd55343.setIcon(icon_025d2876ad21853f71a0db9f024db453);
+            
+</script>
+</html>
